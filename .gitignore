@@ -1,0 +1,69 @@
+# Ambientes virtuais
+venv/
+env/
+ENV/
+.venv/
+
+# Arquivos Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Arquivos de configuração e credenciais
+.env
+*.env
+api_google_sheets.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+
+# Logs e arquivos temporários
+*.log
+logs/
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Prefect
+.prefect/
+prefect-results/
+
+# Diretórios específicos do projeto
+core/*/step_1_data_raw/
+core/*/step_2_stage_area/
+core/*/step_3_data_processed/
+core/DWPII_backup/
+core/DWPII_copy/
+core/DWPII_up/
+core/qim_ues/arquivos_brutos/
+core/qim_ues/backup_qim/
+core/qim_ues/copy/
+core/qim_ues/up/
+core/office365_api/storage/
+
+# IDEs e editores
+.idea/
+.vscode/
+*.swp
+*.swo

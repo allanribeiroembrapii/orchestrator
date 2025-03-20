@@ -1,0 +1,54 @@
+# Prefect project configuration
+name: orchestrator-embrapii-srinfo
+prefect-version: 2.13.0
+
+# Project settings
+build:
+  python-version: "3.10"
+  python-packages:
+    - prefect>=2.13.0
+    - selenium
+    - webdriver-manager
+    - pandas
+    - openpyxl
+    - pywin32
+    - psutil
+    - python-dotenv
+
+# Deployment settings
+deployments:
+  - name: pipeline-srinfo-diario
+    entrypoint: deployments/main_deployment.py:daily_deployment
+    work_pool:
+      name: default-agent-pool
+      work_queue_name: default
+    schedule:
+      cron: "0 8 * * 1-5"
+      timezone: "America/Sao_Paulo"
+    tags:
+      - embrapii
+      - srinfo
+      - diario
+
+  - name: pipeline-srinfo-fim-de-semana
+    entrypoint: deployments/main_deployment.py:weekend_deployment
+    work_pool:
+      name: default-agent-pool
+      work_queue_name: default
+    schedule:
+      cron: "0 10 * * 6,0"
+      timezone: "America/Sao_Paulo"
+    tags:
+      - embrapii
+      - srinfo
+      - fim-de-semana
+      - plano-metas
+
+# Execution settings
+execution:
+  timeout: 14400 # 4 hours in seconds
+  retry:
+    max_retries: 2
+    delay: 60 # seconds
+  logging:
+    level: INFO
