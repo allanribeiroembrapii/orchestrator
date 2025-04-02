@@ -18,3 +18,8 @@ DIC_TRL = {
     8: '8. [Produção] Sistema completo, testado, qualificado e demonstrado',
     9: '9. [Produção continuada] Sistema já foi operado em todas as condições, extensão e alcance',
 }
+
+DIC_BOOL_YES_NO = {
+    0: 'Não',
+    1: 'Sim'
+}

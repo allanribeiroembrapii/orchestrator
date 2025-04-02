@@ -22,8 +22,6 @@ def srinfo_project_contract():
     query = """
             SELECT DISTINCT
                 main.id,
-                prj.code AS code_project,
-                pfm.alias AS financing_modality,
                 main.is_mandatory,
                 main.contract_date,
                 main.start_date,
@@ -34,6 +32,8 @@ def srinfo_project_contract():
                 main.company_amount,
                 main.ue_amount,
                 main.total_amount,
+                prj.code AS code_project,
+                pfm.alias AS financing_modality,
                 main.data_carga    
             FROM db_bronze_srinfo.project_contract AS main
             LEFT JOIN db_bronze_srinfo.project_project as prj

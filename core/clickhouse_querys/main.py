@@ -9,13 +9,13 @@ def main():
     start_clean()
 
     #Ligar VPN
-    connect_vpn()
+    # connect_vpn()
 
     #Executar querys
     ws_projetos_modelo_embrapii()
 
     #Desligar VPN
-    disconnect_vpn()
+    # disconnect_vpn()
 
 
 if __name__ == "__main__":

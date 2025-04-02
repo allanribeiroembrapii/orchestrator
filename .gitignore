@@ -67,3 +67,8 @@ core/office365_api/storage/
 .vscode/
 *.swp
 *.swo
+
+
+# Arquivos de dados
+.csv
+.xlsx
