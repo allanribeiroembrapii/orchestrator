@@ -3,6 +3,7 @@ from start_clean import start_clean
 from querys.ws_projetos_modelo_embrapii.ws_main import ws_projetos_modelo_embrapii
 from querys.ws_unidades_embrapii.ws_main import ws_unidades_embrapii
 from querys.ws_outros.ws_main import ws_outros
+from querys.ws_empresas.ws_main import ws_empresas
 from connection.up_sharepoint import up_sharepoint
 
 
@@ -18,6 +19,7 @@ def clickhouse_querys():
     ws_projetos_modelo_embrapii()
     ws_unidades_embrapii()
     ws_outros()
+    ws_empresas()
 
     #Desligar VPN
     disconnect_vpn()
