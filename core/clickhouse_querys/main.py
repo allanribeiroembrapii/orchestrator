@@ -6,7 +6,7 @@ from querys.ws_outros.ws_main import ws_outros
 from connection.up_sharepoint import up_sharepoint
 
 
-def main():
+def clickhouse_querys():
 
     #Start clean
     start_clean()
@@ -27,4 +27,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    clickhouse_querys()

@@ -2,16 +2,12 @@ import re
 import sys, os
 from pathlib import PurePath
 from dotenv import load_dotenv
+from .office365_api import SharePoint
 
 #Adicionar o caminho do diretório raiz ao sys.path
 load_dotenv()
 ROOT = os.getenv('ROOT')
-PATH_OFFICE = os.path.abspath(os.path.join(ROOT, 'office365_api'))
 
-# Adiciona o diretório correto ao sys.path
-sys.path.append(PATH_OFFICE)
-
-from office365_api.office365_api import SharePoint
 
 def upload_files(pasta_arquivos, destino, sharepoint_site, sharepoint_site_name, sharepoint_doc, keyword=None):
     file_list = get_list_of_files(pasta_arquivos)

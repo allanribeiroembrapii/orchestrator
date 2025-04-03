@@ -1,4 +1,4 @@
-from office365_api import SharePoint
+from office365.office365_api import SharePoint
 import sys
 import csv
 from pathlib import PurePath

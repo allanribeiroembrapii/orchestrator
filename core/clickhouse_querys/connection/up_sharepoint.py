@@ -2,7 +2,7 @@ import os
 import zipfile
 import inspect
 from dotenv import load_dotenv
-from office365_api.upload_files import upload_files
+from .office365.upload_files import upload_files
 from datetime import datetime
 
 #carregar .env
