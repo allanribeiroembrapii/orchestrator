@@ -19,28 +19,14 @@ STEP_3_DATA_PROCESSED = os.getenv('STEP_3_DATA_PROCESSED')
 
 def srinfo_company_company():
     """
-    Dados de negociações de projetos. Retorna todos os dados relativos à negociação.
+    Dados de empresas, sem inativação e sem CNPJ nulo
     """
     query = """
         SELECT DISTINCT
             company.*
-        FROM db_bronze_srinfo.project_project_companies AS pc
-        LEFT JOIN (
-            -- Seleciona as empresas com a data_carga mais recente e data_inativacao NULL
-            SELECT 
-                company.*
-            FROM db_bronze_srinfo.company_company AS company
-            INNER JOIN (
-                SELECT id, MAX(data_carga) AS max_data_carga
-                FROM db_bronze_srinfo.company_company
-                WHERE data_inativacao IS NULL
-                GROUP BY id
-            ) AS latest_company
-            ON company.id = latest_company.id
-            AND company.data_carga = latest_company.max_data_carga
-            WHERE company.data_inativacao IS NULL
-        ) AS company
-        ON pc.company_id = company.id
+        FROM db_bronze_srinfo.company_company AS company
+        WHERE data_inativacao IS NULL
+        AND NOT cnpj IS NULL
     """
     nome_arquivo = "company_company"
     query_clickhouse(HOST, PORT, USER, PASSWORD, query, nome_arquivo)

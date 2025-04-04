@@ -27,7 +27,7 @@ def copy_sharepoint():
         get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "srinfo_company_company.xlsx",
                 "dw_pii", STEP_1_DATA_RAW)
         get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "oni_companies.xlsx",
-                "DWPII/empresas_oni/", STEP_1_DATA_RAW)
+                "dw_pii", STEP_1_DATA_RAW)
         print("🟢 " + inspect.currentframe().f_code.co_name)
     except Exception as e:
         print(f"🔴 Erro: {e}")
