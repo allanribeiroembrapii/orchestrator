@@ -39,13 +39,6 @@ def srinfo_company_company():
     path_file_raw = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW ,f"{nome_arquivo}.csv"))
     df_raw = pd.read_csv(path_file_raw)
 
-    # # Substituir "main." nos nomes das colunas
-    # df_raw.columns = [col.replace("main.", "") for col in df_raw.columns]
-
-    # Dicionários
-    # df_raw['recognition'] = df_raw['recognition'].map(DIC_BOOL_YES_NO)
-    # df_raw['convertion_status'] = df_raw['convertion_status'].map(DIC_BOOL_YES_NO)
-
     # Salvar em formato Excel
     path_file_processed = os.path.abspath(os.path.join(ROOT, STEP_3_DATA_PROCESSED, f"srinfo_{nome_arquivo}.xlsx"))
     df_raw.to_excel(path_file_processed, index=False)
