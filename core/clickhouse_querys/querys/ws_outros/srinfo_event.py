@@ -20,40 +20,46 @@ STEP_3_DATA_PROCESSED = os.getenv('STEP_3_DATA_PROCESSED')
 
 def srinfo_event():
     query = """
-        	SELECT DISTINCT
-                main.id,
-                main.title,
-                main.publisher,
-                main.publication_webpage,
-                main.published_date,
-                unit.id AS unit_id,
-                unit.name AS unit_name,
-                unit.uf_state AS unit_uf,
-                main.data_carga    
-            FROM db_bronze_srinfo.ue_communication AS main
-            LEFT JOIN (
-                SELECT
-                    ue.id,
-                    ue.name,
-                    ue.uf_state,
-                    ue.data_carga
-                FROM db_bronze_srinfo.ue_unit AS ue
-                INNER JOIN (
+        		SELECT DISTINCT
+                    main.id,
+                    main.event_type,
+                    main.participation_type,
+                    main.event_date,
+                    main.name,
+                    main.location,
+                    main.total_participants,
+                    main.total_companies,
+                    main.total_contacted_companies,
+                    main.notes,
+                    main.recognition,
+                    unit.id AS unit_id,
+                    unit.name AS unit_name,
+                    unit.uf_state AS unit_uf,
+                    main.data_carga    
+                FROM db_bronze_srinfo.ue_event AS main
+                LEFT JOIN (
                     SELECT
-                        id,
-                        MAX(data_carga) AS max_data_carga
-                    FROM db_bronze_srinfo.ue_unit
-                    WHERE data_inativacao IS NULL
-                    GROUP BY id
-                ) AS latest_ue
-                ON ue.id = latest_ue.id
-                    AND ue.data_carga = latest_ue.max_data_carga
-                WHERE ue.data_inativacao IS NULL
-            ) AS unit
-                ON main.ue_id = unit.id
-            WHERE main.data_inativacao IS NULL
+                        ue.id,
+                        ue.name,
+                        ue.uf_state,
+                        ue.data_carga
+                    FROM db_bronze_srinfo.ue_unit AS ue
+                    INNER JOIN (
+                        SELECT
+                            id,
+                            MAX(data_carga) AS max_data_carga
+                        FROM db_bronze_srinfo.ue_unit
+                        WHERE data_inativacao IS NULL
+                        GROUP BY id
+                    ) AS latest_ue
+                    ON ue.id = latest_ue.id
+                        AND ue.data_carga = latest_ue.max_data_carga
+                    WHERE ue.data_inativacao IS NULL
+                ) AS unit
+                    ON main.ue_id = unit.id
+                WHERE main.data_inativacao IS NULL
     """
-    nome_arquivo = "ue_communication"
+    nome_arquivo = "ue_event"
     query_clickhouse(HOST, PORT, USER, PASSWORD, query, nome_arquivo)
 
     # Carregar arquivo
@@ -66,6 +72,9 @@ def srinfo_event():
 
     # Substituir "main." nos nomes das colunas
     df_raw.columns = [col.replace("main.", "") for col in df_raw.columns]
+
+        # Dicionários
+    df_raw['recognition'] = df_raw['recognition'].map(DIC_BOOL_YES_NO)
 
     # Salvar em formato Excel
     path_file_processed = os.path.abspath(os.path.join(ROOT, STEP_3_DATA_PROCESSED, f"srinfo_{nome_arquivo}.xlsx"))

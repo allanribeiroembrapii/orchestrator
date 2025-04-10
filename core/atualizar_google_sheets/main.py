@@ -1,55 +1,44 @@
 import os
-from core.atualizar_google_sheets.puxar_planilhas_sharepoint import puxar_planilhas
-from core.atualizar_google_sheets.atualizacao_gsheet import atualizar_gsheet
-from config.module_configs import get_config
+from dotenv import load_dotenv
+from puxar_planilhas_sharepoint import puxar_planilhas
+from atualizacao_gsheet import atualizar_gsheet
 
+# carregar .env 
+load_dotenv()
+ROOT = os.getenv('ROOT')
+PORTFOLIO = os.path.abspath(os.path.join(ROOT, 'inputs', 'portfolio.xlsx'))#
+PROJETOS_EMPRESAS = os.path.abspath(os.path.join(ROOT, 'inputs', 'projetos_empresas.xlsx'))#
+INFORMACOES_EMPRESAS = os.path.abspath(os.path.join(ROOT, 'inputs', 'informacoes_empresas.xlsx'))
+INFO_UNIDADES_EMBRAPII = os.path.abspath(os.path.join(ROOT, 'inputs', 'info_unidades_embrapii.xlsx'))
+UE_LINHAS_ATUACAO = os.path.abspath(os.path.join(ROOT, 'inputs', 'ue_linhas_atuacao.xlsx'))
+MACROENTREGAS = os.path.abspath(os.path.join(ROOT, 'inputs', 'macroentregas.xlsx'))
+NEGOCIACOES = os.path.abspath(os.path.join(ROOT, 'inputs', 'negociacoes_negociacoes.xlsx'))
+CLASSIFICACAO_PROJETO = os.path.abspath(os.path.join(ROOT, 'inputs', 'classificacao_projeto.xlsx'))
+PROJETOS = os.path.abspath(os.path.join(ROOT, 'inputs', 'projetos.xlsx'))
+PROSPECCOES = os.path.abspath(os.path.join(ROOT, 'inputs', 'prospeccao_prospeccao.xlsx'))
+CNAE_IBGE = os.path.abspath(os.path.join(ROOT, 'inputs', 'cnae_ibge.xlsx'))
+PEDIDOS_PI = os.path.abspath(os.path.join(ROOT, 'inputs', 'pedidos_pi.xlsx'))
 
-def main(config_override=None):
-    """
-    Função principal para atualizar o Google Sheets com dados do SharePoint.
-    Busca automaticamente as configurações do módulo.
-
-    Args:
-        config_override (dict, optional): Configurações para sobrescrever as padrões.
-            Pode conter 'url' e/ou 'caminhos_arquivos'.
-
-    Returns:
-        bool: True se a operação foi concluída com sucesso.
-    """
-    # Obter configurações
-    config = get_config("google_sheets")
-    if config_override:
-        # Atualizar configurações com as fornecidas
-        if isinstance(config_override, dict):
-            for key, value in config_override.items():
-                if key in config:
-                    if isinstance(value, dict) and isinstance(config[key], dict):
-                        # Para dicionários aninhados, atualizar em vez de substituir
-                        config[key].update(value)
-                    else:
-                        config[key] = value
-
-    # Extrair valores das configurações
-    url = config["url"]
-    caminhos_arquivos = config["caminhos_arquivos"]
-
-    try:
-        # Puxar planilhas do SharePoint
-        print("Buscando planilhas do SharePoint...")
-        puxar_planilhas()
-
-        # Atualizar cada aba
-        print(f"Atualizando Google Sheets: {url}")
-        for aba, caminho_arquivo in caminhos_arquivos.items():
-            print(f"Processando aba: {aba}")
-            atualizar_gsheet(url, aba, caminho_arquivo)
-
-        print("Atualização do Google Sheets concluída com sucesso.")
-        return True
-    except Exception as e:
-        print(f"Erro durante a atualização do Google Sheets: {e}")
-        return False
-
+def main():
+    puxar_planilhas()
+    url = "https://docs.google.com/spreadsheets/d/1x7IUvZnXg2MH2k3QE9Kiq-_Db4eA-2xwFGuswbTDYjg/edit?usp=sharing"
+    abas = {'raw_portfolio': PORTFOLIO, 
+            'raw_projetos_empresas': PROJETOS_EMPRESAS,
+            'raw_informacoes_empresas': INFORMACOES_EMPRESAS,
+            'raw_info_unidades_embrapii': INFO_UNIDADES_EMBRAPII,
+            'raw_ue_linhas_atuacao': UE_LINHAS_ATUACAO,
+            'raw_macroentregas': MACROENTREGAS,
+            'raw_negociacoes_negociacoes': NEGOCIACOES,
+            'raw_classificacao_projetos': CLASSIFICACAO_PROJETO,
+            'raw_projetos': PROJETOS,
+            'raw_prospeccao_prospeccao': PROSPECCOES,
+            'raw_cnae_ibge': CNAE_IBGE,
+            'raw_pedidos_pi': PEDIDOS_PI}
+    print("🟡 atualizar_gsheet")
+    for aba, caminho_arquivo in abas.items():
+        atualizar_gsheet(url, aba, caminho_arquivo)
+    print("🟢 atualizar_gsheet")
+    
 
 if __name__ == "__main__":
     main()

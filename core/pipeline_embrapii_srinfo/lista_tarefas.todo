@@ -1,0 +1,46 @@
+PIPELINE DE DADOS SRINFO:
+✔ 1. Fazer o download dos arquivos @done(24-07-18 10:49)
+    ✔ 1.1. Função: baixar_dados_srinfo @done(24-07-23 10:00)
+✔ 2. Mover os arquivos para a pasta step_1_data_raw @done(24-07-18 10:52)
+    ✔ 2.1. Função: mover_arquivos @done(24-07-23 10:00)
+✔ 3. Juntar os arquivos da pasta data_raw em um apenas e mover para stage_area @done(24-07-18 13:53)
+    ✔ 3.1. Função: append_arquivos @done(24-07-23 10:00)
+✔ 4. Normalizar as tabelas @done(24-07-25 10:48)
+    ✔ 4.1. Tabela contratos @done(24-07-23 10:07)
+    ✔ 4.2. Tabela projetos @done(24-07-23 10:07)
+    ✔ 4.3. Tabela macroentregas @done(24-07-23 11:12)
+    ✔ 4.4. Tabela estudantes @done(24-07-23 11:54)
+    ✔ 4.5. Tabela pedidos_pi @done(24-07-23 11:30)
+    ✔ 4.6. Tabela info_unidades_embrapii @done(24-07-23 10:07)
+    ✔ 4.7. Tabela ue_linhas_atuacao @done(24-07-23 10:07)
+    ✔ 4.8. Tabela info_empresas @done(24-07-23 10:07)
+    ✘ 4.9. Tabela empresas_cnaes_secundarios @cancelled(24-07-23 10:36)
+    ✔ 4.10. Tabela projetos_empresas @done(24-07-23 14:20)
+    ✔ 4.11. Tabela info_empresas @done(24-07-23 15:51)
+    ✔ 5. Transformar os dados nas tabelas desejadas @done(24-07-24 17:32)
+    ✔ 5.1. Criar a tabela classificacao_projeto @done(24-07-22 11:48)
+    ✔ 5.2. Criar a tabela portfolio @done(24-07-23 09:59)
+    ✔ 6. Mover para o Sharepoint @done(24-07-24 17:32)
+    ✔ 6.1. Criar o script para mover para o sharepoint @done(24-07-22 09:52)
+    ✔ 6.2. Criar o DWPII no Sharepoint @done(24-07-22 09:52)
+    ✔ 6.3. Automatizar o envio dos arquivos para o sharepoint @done(24-07-24 17:32)
+    ✔ 6.4. Limpar DWPII_copy e DWPII_up ao iniciar o pipeline @done(24-07-24 17:32)
+✔ 7. Logear as ações @done(24-07-25 10:48)
+    ✔ 7.1. Criar a planilha de logs @done(24-07-25 10:48)
+    ✔ 7.2. Criar scripts para logear as ações @done(24-07-25 10:48)
+☐ 8. Criar modelagem de dados no Power BI
+    ✔ 8.1. Criar projeto padrão de relatório Power BI (modelagem de dados) @done(24-07-25 18:01)
+    ☐ 8.2. Criação de métricas com base no projeto padrão
+    ☐ 8.3. Criação de relatórios
+☐ 9. Deixar a rotina automatizada
+☐ 10. Documentar o pipeline
+    ☐ 10.1. Criar planilha de documentação das tabelas
+    ☐ 10.2. Criar documento de especificação do pipeline
+    
+    - Enriquecer os dados das empresas. Verificar melhor serviço disponível.
+
+
+
+
+
+

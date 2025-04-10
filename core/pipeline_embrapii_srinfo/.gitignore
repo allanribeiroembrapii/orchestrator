@@ -1,0 +1,38 @@
+# Ignorar arquivos Excel
+*.xlsx
+*.xls
+
+# Ignorar arquivo .env
+.env
+
+# Ignorar outras possíveis extensões de arquivos Excel
+*.xlsm
+*.xlsb
+
+
+*.zip
+# Ignorar arquivos Excel
+*.xlsx
+*.xls
+
+# Excetuar o arquivo específico report_snapshot_embrapii.xlsx
+!report_snapshot_embrapii.xlsx
+
+# Ignorar arquivo .env
+.env
+
+# Ignorar outras possíveis extensões de arquivos Excel
+*.xlsm
+*.xlsb
+
+*.zip
+
+*.db
+
+*.db
+
+*.png
+
+# Ignorar cache do Python
+__pycache__/
+*.py[cod]
