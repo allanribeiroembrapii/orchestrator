@@ -8,15 +8,16 @@ import shutil
 
 # Carregar variáveis de ambiente do arquivo .env
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv("ROOT_PIPELINE")
 
 # Caminho do diretório contendo as planilhas
-DWPII_UP = os.path.abspath(os.path.join(ROOT, 'DWPII_up'))
+DWPII_UP = os.path.abspath(os.path.join(ROOT, "DWPII_up"))
 
 # Caminho do banco de dados SQLite
-db_copy = os.path.join(ROOT, 'DWPII_copy', 'db_srinfo.db')
-db_up = os.path.join(ROOT, 'DWPII_up', 'db_srinfo.db')
-der_path = os.path.join(ROOT, 'DWPII_up', 'der_srinfo.png')
+db_copy = os.path.join(ROOT, "DWPII_copy", "db_srinfo.db")
+db_up = os.path.join(ROOT, "DWPII_up", "db_srinfo.db")
+der_path = os.path.join(ROOT, "DWPII_up", "der_srinfo.png")
+
 
 def gerar_db_sqlite():
 
@@ -42,12 +43,12 @@ def gerar_db_sqlite():
             # Nome da tabela no banco de dados será o nome do arquivo sem a extensão
             table_name = os.path.splitext(filename)[0]
             # Sanitizar nomes de colunas
-            df.columns = [col.encode('ascii', 'ignore').decode('ascii') for col in df.columns]
+            df.columns = [col.encode("ascii", "ignore").decode("ascii") for col in df.columns]
             # Limpar dados da tabela antes de inserir novos dados
             clear_table(table_name, cursor, conn)
             # Inserir os dados no banco de dados
-            df.to_sql(table_name, conn, if_exists='append', index=False)
-            
+            df.to_sql(table_name, conn, if_exists="append", index=False)
+
     # Fechar a conexão com o banco de dados
     conn.close()
 
@@ -56,7 +57,7 @@ def gerar_db_sqlite():
 
 def gerar_der():
     # Conectar ao banco de dados SQLite usando SQLAlchemy
-    engine = create_engine(f'sqlite:///{db_up}')
+    engine = create_engine(f"sqlite:///{db_up}")
     metadata = MetaData()
     metadata.reflect(bind=engine)
 

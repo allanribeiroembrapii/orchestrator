@@ -3,22 +3,47 @@ import inspect
 import pandas as pd
 from dotenv import load_dotenv
 from datetime import datetime
+import pathlib
 
 # Carregar variáveis de ambiente do .env
 load_dotenv()
-ROOT = os.getenv('ROOT')
-STEP_1_DATA_RAW = os.getenv('STEP_1_DATA_RAW')
-STEP_2_STAGE_AREA = os.getenv('STEP_2_STAGE_AREA')
+ROOT = os.getenv("ROOT_DATAPII")
+STEP_1_DATA_RAW = os.getenv("STEP_1_DATA_RAW")
+STEP_2_STAGE_AREA = os.getenv("STEP_2_STAGE_AREA")
 
-PORTFOLIO = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'portfolio.xlsx'))
-UNIDADES = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'info_unidades_embrapii.xlsx'))
-EMPRESAS = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'projetos_empresas.xlsx'))
-IPCA = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'ipca_ibge.xlsx'))
-PORTFOLIO_IPCA = os.path.abspath(os.path.join(ROOT, STEP_2_STAGE_AREA, 'portfolio_ipca.xlsx'))
+
+# Função para verificar e criar diretórios se não existirem
+def verificar_criar_diretorio(caminho):
+    """
+    Verifica se um diretório existe e o cria se não existir.
+
+    Args:
+        caminho: Caminho do diretório a ser verificado/criado
+    """
+    diretorio = os.path.dirname(caminho)
+    if not os.path.exists(diretorio):
+        os.makedirs(diretorio)
+        print(f"Diretório criado: {diretorio}")
+
+
+# Definir caminhos dos arquivos
+PORTFOLIO = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "portfolio.xlsx"))
+UNIDADES = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "info_unidades_embrapii.xlsx"))
+EMPRESAS = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "projetos_empresas.xlsx"))
+IPCA = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "ipca_ibge.xlsx"))
+PORTFOLIO_IPCA = os.path.abspath(os.path.join(ROOT, STEP_2_STAGE_AREA, "portfolio_ipca.xlsx"))
+
+# Verificar e criar diretórios necessários
+for caminho in [PORTFOLIO, UNIDADES, EMPRESAS, IPCA, PORTFOLIO_IPCA]:
+    verificar_criar_diretorio(caminho)
 
 # Rota da API
-ROUTE_ROOT = os.getenv('ROUTE_ROOT')
-API_TOKEN = os.getenv('API_TOKEN')
+ROUTE_ROOT = os.getenv("ROUTE_ROOT")
+if ROUTE_ROOT is None:
+    ROUTE_ROOT = "https://datapii.embrapii.org.br"  # Valor padrão caso a variável de ambiente não esteja definida
+API_TOKEN = os.getenv("API_TOKEN")
+if API_TOKEN is None:
+    API_TOKEN = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"  # Valor padrão caso a variável de ambiente não esteja definida
 
 
 def corrigir_valor_ipca(ipca_df, ano_contrato, mes_contrato, valor):
@@ -30,7 +55,7 @@ def corrigir_valor_ipca(ipca_df, ano_contrato, mes_contrato, valor):
 
     https://www.ibge.gov.br/explica/inflacao.php
     """
-    ipca_df['Mês (Código)'] = ipca_df['Mês (Código)'].astype(str)
+    ipca_df["Mês (Código)"] = ipca_df["Mês (Código)"].astype(str)
 
     # Definir o mês anterior ao contrato
     if mes_contrato == 1:
@@ -43,15 +68,19 @@ def corrigir_valor_ipca(ipca_df, ano_contrato, mes_contrato, valor):
     mes_anterior_str = f"{ano_anterior}{mes_anterior:02d}"
 
     # Verifica o último mês disponível na base do IPCA
-    ultimo_mes_ipca = ipca_df['Mês (Código)'].iloc[-1]
+    ultimo_mes_ipca = ipca_df["Mês (Código)"].iloc[-1]
 
     # Se o mês anterior ao contrato for posterior ao último IPCA, não corrige
     if mes_anterior_str > ultimo_mes_ipca:
         return valor  # valor nominal
 
     try:
-        ipca_base = float(ipca_df.loc[ipca_df['Mês (Código)'] == mes_anterior_str, 'Valor'].values[0])
-        ipca_final = float(ipca_df.loc[ipca_df['Mês (Código)'] == ultimo_mes_ipca, 'Valor'].values[0])
+        ipca_base = float(
+            ipca_df.loc[ipca_df["Mês (Código)"] == mes_anterior_str, "Valor"].values[0]
+        )
+        ipca_final = float(
+            ipca_df.loc[ipca_df["Mês (Código)"] == ultimo_mes_ipca, "Valor"].values[0]
+        )
 
         if ipca_base == 0:
             return None
@@ -62,7 +91,6 @@ def corrigir_valor_ipca(ipca_df, ano_contrato, mes_contrato, valor):
         return None
 
 
-
 def processar_dados():
     print("🟡 " + inspect.currentframe().f_code.co_name)
     # Buscar dados
@@ -70,26 +98,25 @@ def processar_dados():
     df_ipca = pd.read_excel(IPCA)
 
     # Garantir que a data está no formato datetime
-    df_portfolio['data_contrato'] = pd.to_datetime(df_portfolio['data_contrato'])
+    df_portfolio["data_contrato"] = pd.to_datetime(df_portfolio["data_contrato"])
 
     # Aplicar correção
-    colunas_valores = ['valor_embrapii', 'valor_empresa', 'valor_unidade_embrapii', 'valor_sebrae']
+    colunas_valores = ["valor_embrapii", "valor_empresa", "valor_unidade_embrapii", "valor_sebrae"]
     for col in colunas_valores:
         nova_col = f"_ipca_{col}"
         df_portfolio[nova_col] = df_portfolio.apply(
             lambda row: corrigir_valor_ipca(
-                df_ipca,
-                row['data_contrato'].year,
-                row['data_contrato'].month,
-                row[col]
+                df_ipca, row["data_contrato"].year, row["data_contrato"].month, row[col]
             ),
-            axis=1
+            axis=1,
         )
-    
+
     # Criar a coluna _ipca_valor_total com a soma das colunas corrigidas
     colunas_ipca = [f"_ipca_{col}" for col in colunas_valores]
-    df_portfolio['_ipca_valor_total'] = df_portfolio[colunas_ipca].sum(axis=1)
+    df_portfolio["_ipca_valor_total"] = df_portfolio[colunas_ipca].sum(axis=1)
 
+    # Garantir que o diretório existe antes de salvar o arquivo
+    verificar_criar_diretorio(PORTFOLIO_IPCA)
     df_portfolio.to_excel(PORTFOLIO_IPCA, index=False)
     print("🟢 " + inspect.currentframe().f_code.co_name)
 
@@ -101,24 +128,28 @@ def calcular_kpis():
     df_empresas = pd.read_excel(EMPRESAS)
 
     # KPIs
-    projetos = df_portfolio['codigo_projeto'].nunique()
-    valor_total = df_portfolio['_ipca_valor_total'].sum()
-    unidades = df_unidades[df_unidades['status_credenciamento'] == 'Ativado']['unidade_embrapii'].nunique()
-    empresas = df_empresas['cnpj'].nunique()
+    projetos = df_portfolio["codigo_projeto"].nunique()
+    valor_total = df_portfolio["_ipca_valor_total"].sum()
+    unidades = df_unidades[df_unidades["status_credenciamento"] == "Ativado"][
+        "unidade_embrapii"
+    ].nunique()
+    empresas = df_empresas["cnpj"].nunique()
 
     dados = {
-        'projetos': projetos,
-        'valor_total': valor_total,
-        'unidades': unidades,
-        'empresas': empresas
+        "projetos": projetos,
+        "valor_total": valor_total,
+        "unidades": unidades,
+        "empresas": empresas,
     }
 
     return dados
+
 
 import requests
 
 import requests
 from datetime import datetime
+
 
 def post_api_site_embrapii(dados):
     """
@@ -139,35 +170,32 @@ def post_api_site_embrapii(dados):
     token = API_TOKEN
 
     dados_descricao = {
-        'projetos': {
-            'name': 'Projetos Contratados',
-            'descricao': 'Nº de Projetos Contratados pela Embrapii até a data de referência.'
+        "projetos": {
+            "name": "Projetos Contratados",
+            "descricao": "Nº de Projetos Contratados pela Embrapii até a data de referência.",
         },
-        'valor_total': {
-            'name': 'Valor Total Corrigido',
-            'descricao': 'Valor Total dos Projetos Contratados corrigidos pelo IPCA disponível até a data de referência.'
+        "valor_total": {
+            "name": "Valor Total Corrigido",
+            "descricao": "Valor Total dos Projetos Contratados corrigidos pelo IPCA disponível até a data de referência.",
         },
-        'unidades': {
-            'name': 'Unidades Ativas',
-            'descricao': 'Nº de Unidades Embrapii ativas na data de referência.'
+        "unidades": {
+            "name": "Unidades Ativas",
+            "descricao": "Nº de Unidades Embrapii ativas na data de referência.",
         },
-        'empresas': {
-            'name': 'Empresas Atendidas',
-            'descricao': 'Nº de Empresas que contrataram projetos Embrapii até a data de referência (CNPJs únicos).'
-        }
+        "empresas": {
+            "name": "Empresas Atendidas",
+            "descricao": "Nº de Empresas que contrataram projetos Embrapii até a data de referência (CNPJs únicos).",
+        },
     }
 
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json"
-    }
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
     for chave, valor in dados.items():
         dado = {
             "dt_referencia": data_hoje,
-            "no_indice": dados_descricao[chave]['name'],
+            "no_indice": dados_descricao[chave]["name"],
             "vl_indice": valor,
-            "ds_indice": dados_descricao[chave]['descricao']
+            "ds_indice": dados_descricao[chave]["descricao"],
         }
 
         response = requests.post(rota, json=dado, headers=headers)

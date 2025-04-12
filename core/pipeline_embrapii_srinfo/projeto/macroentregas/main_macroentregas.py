@@ -2,40 +2,43 @@ import os
 import sys
 from dotenv import load_dotenv
 
-#carregar .env
+# carregar .env
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv("ROOT_PIPELINE")
 
-#Definição dos caminhos
+# Definição dos caminhos
 PATH_ROOT = os.path.abspath(os.path.join(ROOT))
-SCRIPTS_PUBLIC_PATH = os.path.abspath(os.path.join(ROOT, 'scripts_public'))
-CURRENT_DIR = os.path.abspath(os.path.join(ROOT, 'projeto', 'macroentregas'))
-SCRIPTS_PATH = os.path.abspath(os.path.join(CURRENT_DIR, 'scripts'))
-DIRETORIO_ARQUIVOS_FINALIZADOS = os.path.abspath(os.path.join(CURRENT_DIR, 'step_3_data_processed'))
+SCRIPTS_PUBLIC_PATH = os.path.abspath(os.path.join(ROOT, "scripts_public"))
+CURRENT_DIR = os.path.abspath(os.path.join(ROOT, "projeto", "macroentregas"))
+SCRIPTS_PATH = os.path.abspath(os.path.join(CURRENT_DIR, "scripts"))
+DIRETORIO_ARQUIVOS_FINALIZADOS = os.path.abspath(os.path.join(CURRENT_DIR, "step_3_data_processed"))
 
-#Adicionar caminhos ao sys.path
+# Adicionar caminhos ao sys.path
 sys.path.append(PATH_ROOT)
 sys.path.append(SCRIPTS_PUBLIC_PATH)
 # sys.path.append(CURRENT_DIR)
 
-#Importar módulos necessários
+# Importar módulos necessários
 from scripts_public.scripts_public import baixar_e_juntar_arquivos
-from scripts_public.copiar_arquivos_finalizados_para_dwpii import copiar_arquivos_finalizados_para_dwpii
+from scripts_public.copiar_arquivos_finalizados_para_dwpii import (
+    copiar_arquivos_finalizados_para_dwpii,
+)
 from scripts_public.processar_excel import processar_excel
 from scripts_public.filtrar_projetos import filtrar_projetos
 
-#Definição da função
+
+# Definição da função
 def main_macroentregas(driver):
-    link = 'https://srinfo.embrapii.org.br/projects/project/workpackages/list/'
-    nome_arquivo = 'macroentregas'
+    link = "https://srinfo.embrapii.org.br/projects/project/workpackages/list/"
+    nome_arquivo = "macroentregas"
     baixar_e_juntar_arquivos(driver, link, CURRENT_DIR, nome_arquivo)
     processar_dados()
     copiar_arquivos_finalizados_para_dwpii(DIRETORIO_ARQUIVOS_FINALIZADOS)
 
 
 # Definições dos caminhos e nomes de arquivos
-origem = os.path.join(ROOT, 'projeto', 'macroentregas', 'step_2_stage_area')
-destino = os.path.join(ROOT, 'projeto', 'macroentregas', 'step_3_data_processed')
+origem = os.path.join(ROOT, "projeto", "macroentregas", "step_2_stage_area")
+destino = os.path.join(ROOT, "projeto", "macroentregas", "step_3_data_processed")
 nome_arquivo = "macroentregas.xlsx"
 arquivo_origem = os.path.join(origem, nome_arquivo)
 arquivo_destino = os.path.join(destino, nome_arquivo)
@@ -78,15 +81,29 @@ novos_nomes_e_ordem = {
     "Percentual executado": "percentual_executado",
     "Em atraso?": "me_atrasada",
     "Data de aceitação": "data_aceitacao",
-    "Observações ou comentários": "observacoes", 
+    "Observações ou comentários": "observacoes",
 }
 
 # Campos de data e valor
-campos_data = ['data_inicio_planejado', 'data_termino_planejado', 'data_inicio_real', 'data_termino_real', 'data_aceitacao']
-campos_valor = ['valor_embrapii_me', 'valor_empresa_me', 'valor_unidade_embrapii_me']
+campos_data = [
+    "data_inicio_planejado",
+    "data_termino_planejado",
+    "data_inicio_real",
+    "data_termino_real",
+    "data_aceitacao",
+]
+campos_valor = ["valor_embrapii_me", "valor_empresa_me", "valor_unidade_embrapii_me"]
+
 
 def processar_dados():
-    processar_excel(arquivo_origem, campos_interesse, novos_nomes_e_ordem, arquivo_destino, campos_data, campos_valor)
+    processar_excel(
+        arquivo_origem,
+        campos_interesse,
+        novos_nomes_e_ordem,
+        arquivo_destino,
+        campos_data,
+        campos_valor,
+    )
     filtrar_projetos(arquivo_destino)
 
 

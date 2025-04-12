@@ -6,16 +6,17 @@ from dotenv import load_dotenv
 
 # Carregar .env
 load_dotenv()
-ROOT = os.getenv('ROOT')
-USUARIO = os.getenv('USERNAME')
+ROOT = os.getenv("ROOT_PIPELINE")
+USUARIO = os.getenv("USERNAME")
 sys.path.append(ROOT)
+
 
 # Função para registrar atualizações
 def registrar_log(log):
 
     # Caminhos dos arquivos
-    DWPII_COPY = os.path.abspath(os.path.join(ROOT, 'DWPII_copy'))
-    DWPII_UP = os.path.abspath(os.path.join(ROOT, 'DWPII_up'))
+    DWPII_COPY = os.path.abspath(os.path.join(ROOT, "DWPII_copy"))
+    DWPII_UP = os.path.abspath(os.path.join(ROOT, "DWPII_up"))
     log_copy = os.path.join(DWPII_COPY, "historico.xlsx")
     log_up = os.path.join(DWPII_UP, "historico.xlsx")
 
@@ -47,6 +48,7 @@ def registrar_log(log):
 
     # Salvar o arquivo
     wb.save(log_up)
+
 
 # Executar função
 if __name__ == "__main__":

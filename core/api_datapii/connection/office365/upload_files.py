@@ -4,17 +4,27 @@ from pathlib import PurePath
 from dotenv import load_dotenv
 from .office365_api import SharePoint
 
-#Adicionar o caminho do diretório raiz ao sys.path
+# Adicionar o caminho do diretório raiz ao sys.path
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv("ROOT_DATAPII")
 
 
-def upload_files(pasta_arquivos, destino, sharepoint_site, sharepoint_site_name, sharepoint_doc, keyword=None):
+def upload_files(
+    pasta_arquivos, destino, sharepoint_site, sharepoint_site_name, sharepoint_doc, keyword=None
+):
     file_list = get_list_of_files(pasta_arquivos)
     for file in file_list:
-        if keyword is None or keyword == 'None' or re.search(keyword, file[0]):
+        if keyword is None or keyword == "None" or re.search(keyword, file[0]):
             file_content = get_file_content(file[1])
-            SharePoint().upload_file(destino, sharepoint_site, sharepoint_site_name, sharepoint_doc, file[0], file_content)
+            SharePoint().upload_file(
+                destino,
+                sharepoint_site,
+                sharepoint_site_name,
+                sharepoint_doc,
+                file[0],
+                file_content,
+            )
+
 
 def get_list_of_files(folder):
     file_list = []
@@ -25,7 +35,8 @@ def get_list_of_files(folder):
             file_list.append([item, item_full_path])
     return file_list
 
+
 # read files and return the content of files
 def get_file_content(file_path):
-    with open(file_path, 'rb') as f:
+    with open(file_path, "rb") as f:
         return f.read()

@@ -5,8 +5,9 @@ import win32com.client as win32
 import shutil
 import stat
 
+
 def remove_protection(file_path, temp_folder):
-    excel = win32.DispatchEx('Excel.Application')
+    excel = win32.DispatchEx("Excel.Application")
     workbook = excel.Workbooks.Open(file_path)
     base_name = os.path.basename(file_path)
     new_file_path = os.path.join(temp_folder, base_name)
@@ -15,32 +16,57 @@ def remove_protection(file_path, temp_folder):
     excel.Application.Quit()
     return new_file_path
 
+
 def append_excel_files(diretorio, nome_arquivo):
 
     # Obtém a data atual no formato aaaa.mm.dd
-    data_atual = datetime.now().strftime('%Y.%m.%d')
+    data_atual = datetime.now().strftime("%Y.%m.%d")
     novo_nome = f"{nome_arquivo}.xlsx"
 
-    input_folder = os.path.join(diretorio, 'step_1_data_raw')
-    output_folder = os.path.join(diretorio, 'step_2_stage_area')
+    input_folder = os.path.join(diretorio, "step_1_data_raw")
+    output_folder = os.path.join(diretorio, "step_2_stage_area")
 
-    #apagar os arquivos da output_folder
-    for file in os.listdir(output_folder):
-        file_path = os.path.join(output_folder, file)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            print(f'Falha ao deletar {file_path}. Razão: {e}')
+    # Verificar e criar as pastas necessárias
+    for folder in [input_folder, output_folder]:
+        if not os.path.exists(folder):
+            os.makedirs(folder, exist_ok=True)
+            print(f"Criada pasta: {folder}")
 
+    # Apagar os arquivos da output_folder
+    if os.path.exists(output_folder):
+        for file in os.listdir(output_folder):
+            file_path = os.path.join(output_folder, file)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print(f"Falha ao deletar {file_path}. Razão: {e}")
 
-    data_temp_folder = os.path.join(input_folder, 'data_temp')
+    data_temp_folder = os.path.join(input_folder, "data_temp")
     if not os.path.exists(data_temp_folder):
         os.makedirs(data_temp_folder)
 
-    all_files = [os.path.join(input_folder, f) for f in os.listdir(input_folder) if f.endswith('.xlsx')]
+    # Verificar se o diretório de entrada existe e contém arquivos
+    if not os.path.exists(input_folder) or not os.listdir(input_folder):
+        print(f"Aviso: Diretório de entrada vazio ou não existe: {input_folder}")
+        # Criar um arquivo vazio no diretório de saída para manter a consistência
+        output_file = os.path.join(output_folder, novo_nome)
+        pd.DataFrame().to_excel(output_file, index=False)
+        return
+
+    all_files = [
+        os.path.join(input_folder, f) for f in os.listdir(input_folder) if f.endswith(".xlsx")
+    ]
+
+    if not all_files:
+        print(f"Aviso: Nenhum arquivo Excel encontrado em: {input_folder}")
+        # Criar um arquivo vazio no diretório de saída para manter a consistência
+        output_file = os.path.join(output_folder, novo_nome)
+        pd.DataFrame().to_excel(output_file, index=False)
+        return
+
     if len(all_files) == 1:
         # Caso tenha apenas um arquivo, copie, renomeie e mova para a pasta de destino
         file = all_files[0]
@@ -54,8 +80,8 @@ def append_excel_files(diretorio, nome_arquivo):
         for file in all_files:
             unprotected_file = remove_protection(file, data_temp_folder)
             df = pd.read_excel(unprotected_file)
-            df.insert(0, 'ID', range(1, 1 + len(df)))
-            df.insert(1, 'data_dados', datetime.now().strftime('%Y-%m-%d'))
+            df.insert(0, "ID", range(1, 1 + len(df)))
+            df.insert(1, "data_dados", datetime.now().strftime("%Y-%m-%d"))
             data_frames.append(df)
 
         final_df = pd.concat(data_frames, ignore_index=True)
@@ -63,6 +89,6 @@ def append_excel_files(diretorio, nome_arquivo):
         output_file = os.path.join(output_folder, novo_nome)
         final_df.to_excel(output_file, index=False)
 
-    # Apaga a pasta data_temp e todo o seu conteúdo
-    shutil.rmtree(data_temp_folder)
-
+    # Apaga a pasta data_temp e todo o seu conteúdo, se existir
+    if os.path.exists(data_temp_folder):
+        shutil.rmtree(data_temp_folder)

@@ -16,48 +16,47 @@ def baixar_dados_srinfo_projetos_contratados(driver):
 
     link_listagem = "https://srinfo.embrapii.org.br/analytics/reports/"
 
-    username = os.getenv('USERNAME')
-    password = os.getenv('PASSWORD')
-    
+    username = os.getenv("SRINFO_USERNAME")
+    password = os.getenv("PASSWORD")
+
     try:
-        #Acessar tela de login
-        driver.get('https://srinfo.embrapii.org.br/users/login/')
+        # Acessar tela de login
+        driver.get("https://srinfo.embrapii.org.br/users/login/")
         time.sleep(5)
-        
-        #Inserir credenciais
+
+        # Inserir credenciais
         username_field = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'id_username'))
+            EC.element_to_be_clickable((By.ID, "id_username"))
         )
         username_field.send_keys(username)
-        
+
         password_field = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.NAME, 'password'))
+            EC.element_to_be_clickable((By.NAME, "password"))
         )
         password_field.send_keys(password)
 
-
-        #Logar
+        # Logar
         login_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, 'btn-primary'))
+            EC.element_to_be_clickable((By.CLASS_NAME, "btn-primary"))
         )
         login_button.click()
 
-        #Esperar 3 segundos
+        # Esperar 3 segundos
         time.sleep(3)
 
-        #Ir para a listagem
+        # Ir para a listagem
         driver.get(link_listagem)
-        
-        #visualizar dados
+
+        # visualizar dados
         visualizar_dados_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, 'btn.btn-success'))
+            EC.element_to_be_clickable((By.CLASS_NAME, "btn.btn-success"))
         )
         visualizar_dados_button.click()
         time.sleep(7)
 
-        #Selecionar "9999" no dropdown
+        # Selecionar "9999" no dropdown
         dropdown = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, 'form-control.input-sm'))
+            EC.element_to_be_clickable((By.CLASS_NAME, "form-control.input-sm"))
         )
         dropdown.click()
         option = WebDriverWait(driver, 10).until(
@@ -68,18 +67,19 @@ def baixar_dados_srinfo_projetos_contratados(driver):
         carregar_dados_e_fazer_download(driver=driver)
     finally:
         pass
-    
+
+
 def carregar_dados_e_fazer_download(driver):
-    #Esperar até 90 segundos para carregar
+    # Esperar até 90 segundos para carregar
     time.sleep(2)
     WebDriverWait(driver, 90).until(
-        EC.invisibility_of_element_located((By.ID, 'object-list_processing'))
+        EC.invisibility_of_element_located((By.ID, "object-list_processing"))
     )
     time.sleep(2)
 
-    #Fazer o download
+    # Fazer o download
     excel_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.CLASS_NAME, 'buttons-excel'))
+        EC.element_to_be_clickable((By.CLASS_NAME, "buttons-excel"))
     )
     excel_button.click()
     time.sleep(3)
