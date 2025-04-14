@@ -10,10 +10,16 @@ from datetime import datetime
 # Adicionar o caminho do diretório raiz ao sys.path
 load_dotenv()
 # Carrega o .env da raiz do projeto para obter ROOT_PIPELINE
-load_dotenv(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ".env"))
+load_dotenv(
+    os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ".env")
+)
 ROOT = os.getenv("ROOT_PIPELINE")
 USUARIO = os.getenv("USERNAME")
 sys.path.append(ROOT)
+
+# Importar o logger do orquestrador
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+from logs.orchestrator_logs import OrchestratorLogger
 
 # Importar o módulo principal de contratos
 from scripts_public.buscar_arquivos_sharepoint import buscar_arquivos_sharepoint
@@ -35,17 +41,23 @@ from projeto.estudantes.main_estudantes import main_estudantes
 from projeto.pedidos_pi.main_pedidos_pi import main_pedidos_pi
 from projeto.macroentregas.main_macroentregas import main_macroentregas
 from projeto.sebrae.main_sebrae import main_sebrae
-from projeto.classificacao_projeto.main_classificacao_projeto import main_classificacao_projeto
+from projeto.classificacao_projeto.main_classificacao_projeto import (
+    main_classificacao_projeto,
+)
 from projeto.portfolio.main_portfolio import main_portfolio
 from prospeccao.comunicacao.main_comunicacao import main_comunicacao
 from prospeccao.eventos_srinfo.main_eventos_srinfo import main_eventos_srinfo
 from prospeccao.prospeccao.main_prospeccao import main_prospeccao
 from negociacoes.negociacoes.main_negociacoes import main_negociacoes
 from negociacoes.planos_trabalho.main_planos_trabalho import main_planos_trabalho
-from negociacoes.propostas_tecnicas.main_propostas_tecnicas import main_propostas_tecnicas
+from negociacoes.propostas_tecnicas.main_propostas_tecnicas import (
+    main_propostas_tecnicas,
+)
 from unidade_embrapii.info_unidades.main_info_unidades import main_info_unidades
 from unidade_embrapii.equipe_ue.main_equipe_ue import main_equipe_ue
-from unidade_embrapii.termos_cooperacao.main_termos_cooperacao import main_termos_cooperacao
+from unidade_embrapii.termos_cooperacao.main_termos_cooperacao import (
+    main_termos_cooperacao,
+)
 from unidade_embrapii.plano_acao.main_plano_acao import main_plano_acao
 from unidade_embrapii.plano_metas.main_plano_metas import main_plano_metas
 from scripts_public.registrar_log import registrar_log
@@ -75,8 +87,12 @@ def verificar_criar_pastas():
         os.path.abspath(os.path.join(ROOT, "projeto", "portfolio")),
         os.path.abspath(os.path.join(ROOT, "projeto", "classificacao_projeto")),
         # Diretórios de análises e relatórios
-        os.path.abspath(os.path.join(ROOT, "analises_relatorios", "empresas_contratantes")),
-        os.path.abspath(os.path.join(ROOT, "analises_relatorios", "projetos_contratados")),
+        os.path.abspath(
+            os.path.join(ROOT, "analises_relatorios", "empresas_contratantes")
+        ),
+        os.path.abspath(
+            os.path.join(ROOT, "analises_relatorios", "projetos_contratados")
+        ),
         # Diretórios de unidades
         os.path.abspath(os.path.join(ROOT, "unidade_embrapii", "equipe_ue")),
         os.path.abspath(os.path.join(ROOT, "unidade_embrapii", "info_unidades")),
@@ -115,140 +131,194 @@ def verificar_criar_pastas():
 
 
 def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=False):
-
     print("Início: ", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     inicio = datetime.now()
 
+    # Inicializar o logger
+    logger = OrchestratorLogger.get_instance()
+    module_idx = logger.start_module("pipeline_embrapii_srinfo")
+
     log = []
 
-    # Verificar e criar pastas necessárias
-    verificar_criar_pastas()
+    try:
+        # Verificar e criar pastas necessárias
+        verificar_criar_pastas()
+        logger.add_step(module_idx, "verificar_criar_pastas")
 
-    # SharePoint
-    buscar_arquivos_sharepoint()
+        # SharePoint
+        buscar_arquivos_sharepoint()
+        logger.add_step(module_idx, "buscar_arquivos_sharepoint")
 
-    # Configurar o WebDriver
-    driver = configurar_webdriver()
+        # Configurar o WebDriver
+        driver = configurar_webdriver()
+        logger.add_step(module_idx, "configurar_webdriver")
 
-    # Empresas
-    print("SEÇÃO 1/5: COLETA DE DADOS")
-    print("Subseção: Empresas")
-    main_info_empresas_baixar(driver)
-    log = logear(log, "info_empresas")
+        # Empresas
+        print("SEÇÃO 1/5: COLETA DE DADOS")
+        print("Subseção: Empresas")
+        main_info_empresas_baixar(driver)
+        log = logear(log, "info_empresas")
+        logger.add_step(module_idx, "main_info_empresas_baixar")
 
-    main_empresas_contratantes(driver)
-    log = logear(log, "empresas_contratantes")
+        main_empresas_contratantes(driver)
+        log = logear(log, "empresas_contratantes")
+        logger.add_step(module_idx, "main_empresas_contratantes")
 
-    # Unidades Embrapii
-    print("Subseção: Unidades Embrapii")
-    main_info_unidades(driver)
-    log = logear(log, "info_unidades")
+        # Unidades Embrapii
+        print("Subseção: Unidades Embrapii")
+        main_info_unidades(driver)
+        log = logear(log, "info_unidades")
+        logger.add_step(module_idx, "main_info_unidades")
 
-    main_equipe_ue(driver)
-    log = logear(log, "equipe_ue")
+        main_equipe_ue(driver)
+        log = logear(log, "equipe_ue")
+        logger.add_step(module_idx, "main_equipe_ue")
 
-    main_termos_cooperacao(driver)
-    log = logear(log, "ue_termos_cooperacao")
+        main_termos_cooperacao(driver)
+        log = logear(log, "ue_termos_cooperacao")
+        logger.add_step(module_idx, "main_termos_cooperacao")
 
-    main_plano_acao(driver)
-    log = logear(log, "ue_termos_cooperacao")
+        main_plano_acao(driver)
+        log = logear(log, "ue_termos_cooperacao")
+        logger.add_step(module_idx, "main_plano_acao")
 
-    if plano_metas:
-        main_plano_metas(driver)
-        log = logear(log, "ue_plano_metas")
+        if plano_metas:
+            main_plano_metas(driver)
+            log = logear(log, "ue_plano_metas")
+            logger.add_step(module_idx, "main_plano_metas")
 
-    # Projetos
-    print("Subseção: Projetos")
+        # Projetos
+        print("Subseção: Projetos")
 
-    main_sebrae(driver)
-    log = logear(log, "sebrae")
+        main_sebrae(driver)
+        log = logear(log, "sebrae")
+        logger.add_step(module_idx, "main_sebrae")
 
-    main_projetos_contratados(driver)
-    log = logear(log, "projetos_contratados")
+        main_projetos_contratados(driver)
+        log = logear(log, "projetos_contratados")
+        logger.add_step(module_idx, "main_projetos_contratados")
 
-    main_projetos_empresas()
-    log = logear(log, "projetos_empresas")
+        main_projetos_empresas()
+        log = logear(log, "projetos_empresas")
+        logger.add_step(module_idx, "main_projetos_empresas")
 
-    main_projetos(driver)
-    log = logear(log, "projetos")
+        main_projetos(driver)
+        log = logear(log, "projetos")
+        logger.add_step(module_idx, "main_projetos")
 
-    main_contratos(driver)
-    log = logear(log, "contratos")
+        main_contratos(driver)
+        log = logear(log, "contratos")
+        logger.add_step(module_idx, "main_contratos")
 
-    main_estudantes(driver)
-    log = logear(log, "estudantes")
+        main_estudantes(driver)
+        log = logear(log, "estudantes")
+        logger.add_step(module_idx, "main_estudantes")
 
-    main_pedidos_pi(driver)
-    log = logear(log, "pedidos_pi")
+        main_pedidos_pi(driver)
+        log = logear(log, "pedidos_pi")
+        logger.add_step(module_idx, "main_pedidos_pi")
 
-    main_macroentregas(driver)
-    log = logear(log, "macroentregas")
+        main_macroentregas(driver)
+        log = logear(log, "macroentregas")
+        logger.add_step(module_idx, "main_macroentregas")
 
-    main_comunicacao(driver)
-    log = logear(log, "comunicacao")
+        main_comunicacao(driver)
+        log = logear(log, "comunicacao")
+        logger.add_step(module_idx, "main_comunicacao")
 
-    main_eventos_srinfo(driver)
-    log = logear(log, "eventos_srinfo")
+        main_eventos_srinfo(driver)
+        log = logear(log, "eventos_srinfo")
+        logger.add_step(module_idx, "main_eventos_srinfo")
 
-    main_prospeccao(driver)
-    log = logear(log, "prospeccao")
+        main_prospeccao(driver)
+        log = logear(log, "prospeccao")
+        logger.add_step(module_idx, "main_prospeccao")
 
-    main_negociacoes(driver)
-    log = logear(log, "negociacoes")
+        main_negociacoes(driver)
+        log = logear(log, "negociacoes")
+        logger.add_step(module_idx, "main_negociacoes")
 
-    main_propostas_tecnicas(driver)
-    log = logear(log, "propostas_tecnicas")
+        main_propostas_tecnicas(driver)
+        log = logear(log, "propostas_tecnicas")
+        logger.add_step(module_idx, "main_propostas_tecnicas")
 
-    main_planos_trabalho(driver)
-    log = logear(log, "planos_trabalho")
+        main_planos_trabalho(driver)
+        log = logear(log, "planos_trabalho")
+        logger.add_step(module_idx, "main_planos_trabalho")
 
-    encerrar_webdriver(driver)
+        encerrar_webdriver(driver)
+        logger.add_step(module_idx, "encerrar_webdriver")
 
-    # Processamento de dados
-    print("SEÇÃO 2/5: PROCESSAMENTO DE DADOS")
-    main_classificacao_projeto()
-    log = logear(log, "classificacao_projetos")
+        # Processamento de dados
+        print("SEÇÃO 2/5: PROCESSAMENTO DE DADOS")
+        main_classificacao_projeto()
+        log = logear(log, "classificacao_projetos")
+        logger.add_step(module_idx, "main_classificacao_projeto")
 
-    main_info_empresas_processar()
-    log = logear(log, "info_empresas")
+        main_info_empresas_processar()
+        log = logear(log, "info_empresas")
+        logger.add_step(module_idx, "main_info_empresas_processar")
 
-    main_portfolio()
-    log = logear(log, "portfolio")
+        main_portfolio()
+        log = logear(log, "portfolio")
+        logger.add_step(module_idx, "main_portfolio")
 
-    registrar_log(log)
+        registrar_log(log)
+        logger.add_step(module_idx, "registrar_log")
 
-    # SharePoint
-    print("SEÇÃO 3/5: LEVAR ARQUIVOS PARA O SHAREPOINT")
-    levar_arquivos_sharepoint()
+        # SharePoint
+        print("SEÇÃO 3/5: LEVAR ARQUIVOS PARA O SHAREPOINT")
+        levar_arquivos_sharepoint()
+        logger.add_step(module_idx, "levar_arquivos_sharepoint")
 
-    # Report Snapshot Embrapii
-    if gerar_snapshot:
-        print("SEÇÃO 4/5: GERAR SNAPSHOT")
-        gerar_report_snapshot()
+        # Report Snapshot Embrapii
+        if gerar_snapshot:
+            print("SEÇÃO 4/5: GERAR SNAPSHOT")
+            gerar_report_snapshot()
+            logger.add_step(module_idx, "gerar_report_snapshot")
 
-    # Calculando num de novos projetos, empresas e proj sem classificacao
-    print("SEÇÃO 5/5: ENCAMINHAR MENSAGEM")
-    novos = comparar_excel()
+        # Calculando num de novos projetos, empresas e proj sem classificacao
+        print("SEÇÃO 5/5: ENCAMINHAR MENSAGEM")
+        novos = comparar_excel()
+        logger.add_step(
+            module_idx,
+            "comparar_excel",
+            details={
+                "novos_projetos": novos[0],
+                "novas_empresas": novos[1],
+                "projetos_sem_classificacao": novos[2],
+            },
+        )
 
-    fim = datetime.now()
-    duracao = duracao_tempo(inicio, fim)
-    link = "https://embrapii.sharepoint.com/:x:/r/sites/GEPES/Documentos%20Compartilhados/DWPII/srinfo/classificacao_projeto.xlsx?d=wb7a7a439310f4d52a37728b9f1833961&csf=1&web=1&e=qXpfgA"
-    link_snapshot = "https://embrapii.sharepoint.com/:f:/r/sites/GEPES/Documentos%20Compartilhados/Reports?csf=1&web=1&e=aVdkyL"
-    mensagem = (
-        f"*Pipeline SRInfo*\n"
-        f'Iniciado em: {inicio.strftime("%d/%m/%Y %H:%M:%S")}\n'
-        f'Finalizado em: {fim.strftime("%d/%m/%Y %H:%M:%S")}\n'
-        f"_Duração total: {duracao}_\n\n"
-        f"Novos projetos: {novos[0]}\n"
-        f"Novas empresas: {novos[1]}\n"
-        f"Projetos sem classificação: {novos[2]}\n\n"
-        f"Relatório Executivo (snapshot): {link_snapshot}\n\n"
-        f"Link para classificação dos projetos: {link}"
-    )
-    print(mensagem)
+        fim = datetime.now()
+        duracao = duracao_tempo(inicio, fim)
+        link = "https://embrapii.sharepoint.com/:x:/r/sites/GEPES/Documentos%20Compartilhados/DWPII/srinfo/classificacao_projeto.xlsx?d=wb7a7a439310f4d52a37728b9f1833961&csf=1&web=1&e=qXpfgA"
+        link_snapshot = "https://embrapii.sharepoint.com/:f:/r/sites/GEPES/Documentos%20Compartilhados/Reports?csf=1&web=1&e=aVdkyL"
+        mensagem = (
+            f"*Pipeline SRInfo*\n"
+            f'Iniciado em: {inicio.strftime("%d/%m/%Y %H:%M:%S")}\n'
+            f'Finalizado em: {fim.strftime("%d/%m/%Y %H:%M:%S")}\n'
+            f"_Duração total: {duracao}_\n\n"
+            f"Novos projetos: {novos[0]}\n"
+            f"Novas empresas: {novos[1]}\n"
+            f"Projetos sem classificação: {novos[2]}\n\n"
+            f"Relatório Executivo (snapshot): {link_snapshot}\n\n"
+            f"Link para classificação dos projetos: {link}"
+        )
+        print(mensagem)
 
-    if enviar_wpp:
-        enviar_whatsapp(mensagem)
+        if enviar_wpp:
+            enviar_whatsapp(mensagem)
+            logger.add_step(module_idx, "enviar_whatsapp")
+
+        # Finalizar o log do módulo com sucesso
+        logger.end_module(module_idx, "success")
+
+    except Exception as e:
+        # Registrar erro no log
+        logger.end_module(module_idx, "error", error=e)
+        # Re-lançar a exceção para manter o comportamento original
+        raise
 
     print("Fim: ", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 
@@ -293,4 +363,8 @@ def teste_pipeline():
 
 
 if __name__ == "__main__":
-    main_pipeline_srinfo()
+    try:
+        main_pipeline_srinfo()
+    except Exception as e:
+        print(f"Erro na execução do pipeline: {str(e)}")
+        sys.exit(1)

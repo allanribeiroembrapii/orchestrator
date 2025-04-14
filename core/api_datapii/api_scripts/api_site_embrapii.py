@@ -4,12 +4,26 @@ import pandas as pd
 from dotenv import load_dotenv
 from datetime import datetime
 import pathlib
+import sys
+
+# Obter o diretório atual e o diretório raiz
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Carregar variáveis de ambiente do .env
 load_dotenv()
 ROOT = os.getenv("ROOT_DATAPII")
+if not ROOT:
+    ROOT = parent_dir
+
 STEP_1_DATA_RAW = os.getenv("STEP_1_DATA_RAW")
+if not STEP_1_DATA_RAW:
+    STEP_1_DATA_RAW = "data/step_1_data_raw"
+
 STEP_2_STAGE_AREA = os.getenv("STEP_2_STAGE_AREA")
+if not STEP_2_STAGE_AREA:
+    STEP_2_STAGE_AREA = "data/step_2_stage_area"
 
 
 # Função para verificar e criar diretórios se não existirem
@@ -28,10 +42,16 @@ def verificar_criar_diretorio(caminho):
 
 # Definir caminhos dos arquivos
 PORTFOLIO = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "portfolio.xlsx"))
-UNIDADES = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "info_unidades_embrapii.xlsx"))
-EMPRESAS = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "projetos_empresas.xlsx"))
+UNIDADES = os.path.abspath(
+    os.path.join(ROOT, STEP_1_DATA_RAW, "info_unidades_embrapii.xlsx")
+)
+EMPRESAS = os.path.abspath(
+    os.path.join(ROOT, STEP_1_DATA_RAW, "projetos_empresas.xlsx")
+)
 IPCA = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "ipca_ibge.xlsx"))
-PORTFOLIO_IPCA = os.path.abspath(os.path.join(ROOT, STEP_2_STAGE_AREA, "portfolio_ipca.xlsx"))
+PORTFOLIO_IPCA = os.path.abspath(
+    os.path.join(ROOT, STEP_2_STAGE_AREA, "portfolio_ipca.xlsx")
+)
 
 # Verificar e criar diretórios necessários
 for caminho in [PORTFOLIO, UNIDADES, EMPRESAS, IPCA, PORTFOLIO_IPCA]:
@@ -101,7 +121,12 @@ def processar_dados():
     df_portfolio["data_contrato"] = pd.to_datetime(df_portfolio["data_contrato"])
 
     # Aplicar correção
-    colunas_valores = ["valor_embrapii", "valor_empresa", "valor_unidade_embrapii", "valor_sebrae"]
+    colunas_valores = [
+        "valor_embrapii",
+        "valor_empresa",
+        "valor_unidade_embrapii",
+        "valor_sebrae",
+    ]
     for col in colunas_valores:
         nova_col = f"_ipca_{col}"
         df_portfolio[nova_col] = df_portfolio.apply(
