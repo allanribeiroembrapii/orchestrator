@@ -2,6 +2,8 @@
 rem Define codificação UTF-8 para o console
 chcp 65001 > nul
 
+setlocal enabledelayedexpansion
+
 title Orquestrador Embrapii
 echo ========================================
 echo EMBRAPII ORCHESTRATOR - EXECUCAO MANUAL
@@ -26,13 +28,16 @@ echo - API DataPII: %ROOT_DATAPII%
 echo - Log: %LOG_FILE%
 echo.
 
+rem Salvar horário de início
+set START_TIME=%date% %time%
+
 rem Verifica e cria pasta de logs se não existir
 if not exist "%LOG_DIR%" (
     echo Criando diretório de logs...
     mkdir "%LOG_DIR%"
 )
 
-echo Iniciando execucao em %date% %time% > %LOG_FILE%
+echo Iniciando execucao em %START_TIME% > %LOG_FILE%
 echo Diretorio raiz: %ROOT% >> %LOG_FILE%
 
 rem Verificar os diretórios principais
@@ -186,21 +191,38 @@ if exist "%ROOT%\venv\Scripts\activate.bat" (
 )
 
 rem ==== CONCLUSÃO BEM-SUCEDIDA ====
+
+rem Salvar horário de término
+set END_TIME=%date% %time%
+
+rem Obter informações sobre novos projetos e empresas da execução
+rem Usando o script corrigido que evita o problema de escape unicode
+cd /d "%ROOT%"
+for /f "tokens=1,2,3" %%a in ('python -c "import sys; sys.path.append(r'%ROOT_PIPELINE%'); from scripts_public.comparar_excel import comparar_excel; result = comparar_excel(); print(result[0], result[1], result[2])"') do (
+    set NOVOS_PROJETOS=%%a
+    set NOVAS_EMPRESAS=%%b
+    set PROJETOS_SEM_CLASSIFICACAO=%%c
+)
+
 echo.
 echo ========================================
 echo EXECUCAO CONCLUIDA COM SUCESSO
-echo Data e hora: %date% %time%
+echo Data e hora: %END_TIME%
 echo ========================================
 echo EXECUCAO CONCLUIDA COM SUCESSO >> %LOG_FILE%
-echo Data e hora: %date% %time% >> %LOG_FILE%
+echo Data e hora: %END_TIME% >> %LOG_FILE%
 
-rem Enviar notificação via webhook
-echo Enviando notificação via webhook...
-(
-echo ^{^"text^":^"✅ **EXECUÇÃO CONCLUÍDA COM SUCESSO** - %date% %time%\n\nTodos os módulos foram executados com sucesso:^"^}
-) > %TEMP%\teams_message.json
+rem Cálculo da duração (simplificado)
+set /a DURACAO_MINUTOS=%time:~3,2%-%START_TIME:~3,2%
+if %DURACAO_MINUTOS% lss 0 set /a DURACAO_MINUTOS=60+%DURACAO_MINUTOS%
+set /a DURACAO_HORAS=%time:~0,2%-%START_TIME:~0,2%
+if %DURACAO_HORAS% lss 0 set /a DURACAO_HORAS=24+%DURACAO_HORAS%
+set DURACAO=%DURACAO_HORAS%:%DURACAO_MINUTOS%:00
 
-curl -H "Content-Type: application/json" -d @"%TEMP%\teams_message.json" "https://prod-07.brazilsouth.logic.azure.com:443/workflows/ab16e58e66774488a997f828f1fe56e6/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=N4Q5CYnieqFvVwhc4gOfW31zfDa4kz9XCFSq35mCqlY"
+rem Enviar notificação via Teams usando o script corrigido
+echo Enviando notificação via Teams...
+cd /d "%ROOT%"
+python logs\send_teams_notification_fixed.py
 
 if %errorlevel% equ 0 (
     echo Notificação enviada com sucesso.
@@ -208,17 +230,17 @@ if %errorlevel% equ 0 (
     echo Falha ao enviar notificação.
 )
 
-del %TEMP%\teams_message.json 2>nul
 goto fim
 
 :erro
+set END_TIME=%date% %time%
 echo.
 echo ========================================
 echo ERRO NA EXECUCAO
 echo Verifique os logs para mais detalhes
 echo ========================================
 echo ERRO NA EXECUCAO >> %LOG_FILE%
-echo Data e hora do erro: %date% %time% >> %LOG_FILE%
+echo Data e hora do erro: %END_TIME% >> %LOG_FILE%
 echo Diretório atual no momento do erro: %CD% >> %LOG_FILE%
 
 rem Desativar ambiente virtual se foi ativado
@@ -228,15 +250,10 @@ if exist "%ROOT%\venv\Scripts\activate.bat" (
     echo Ambiente virtual desativado >> %LOG_FILE%
 )
 
-rem Enviar notificação de erro via webhook
-echo Enviando notificação de erro via webhook...
-(
-echo ^{^"text^":^"❌ **ERRO NA EXECUÇÃO** - %date% %time%\n\nOcorreu um erro durante a execução do orquestrador.\nLocalização: %CD%^"^}
-) > %TEMP%\teams_error.json
-
-curl -H "Content-Type: application/json" -d @"%TEMP%\teams_error.json" "https://prod-19.brazilsouth.logic.azure.com:443/workflows/7020ca7ed0b64e9bbd57761e96165beb/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%%2Ftriggers%%2Fmanual%%2Frun&sv=1.0&sig=RMG1cStKRn7822ipPN_PvaNRTxLk2fmAp2mZCglkupc"
-
-del %TEMP%\teams_error.json 2>nul
+rem Enviar notificação de erro via Teams usando o script corrigido
+echo Enviando notificação de erro via Teams...
+cd /d "%ROOT%"
+python logs\send_teams_notification_fixed.py --error "Erro no diretório: %CD%. Verifique logs para mais detalhes."
 
 :fim
 echo.
