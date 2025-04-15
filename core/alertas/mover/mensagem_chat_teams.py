@@ -137,7 +137,7 @@ def mensagem_teams_mover():
                                     {
                                         "type": "Action.OpenUrl",
                                         "title": "🔗 Painel MOVER",
-                                        "url": "https://app.powerbi.com/Redirect?action=OpenReport&appId=a545d987-6ef5-4df2-816d-df6e337bc2e8&reportObjectId=ee865143-b695-4537-97f6-f74173d6c652&ctid=8fb344f4-0740-4e5a-b2c1-53858c0c732f&reportPage=739ea8bad70e0d06a51a&pbi_source=appShareLink&portalSessionId=7b6e6f68-585d-4a14-9441-fab46f2d0267"
+                                        "url": "https://app.powerbi.com/Redirect?action=OpenReport&appId=a545d987-6ef5-4df2-816d-df6e337bc2e8&reportObjectId=7c4d7ea7-9276-47c8-b24c-90d0399df3d5&ctid=8fb344f4-0740-4e5a-b2c1-53858c0c732f&reportPage=a191642d4504d5e26ffb&pbi_source=appShareLink&portalSessionId=8738083d-ca1b-446b-98a5-a06b7a02c39c"
                                     }
                                 ]
                             },
