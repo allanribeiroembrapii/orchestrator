@@ -1,0 +1,410 @@
+{
+  "executions": [
+    {
+      "execution_id": "20250414094250",
+      "start_time": "2025-04-14T09:42:50.242046",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-14T09:42:50.242046",
+          "status": "error",
+          "steps": [],
+          "end_time": "2025-04-14T09:42:53.074770",
+          "error": {
+            "message": "[Errno 22] Invalid argument: 'C:\\\\Users\\\\55619\\\\Desktop\\\\orchestrator\\\\core\\x07tualizar_google_sheets\\\\inputs\\\\portfolio.xlsx'",
+            "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 50, in main\n    puxar_planilhas()\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\puxar_planilhas_sharepoint.py\", line 22, in puxar_planilhas\n    get_file(\"portfolio.xlsx\", \"DWPII/srinfo\", inputs)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\office365_api\\download_files.py\", line 25, in get_file\n    save_file(file_n, file_obj, dest)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\office365_api\\download_files.py\", line 19, in save_file\n    with open(file_dir_path, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^\nOSError: [Errno 22] Invalid argument: 'C:\\\\Users\\\\55619\\\\Desktop\\\\orchestrator\\\\core\\x07tualizar_google_sheets\\\\inputs\\\\portfolio.xlsx'\n"
+          },
+          "duration_seconds": 2.832724
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414094908",
+      "start_time": "2025-04-14T09:49:08.294853",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-14T09:49:08.295839",
+          "status": "success",
+          "steps": [
+            {
+              "name": "puxar_planilhas",
+              "time": "2025-04-14T09:50:00.977222",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_portfolio",
+              "time": "2025-04-14T09:50:00.977222",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos_empresas",
+              "time": "2025-04-14T09:50:01.003679",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_informacoes_empresas",
+              "time": "2025-04-14T09:50:01.004287",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_info_unidades_embrapii",
+              "time": "2025-04-14T09:50:01.005438",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_ue_linhas_atuacao",
+              "time": "2025-04-14T09:50:01.006079",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_macroentregas",
+              "time": "2025-04-14T09:50:01.007856",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_negociacoes_negociacoes",
+              "time": "2025-04-14T09:50:01.008993",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_classificacao_projetos",
+              "time": "2025-04-14T09:50:01.010275",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos",
+              "time": "2025-04-14T09:50:01.010275",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_prospeccao_prospeccao",
+              "time": "2025-04-14T09:50:01.011419",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_cnae_ibge",
+              "time": "2025-04-14T09:50:01.012071",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_pedidos_pi",
+              "time": "2025-04-14T09:50:01.013209",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            }
+          ],
+          "end_time": "2025-04-14T09:50:01.013844",
+          "duration_seconds": 52.718005
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414140510",
+      "start_time": "2025-04-14T14:05:10.736233",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-14T14:05:10.736233",
+          "status": "success",
+          "steps": [
+            {
+              "name": "puxar_planilhas",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_portfolio",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos_empresas",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_informacoes_empresas",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_info_unidades_embrapii",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_ue_linhas_atuacao",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_macroentregas",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_negociacoes_negociacoes",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_classificacao_projetos",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_prospeccao_prospeccao",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_cnae_ibge",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_pedidos_pi",
+              "time": "2025-04-14T14:05:49.872927",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 74, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 80, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            }
+          ],
+          "end_time": "2025-04-14T14:05:49.872927",
+          "duration_seconds": 39.136694
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414144131",
+      "start_time": "2025-04-14T14:41:31.702268",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-14T14:41:31.702268",
+          "status": "success",
+          "steps": [
+            {
+              "name": "puxar_planilhas",
+              "time": "2025-04-14T14:42:08.074291",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_portfolio",
+              "time": "2025-04-14T14:42:08.074291",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos_empresas",
+              "time": "2025-04-14T14:42:08.074291",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_informacoes_empresas",
+              "time": "2025-04-14T14:42:08.080601",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_info_unidades_embrapii",
+              "time": "2025-04-14T14:42:08.080601",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_ue_linhas_atuacao",
+              "time": "2025-04-14T14:42:08.084530",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_macroentregas",
+              "time": "2025-04-14T14:42:08.085858",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_negociacoes_negociacoes",
+              "time": "2025-04-14T14:42:08.087625",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_classificacao_projetos",
+              "time": "2025-04-14T14:42:08.088840",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos",
+              "time": "2025-04-14T14:42:08.090462",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_prospeccao_prospeccao",
+              "time": "2025-04-14T14:42:08.091700",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_cnae_ibge",
+              "time": "2025-04-14T14:42:08.092687",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            },
+            {
+              "name": "atualizar_gsheet_raw_pedidos_pi",
+              "time": "2025-04-14T14:42:08.093688",
+              "status": "error",
+              "error": {
+                "message": "[Errno 2] No such file or directory: 'api_google_sheets.json'",
+                "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 89, in main\n    atualizar_gsheet(url, aba, caminho_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\atualizacao_gsheet.py\", line 19, in atualizar_gsheet\n    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\oauth2\\service_account.py\", line 260, in from_service_account_file\n    info, signer = _service_account_info.from_filename(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\google\\auth\\_service_account_info.py\", line 78, in from_filename\n    with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'api_google_sheets.json'\n"
+              }
+            }
+          ],
+          "end_time": "2025-04-14T14:42:08.095689",
+          "duration_seconds": 36.393421
+        }
+      ]
+    }
+  ]
+}

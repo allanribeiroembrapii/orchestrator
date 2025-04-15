@@ -40,7 +40,7 @@ api_google_sheets.json
 
 # Logs e arquivos temporários
 *.log
-logs/
+logs/*.json
 *.tmp
 .DS_Store
 Thumbs.db

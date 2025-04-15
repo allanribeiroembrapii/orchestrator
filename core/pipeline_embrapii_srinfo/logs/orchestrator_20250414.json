@@ -1,0 +1,1195 @@
+{
+  "executions": [
+    {
+      "execution_id": "20250414090456",
+      "start_time": "2025-04-14T09:04:56.683477",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T09:04:56.683477",
+          "status": "running",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T09:04:56.688415",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T09:07:32.243852",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T09:07:33.329577",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T09:08:52.624297",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T09:09:46.790309",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-14T09:10:15.244341",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-14T09:12:59.624997",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-14T09:13:26.733842",
+              "status": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414091510",
+      "start_time": "2025-04-14T09:15:10.008079",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T09:15:10.009083",
+          "status": "success",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T09:15:10.011738",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T09:17:31.418932",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T09:17:32.420128",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T09:19:04.539910",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T09:19:59.831012",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-14T09:20:27.511207",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-14T09:23:31.692145",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-14T09:23:58.285574",
+              "status": "success"
+            },
+            {
+              "name": "main_plano_acao",
+              "time": "2025-04-14T09:24:24.610991",
+              "status": "success"
+            },
+            {
+              "name": "main_sebrae",
+              "time": "2025-04-14T09:26:31.432617",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_contratados",
+              "time": "2025-04-14T09:27:26.990989",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_empresas",
+              "time": "2025-04-14T09:27:30.477508",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos",
+              "time": "2025-04-14T09:28:12.755273",
+              "status": "success"
+            },
+            {
+              "name": "main_contratos",
+              "time": "2025-04-14T09:28:55.425747",
+              "status": "success"
+            },
+            {
+              "name": "main_estudantes",
+              "time": "2025-04-14T09:29:42.747292",
+              "status": "success"
+            },
+            {
+              "name": "main_pedidos_pi",
+              "time": "2025-04-14T09:30:12.211284",
+              "status": "success"
+            },
+            {
+              "name": "main_macroentregas",
+              "time": "2025-04-14T09:31:49.091231",
+              "status": "success"
+            },
+            {
+              "name": "main_comunicacao",
+              "time": "2025-04-14T09:32:26.641914",
+              "status": "success"
+            },
+            {
+              "name": "main_eventos_srinfo",
+              "time": "2025-04-14T09:33:07.570288",
+              "status": "success"
+            },
+            {
+              "name": "main_prospeccao",
+              "time": "2025-04-14T09:34:43.763329",
+              "status": "success"
+            },
+            {
+              "name": "main_negociacoes",
+              "time": "2025-04-14T09:36:50.756683",
+              "status": "success"
+            },
+            {
+              "name": "main_propostas_tecnicas",
+              "time": "2025-04-14T09:38:54.706864",
+              "status": "success"
+            },
+            {
+              "name": "main_planos_trabalho",
+              "time": "2025-04-14T09:40:21.372521",
+              "status": "success"
+            },
+            {
+              "name": "encerrar_webdriver",
+              "time": "2025-04-14T09:40:23.745921",
+              "status": "success"
+            },
+            {
+              "name": "main_classificacao_projeto",
+              "time": "2025-04-14T09:40:32.300797",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_processar",
+              "time": "2025-04-14T09:40:36.040902",
+              "status": "success"
+            },
+            {
+              "name": "main_portfolio",
+              "time": "2025-04-14T09:40:39.904686",
+              "status": "success"
+            },
+            {
+              "name": "registrar_log",
+              "time": "2025-04-14T09:40:40.138204",
+              "status": "success"
+            },
+            {
+              "name": "levar_arquivos_sharepoint",
+              "time": "2025-04-14T09:42:41.245845",
+              "status": "success"
+            },
+            {
+              "name": "comparar_excel",
+              "time": "2025-04-14T09:42:43.803244",
+              "status": "success",
+              "details": {
+                "novos_projetos": 1,
+                "novas_empresas": 3,
+                "projetos_sem_classificacao": 30
+              }
+            }
+          ],
+          "end_time": "2025-04-14T09:42:43.804395",
+          "duration_seconds": 1653.795312
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414095101",
+      "start_time": "2025-04-14T09:51:01.626141",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T09:51:01.626533",
+          "status": "error",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T09:51:01.629674",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T09:53:16.607175",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T09:53:17.619996",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T09:54:41.126287",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T09:55:35.816766",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-14T09:56:02.758650",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-14T09:59:09.286765",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-14T09:59:37.364643",
+              "status": "success"
+            },
+            {
+              "name": "main_plano_acao",
+              "time": "2025-04-14T10:00:04.884932",
+              "status": "success"
+            },
+            {
+              "name": "main_sebrae",
+              "time": "2025-04-14T10:02:13.456527",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_contratados",
+              "time": "2025-04-14T10:03:10.130613",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_empresas",
+              "time": "2025-04-14T10:03:13.476333",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos",
+              "time": "2025-04-14T10:03:57.976517",
+              "status": "success"
+            },
+            {
+              "name": "main_contratos",
+              "time": "2025-04-14T10:04:40.429425",
+              "status": "success"
+            },
+            {
+              "name": "main_estudantes",
+              "time": "2025-04-14T10:05:28.186152",
+              "status": "success"
+            },
+            {
+              "name": "main_pedidos_pi",
+              "time": "2025-04-14T10:05:57.002537",
+              "status": "success"
+            },
+            {
+              "name": "main_macroentregas",
+              "time": "2025-04-14T10:07:36.641192",
+              "status": "success"
+            },
+            {
+              "name": "main_comunicacao",
+              "time": "2025-04-14T10:08:14.450722",
+              "status": "success"
+            },
+            {
+              "name": "main_eventos_srinfo",
+              "time": "2025-04-14T10:09:00.554169",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-14T10:09:25.865419",
+          "error": {
+            "message": "Message: invalid session id: session deleted as the browser has closed the connection\nfrom disconnected: not connected to DevTools\n  (Session info: MicrosoftEdge=135.0.3179.73)\nStacktrace:\n\tGetHandleVerifier [0x00007FF70C7FEE65+16773]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C75F130+402672]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF70CA54BDA+1818314]\n\t(No symbol) [0x00007FF70C53B880]\n\t(No symbol) [0x00007FF70C55A19A]\n\t(No symbol) [0x00007FF70C5BEB96]\n\t(No symbol) [0x00007FF70C5D605A]\n\t(No symbol) [0x00007FF70C5B8C33]\n\t(No symbol) [0x00007FF70C58D4D6]\n\t(No symbol) [0x00007FF70C58CA82]\n\t(No symbol) [0x00007FF70C58D303]\n\t(No symbol) [0x00007FF70C68060D]\n\t(No symbol) [0x00007FF70C68D642]\n\t(No symbol) [0x00007FF70C685673]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF70C8D9BAA+265882]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C76C581+457025]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C765834+429044]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C765983+429379]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C757486+370758]\n\tBaseThreadInitThunk [0x00007FFF6D52E8D7+23]\n\tRtlUserThreadStart [0x00007FFF6EAB14FC+44]\n",
+            "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\main.py\", line 233, in main_pipeline_srinfo\n    main_prospeccao(driver)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\prospeccao\\prospeccao\\main_prospeccao.py\", line 35, in main_prospeccao\n    baixar_e_juntar_arquivos(driver, link, CURRENT_DIR, nome_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\scripts_public.py\", line 17, in baixar_e_juntar_arquivos\n    numero_arquivos = baixar_dados_srinfo(driver, link, num_pages, option1000, sebrae)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\baixar_dados_srinfo.py\", line 73, in baixar_dados_srinfo\n    carregar_dados_e_fazer_download(driver=driver)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\baixar_dados_srinfo.py\", line 116, in carregar_dados_e_fazer_download\n    excel_button = WebDriverWait(driver, 10).until(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\selenium\\webdriver\\support\\wait.py\", line 137, in until\n    value = method(self._driver)\n            ^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\selenium\\webdriver\\support\\expected_conditions.py\", line 631, in _predicate\n    target = driver.find_element(*target)  # grab element at locator\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py\", line 898, in find_element\n    return self.execute(Command.FIND_ELEMENT, {\"using\": by, \"value\": value})[\"value\"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py\", line 429, in execute\n    self.error_handler.check_response(response)\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py\", line 232, in check_response\n    raise exception_class(message, screen, stacktrace)\nselenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection\nfrom disconnected: not connected to DevTools\n  (Session info: MicrosoftEdge=135.0.3179.73)\nStacktrace:\n\tGetHandleVerifier [0x00007FF70C7FEE65+16773]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C75F130+402672]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF70CA54BDA+1818314]\n\t(No symbol) [0x00007FF70C53B880]\n\t(No symbol) [0x00007FF70C55A19A]\n\t(No symbol) [0x00007FF70C5BEB96]\n\t(No symbol) [0x00007FF70C5D605A]\n\t(No symbol) [0x00007FF70C5B8C33]\n\t(No symbol) [0x00007FF70C58D4D6]\n\t(No symbol) [0x00007FF70C58CA82]\n\t(No symbol) [0x00007FF70C58D303]\n\t(No symbol) [0x00007FF70C68060D]\n\t(No symbol) [0x00007FF70C68D642]\n\t(No symbol) [0x00007FF70C685673]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF70C8D9BAA+265882]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C76C581+457025]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C765834+429044]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C765983+429379]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C757486+370758]\n\tBaseThreadInitThunk [0x00007FFF6D52E8D7+23]\n\tRtlUserThreadStart [0x00007FFF6EAB14FC+44]\n\n"
+          },
+          "duration_seconds": 1104.238886
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414132949",
+      "start_time": "2025-04-14T13:29:49.571647",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T13:29:49.571647",
+          "status": "error",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T13:29:49.587570",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T13:33:33.811462",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T13:33:34.793397",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T13:34:54.359820",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T13:35:51.734438",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-14T13:36:00.196957",
+          "error": {
+            "message": "Message: invalid session id: session deleted as the browser has closed the connection\nfrom disconnected: not connected to DevTools\n  (Session info: MicrosoftEdge=135.0.3179.73)\nStacktrace:\n\tGetHandleVerifier [0x00007FF70C7FEE65+16773]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C75F130+402672]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF70CA54BDA+1818314]\n\t(No symbol) [0x00007FF70C53B880]\n\t(No symbol) [0x00007FF70C55A19A]\n\t(No symbol) [0x00007FF70C5BEB96]\n\t(No symbol) [0x00007FF70C5D605A]\n\t(No symbol) [0x00007FF70C5B8C33]\n\t(No symbol) [0x00007FF70C58D4D6]\n\t(No symbol) [0x00007FF70C58CA82]\n\t(No symbol) [0x00007FF70C58D303]\n\t(No symbol) [0x00007FF70C68060D]\n\t(No symbol) [0x00007FF70C68D642]\n\t(No symbol) [0x00007FF70C685673]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF70C8D9BAA+265882]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C76C581+457025]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C765834+429044]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C765983+429379]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C757486+370758]\n\tBaseThreadInitThunk [0x00007FFF6D52E8D7+23]\n\tRtlUserThreadStart [0x00007FFF6EAB14FC+44]\n",
+            "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\main.py\", line 169, in main_pipeline_srinfo\n    main_info_unidades(driver)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\unidade_embrapii\\info_unidades\\main_info_unidades.py\", line 49, in main_info_unidades\n    baixar_e_juntar_arquivos(driver, link, CURRENT_DIR, nome_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\scripts_public.py\", line 17, in baixar_e_juntar_arquivos\n    numero_arquivos = baixar_dados_srinfo(driver, link, num_pages, option1000, sebrae)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\baixar_dados_srinfo.py\", line 47, in baixar_dados_srinfo\n    driver.get(link_listagem)\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py\", line 454, in get\n    self.execute(Command.GET, {\"url\": url})\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py\", line 429, in execute\n    self.error_handler.check_response(response)\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py\", line 232, in check_response\n    raise exception_class(message, screen, stacktrace)\nselenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection\nfrom disconnected: not connected to DevTools\n  (Session info: MicrosoftEdge=135.0.3179.73)\nStacktrace:\n\tGetHandleVerifier [0x00007FF70C7FEE65+16773]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C75F130+402672]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF70CA54BDA+1818314]\n\t(No symbol) [0x00007FF70C53B880]\n\t(No symbol) [0x00007FF70C55A19A]\n\t(No symbol) [0x00007FF70C5BEB96]\n\t(No symbol) [0x00007FF70C5D605A]\n\t(No symbol) [0x00007FF70C5B8C33]\n\t(No symbol) [0x00007FF70C58D4D6]\n\t(No symbol) [0x00007FF70C58CA82]\n\t(No symbol) [0x00007FF70C58D303]\n\t(No symbol) [0x00007FF70C68060D]\n\t(No symbol) [0x00007FF70C68D642]\n\t(No symbol) [0x00007FF70C685673]\n\tMicrosoft::Applications::Events::EventProperty::to_string [0x00007FF70C8D9BAA+265882]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C76C581+457025]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C765834+429044]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C765983+429379]\n\tMicrosoft::Applications::Events::ILogConfiguration::operator* [0x00007FF70C757486+370758]\n\tBaseThreadInitThunk [0x00007FFF6D52E8D7+23]\n\tRtlUserThreadStart [0x00007FFF6EAB14FC+44]\n\n"
+          },
+          "duration_seconds": 370.62531
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414133632",
+      "start_time": "2025-04-14T13:36:32.009347",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T13:36:32.009347",
+          "status": "success",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T13:36:32.009347",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T13:39:41.162153",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T13:39:42.202692",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T13:41:07.121992",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T13:42:01.733994",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-14T13:42:28.542520",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-14T13:45:18.184177",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-14T13:45:45.204622",
+              "status": "success"
+            },
+            {
+              "name": "main_plano_acao",
+              "time": "2025-04-14T13:46:11.890122",
+              "status": "success"
+            },
+            {
+              "name": "main_sebrae",
+              "time": "2025-04-14T13:48:19.581626",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_contratados",
+              "time": "2025-04-14T13:49:13.617736",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_empresas",
+              "time": "2025-04-14T13:49:17.035527",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos",
+              "time": "2025-04-14T13:50:02.399337",
+              "status": "success"
+            },
+            {
+              "name": "main_contratos",
+              "time": "2025-04-14T13:50:47.041853",
+              "status": "success"
+            },
+            {
+              "name": "main_estudantes",
+              "time": "2025-04-14T13:51:34.439015",
+              "status": "success"
+            },
+            {
+              "name": "main_pedidos_pi",
+              "time": "2025-04-14T13:52:04.377284",
+              "status": "success"
+            },
+            {
+              "name": "main_macroentregas",
+              "time": "2025-04-14T13:53:48.337588",
+              "status": "success"
+            },
+            {
+              "name": "main_comunicacao",
+              "time": "2025-04-14T13:54:25.094704",
+              "status": "success"
+            },
+            {
+              "name": "main_eventos_srinfo",
+              "time": "2025-04-14T13:55:07.979752",
+              "status": "success"
+            },
+            {
+              "name": "main_prospeccao",
+              "time": "2025-04-14T13:56:41.984916",
+              "status": "success"
+            },
+            {
+              "name": "main_negociacoes",
+              "time": "2025-04-14T13:58:51.477689",
+              "status": "success"
+            },
+            {
+              "name": "main_propostas_tecnicas",
+              "time": "2025-04-14T14:01:12.884180",
+              "status": "success"
+            },
+            {
+              "name": "main_planos_trabalho",
+              "time": "2025-04-14T14:02:51.209619",
+              "status": "success"
+            },
+            {
+              "name": "encerrar_webdriver",
+              "time": "2025-04-14T14:02:53.603550",
+              "status": "success"
+            },
+            {
+              "name": "main_classificacao_projeto",
+              "time": "2025-04-14T14:03:01.918268",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_processar",
+              "time": "2025-04-14T14:03:05.578897",
+              "status": "success"
+            },
+            {
+              "name": "main_portfolio",
+              "time": "2025-04-14T14:03:09.241555",
+              "status": "success"
+            },
+            {
+              "name": "registrar_log",
+              "time": "2025-04-14T14:03:09.464639",
+              "status": "success"
+            },
+            {
+              "name": "levar_arquivos_sharepoint",
+              "time": "2025-04-14T14:05:02.906095",
+              "status": "success"
+            },
+            {
+              "name": "comparar_excel",
+              "time": "2025-04-14T14:05:05.378615",
+              "status": "success",
+              "details": {
+                "novos_projetos": 4,
+                "novas_empresas": 4,
+                "projetos_sem_classificacao": 34
+              }
+            }
+          ],
+          "end_time": "2025-04-14T14:05:05.378615",
+          "duration_seconds": 1713.369268
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414141259",
+      "start_time": "2025-04-14T14:12:59.865583",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T14:12:59.873231",
+          "status": "running",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T14:12:59.876597",
+              "status": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414141350",
+      "start_time": "2025-04-14T14:13:50.341431",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T14:13:50.341431",
+          "status": "success",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T14:13:50.349037",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T14:15:52.362874",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T14:15:53.355725",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T14:17:20.116578",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T14:18:16.422062",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-14T14:18:44.313984",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-14T14:21:38.482490",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-14T14:22:05.874824",
+              "status": "success"
+            },
+            {
+              "name": "main_plano_acao",
+              "time": "2025-04-14T14:22:30.130195",
+              "status": "success"
+            },
+            {
+              "name": "main_sebrae",
+              "time": "2025-04-14T14:24:40.077296",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_contratados",
+              "time": "2025-04-14T14:25:30.833137",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_empresas",
+              "time": "2025-04-14T14:25:35.043322",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos",
+              "time": "2025-04-14T14:26:19.153165",
+              "status": "success"
+            },
+            {
+              "name": "main_contratos",
+              "time": "2025-04-14T14:27:01.519109",
+              "status": "success"
+            },
+            {
+              "name": "main_estudantes",
+              "time": "2025-04-14T14:27:50.394128",
+              "status": "success"
+            },
+            {
+              "name": "main_pedidos_pi",
+              "time": "2025-04-14T14:28:20.157843",
+              "status": "success"
+            },
+            {
+              "name": "main_macroentregas",
+              "time": "2025-04-14T14:30:02.993773",
+              "status": "success"
+            },
+            {
+              "name": "main_comunicacao",
+              "time": "2025-04-14T14:30:46.172970",
+              "status": "success"
+            },
+            {
+              "name": "main_eventos_srinfo",
+              "time": "2025-04-14T14:31:39.968731",
+              "status": "success"
+            },
+            {
+              "name": "main_prospeccao",
+              "time": "2025-04-14T14:33:15.966775",
+              "status": "success"
+            },
+            {
+              "name": "main_negociacoes",
+              "time": "2025-04-14T14:35:23.897540",
+              "status": "success"
+            },
+            {
+              "name": "main_propostas_tecnicas",
+              "time": "2025-04-14T14:37:37.382073",
+              "status": "success"
+            },
+            {
+              "name": "main_planos_trabalho",
+              "time": "2025-04-14T14:39:06.560706",
+              "status": "success"
+            },
+            {
+              "name": "encerrar_webdriver",
+              "time": "2025-04-14T14:39:08.977780",
+              "status": "success"
+            },
+            {
+              "name": "main_classificacao_projeto",
+              "time": "2025-04-14T14:39:17.861024",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_processar",
+              "time": "2025-04-14T14:39:21.860633",
+              "status": "success"
+            },
+            {
+              "name": "main_portfolio",
+              "time": "2025-04-14T14:39:26.115887",
+              "status": "success"
+            },
+            {
+              "name": "registrar_log",
+              "time": "2025-04-14T14:39:26.292221",
+              "status": "success"
+            },
+            {
+              "name": "levar_arquivos_sharepoint",
+              "time": "2025-04-14T14:41:27.465374",
+              "status": "success"
+            },
+            {
+              "name": "comparar_excel",
+              "time": "2025-04-14T14:41:30.433699",
+              "status": "success",
+              "details": {
+                "novos_projetos": 0,
+                "novas_empresas": 0,
+                "projetos_sem_classificacao": 34
+              }
+            }
+          ],
+          "end_time": "2025-04-14T14:41:30.433699",
+          "duration_seconds": 1660.092268
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414150046",
+      "start_time": "2025-04-14T15:00:46.800952",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T15:00:46.800952",
+          "status": "error",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T15:00:46.810370",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T15:03:25.277826",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T15:03:26.271718",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T15:04:52.709729",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T15:05:47.932298",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-14T15:06:12.848361",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-14T15:09:11.166515",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-14T15:09:39.283641",
+              "status": "success"
+            },
+            {
+              "name": "main_plano_acao",
+              "time": "2025-04-14T15:10:07.173690",
+              "status": "success"
+            },
+            {
+              "name": "main_sebrae",
+              "time": "2025-04-14T15:12:17.605710",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_contratados",
+              "time": "2025-04-14T15:13:10.454585",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_empresas",
+              "time": "2025-04-14T15:13:14.113638",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos",
+              "time": "2025-04-14T15:14:00.482574",
+              "status": "success"
+            },
+            {
+              "name": "main_contratos",
+              "time": "2025-04-14T15:14:44.874843",
+              "status": "success"
+            },
+            {
+              "name": "main_estudantes",
+              "time": "2025-04-14T15:15:32.923805",
+              "status": "success"
+            },
+            {
+              "name": "main_pedidos_pi",
+              "time": "2025-04-14T15:16:04.905986",
+              "status": "success"
+            },
+            {
+              "name": "main_macroentregas",
+              "time": "2025-04-14T15:17:44.523155",
+              "status": "success"
+            },
+            {
+              "name": "main_comunicacao",
+              "time": "2025-04-14T15:18:22.397381",
+              "status": "success"
+            },
+            {
+              "name": "main_eventos_srinfo",
+              "time": "2025-04-14T15:19:05.189466",
+              "status": "success"
+            },
+            {
+              "name": "main_prospeccao",
+              "time": "2025-04-14T15:20:38.926587",
+              "status": "success"
+            },
+            {
+              "name": "main_negociacoes",
+              "time": "2025-04-14T15:22:51.322083",
+              "status": "success"
+            },
+            {
+              "name": "main_propostas_tecnicas",
+              "time": "2025-04-14T15:25:10.586375",
+              "status": "success"
+            },
+            {
+              "name": "main_planos_trabalho",
+              "time": "2025-04-14T15:26:37.930515",
+              "status": "success"
+            },
+            {
+              "name": "encerrar_webdriver",
+              "time": "2025-04-14T15:26:40.364846",
+              "status": "success"
+            },
+            {
+              "name": "main_classificacao_projeto",
+              "time": "2025-04-14T15:26:49.048390",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_processar",
+              "time": "2025-04-14T15:26:52.898772",
+              "status": "success"
+            },
+            {
+              "name": "main_portfolio",
+              "time": "2025-04-14T15:26:56.744418",
+              "status": "success"
+            },
+            {
+              "name": "registrar_log",
+              "time": "2025-04-14T15:26:57.031560",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-14T15:27:10.145820",
+          "error": {
+            "message": "('-2147018894, Microsoft.SharePoint.SPFileLockException', 'O arquivo https://embrapii.sharepoint.com/sites/GEPES/Documentos Compartilhados/DWPII/srinfo/classificacao_projeto.xlsx foi bloqueado para uso compartilhado por allan.ribeiro@embrapii.org.br [membership].', \"423 Client Error: Locked for url: https://embrapii.sharepoint.com/sites/GEPES/_api/Web/getFolderByServerRelativePath(DecodedUrl='%2Fsites%2FGEPES%2FDocumentos%20Compartilhados%2F%2FDWPII%2Fsrinfo')/Files/add(overwrite=true,url='classificacao_projeto.xlsx')\")",
+            "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\office365\\runtime\\client_request.py\", line 37, in execute_query\n    response = self.execute_request_direct(request)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\office365\\runtime\\client_request.py\", line 101, in execute_request_direct\n    response.raise_for_status()\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\requests\\models.py\", line 1021, in raise_for_status\n    raise HTTPError(http_error_msg, response=self)\nrequests.exceptions.HTTPError: 423 Client Error: Locked for url: https://embrapii.sharepoint.com/sites/GEPES/_api/Web/getFolderByServerRelativePath(DecodedUrl='%2Fsites%2FGEPES%2FDocumentos%20Compartilhados%2F%2FDWPII%2Fsrinfo')/Files/add(overwrite=true,url='classificacao_projeto.xlsx')\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\main.py\", line 271, in main_pipeline_srinfo\n    levar_arquivos_sharepoint()\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\levar_arquivos_sharepoint.py\", line 34, in levar_arquivos_sharepoint\n    upload_files(\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\office365_api\\upload_files.py\", line 24, in upload_files\n    SharePoint().upload_file(\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\office365_api\\office365_api.py\", line 64, in upload_file\n    response = target_folder.upload_file(file_name, content).execute_query()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\office365\\runtime\\client_object.py\", line 55, in execute_query\n    self.context.execute_query()\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\office365\\runtime\\client_runtime_context.py\", line 173, in execute_query\n    self.pending_request().execute_query(qry)\n  File \"C:\\Users\\55619\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\office365\\runtime\\client_request.py\", line 41, in execute_query\n    raise ClientRequestException(*e.args, response=e.response)\noffice365.runtime.client_request_exception.ClientRequestException: ('-2147018894, Microsoft.SharePoint.SPFileLockException', 'O arquivo https://embrapii.sharepoint.com/sites/GEPES/Documentos Compartilhados/DWPII/srinfo/classificacao_projeto.xlsx foi bloqueado para uso compartilhado por allan.ribeiro@embrapii.org.br [membership].', \"423 Client Error: Locked for url: https://embrapii.sharepoint.com/sites/GEPES/_api/Web/getFolderByServerRelativePath(DecodedUrl='%2Fsites%2FGEPES%2FDocumentos%20Compartilhados%2F%2FDWPII%2Fsrinfo')/Files/add(overwrite=true,url='classificacao_projeto.xlsx')\")\n"
+          },
+          "duration_seconds": 1583.344868
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414153658",
+      "start_time": "2025-04-14T15:36:58.326176",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T15:36:58.328748",
+          "status": "error",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T15:36:58.331970",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T15:39:15.793944",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T15:39:16.836760",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T15:40:39.800672",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T15:41:33.941949",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-14T15:42:02.114397",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-14T15:44:59.459397",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-14T15:45:27.868727",
+              "status": "success"
+            },
+            {
+              "name": "main_plano_acao",
+              "time": "2025-04-14T15:45:55.609342",
+              "status": "success"
+            },
+            {
+              "name": "main_sebrae",
+              "time": "2025-04-14T15:48:02.695250",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_contratados",
+              "time": "2025-04-14T15:48:54.056348",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_empresas",
+              "time": "2025-04-14T15:48:58.209483",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos",
+              "time": "2025-04-14T15:49:45.724419",
+              "status": "success"
+            },
+            {
+              "name": "main_contratos",
+              "time": "2025-04-14T15:50:29.405717",
+              "status": "success"
+            },
+            {
+              "name": "main_estudantes",
+              "time": "2025-04-14T15:51:16.965319",
+              "status": "success"
+            },
+            {
+              "name": "main_pedidos_pi",
+              "time": "2025-04-14T15:51:47.571645",
+              "status": "success"
+            },
+            {
+              "name": "main_macroentregas",
+              "time": "2025-04-14T15:53:27.116648",
+              "status": "success"
+            },
+            {
+              "name": "main_comunicacao",
+              "time": "2025-04-14T15:54:08.178982",
+              "status": "success"
+            },
+            {
+              "name": "main_eventos_srinfo",
+              "time": "2025-04-14T15:54:50.429374",
+              "status": "success"
+            },
+            {
+              "name": "main_prospeccao",
+              "time": "2025-04-14T15:56:22.798596",
+              "status": "success"
+            },
+            {
+              "name": "main_negociacoes",
+              "time": "2025-04-14T15:58:41.601293",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-14T16:00:30.284135",
+          "error": {
+            "message": "Message: \n",
+            "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\main.py\", line 241, in main_pipeline_srinfo\n    main_propostas_tecnicas(driver)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\negociacoes\\propostas_tecnicas\\main_propostas_tecnicas.py\", line 37, in main_propostas_tecnicas\n    baixar_e_juntar_arquivos(driver, link, CURRENT_DIR, nome_arquivo)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\scripts_public.py\", line 17, in baixar_e_juntar_arquivos\n    numero_arquivos = baixar_dados_srinfo(driver, link, num_pages, option1000, sebrae)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\baixar_dados_srinfo.py\", line 73, in baixar_dados_srinfo\n    carregar_dados_e_fazer_download(driver=driver)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\baixar_dados_srinfo.py\", line 110, in carregar_dados_e_fazer_download\n    WebDriverWait(driver, 90).until(\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\selenium\\webdriver\\support\\wait.py\", line 146, in until\n    raise TimeoutException(message, screen, stacktrace)\nselenium.common.exceptions.TimeoutException: Message: \n\n"
+          },
+          "duration_seconds": 1411.955387
+        }
+      ]
+    },
+    {
+      "execution_id": "20250414160923",
+      "start_time": "2025-04-14T16:09:23.752042",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-14T16:09:23.753208",
+          "status": "error",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-14T16:09:23.757266",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-14T16:11:34.313965",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-14T16:11:35.285595",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-14T16:13:09.351636",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-14T16:14:03.805585",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-14T16:14:30.636862",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-14T16:17:21.030774",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-14T16:17:49.269589",
+              "status": "success"
+            },
+            {
+              "name": "main_plano_acao",
+              "time": "2025-04-14T16:18:17.184129",
+              "status": "success"
+            },
+            {
+              "name": "main_sebrae",
+              "time": "2025-04-14T16:20:24.041565",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_contratados",
+              "time": "2025-04-14T16:21:15.191479",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_empresas",
+              "time": "2025-04-14T16:21:19.363454",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos",
+              "time": "2025-04-14T16:22:05.066868",
+              "status": "success"
+            },
+            {
+              "name": "main_contratos",
+              "time": "2025-04-14T16:22:50.279387",
+              "status": "success"
+            },
+            {
+              "name": "main_estudantes",
+              "time": "2025-04-14T16:23:37.991399",
+              "status": "success"
+            },
+            {
+              "name": "main_pedidos_pi",
+              "time": "2025-04-14T16:24:08.962645",
+              "status": "success"
+            },
+            {
+              "name": "main_macroentregas",
+              "time": "2025-04-14T16:25:46.774177",
+              "status": "success"
+            },
+            {
+              "name": "main_comunicacao",
+              "time": "2025-04-14T16:26:26.988018",
+              "status": "success"
+            },
+            {
+              "name": "main_eventos_srinfo",
+              "time": "2025-04-14T16:27:05.186834",
+              "status": "success"
+            },
+            {
+              "name": "main_prospeccao",
+              "time": "2025-04-14T16:28:37.633687",
+              "status": "success"
+            },
+            {
+              "name": "main_negociacoes",
+              "time": "2025-04-14T16:30:49.372609",
+              "status": "success"
+            },
+            {
+              "name": "main_propostas_tecnicas",
+              "time": "2025-04-14T16:32:49.715642",
+              "status": "success"
+            },
+            {
+              "name": "main_planos_trabalho",
+              "time": "2025-04-14T16:34:14.776302",
+              "status": "success"
+            },
+            {
+              "name": "encerrar_webdriver",
+              "time": "2025-04-14T16:34:17.183647",
+              "status": "success"
+            },
+            {
+              "name": "main_classificacao_projeto",
+              "time": "2025-04-14T16:34:25.737219",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_processar",
+              "time": "2025-04-14T16:34:29.756050",
+              "status": "success"
+            },
+            {
+              "name": "main_portfolio",
+              "time": "2025-04-14T16:34:34.022823",
+              "status": "success"
+            },
+            {
+              "name": "registrar_log",
+              "time": "2025-04-14T16:34:34.276489",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-14T16:34:47.322288",
+          "error": {
+            "message": "('-2147018894, Microsoft.SharePoint.SPFileLockException', 'O arquivo https://embrapii.sharepoint.com/sites/GEPES/Documentos Compartilhados/DWPII/srinfo/classificacao_projeto.xlsx foi bloqueado para uso compartilhado por allan.ribeiro@embrapii.org.br [membership].', \"423 Client Error: Locked for url: https://embrapii.sharepoint.com/sites/GEPES/_api/Web/getFolderByServerRelativePath(DecodedUrl='%2Fsites%2FGEPES%2FDocumentos%20Compartilhados%2FDWPII%2Fsrinfo')/Files/add(overwrite=true,url='classificacao_projeto.xlsx')\")",
+            "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\office365\\runtime\\client_request.py\", line 37, in execute_query\n    response = self.execute_request_direct(request)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\office365\\runtime\\client_request.py\", line 101, in execute_request_direct\n    response.raise_for_status()\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\requests\\models.py\", line 1024, in raise_for_status\n    raise HTTPError(http_error_msg, response=self)\nrequests.exceptions.HTTPError: 423 Client Error: Locked for url: https://embrapii.sharepoint.com/sites/GEPES/_api/Web/getFolderByServerRelativePath(DecodedUrl='%2Fsites%2FGEPES%2FDocumentos%20Compartilhados%2FDWPII%2Fsrinfo')/Files/add(overwrite=true,url='classificacao_projeto.xlsx')\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\main.py\", line 271, in main_pipeline_srinfo\n    levar_arquivos_sharepoint()\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\scripts_public\\levar_arquivos_sharepoint.py\", line 34, in levar_arquivos_sharepoint\n    upload_files(\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\office365_api\\upload_files.py\", line 24, in upload_files\n    SharePoint().upload_file(\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\pipeline_embrapii_srinfo\\office365_api\\office365_api.py\", line 64, in upload_file\n    response = target_folder.upload_file(file_name, content).execute_query()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\office365\\runtime\\client_object.py\", line 55, in execute_query\n    self.context.execute_query()\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\office365\\runtime\\client_runtime_context.py\", line 173, in execute_query\n    self.pending_request().execute_query(qry)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\venv\\Lib\\site-packages\\office365\\runtime\\client_request.py\", line 41, in execute_query\n    raise ClientRequestException(*e.args, response=e.response)\noffice365.runtime.client_request_exception.ClientRequestException: ('-2147018894, Microsoft.SharePoint.SPFileLockException', 'O arquivo https://embrapii.sharepoint.com/sites/GEPES/Documentos Compartilhados/DWPII/srinfo/classificacao_projeto.xlsx foi bloqueado para uso compartilhado por allan.ribeiro@embrapii.org.br [membership].', \"423 Client Error: Locked for url: https://embrapii.sharepoint.com/sites/GEPES/_api/Web/getFolderByServerRelativePath(DecodedUrl='%2Fsites%2FGEPES%2FDocumentos%20Compartilhados%2FDWPII%2Fsrinfo')/Files/add(overwrite=true,url='classificacao_projeto.xlsx')\")\n"
+          },
+          "duration_seconds": 1523.56908
+        }
+      ]
+    }
+  ]
+}

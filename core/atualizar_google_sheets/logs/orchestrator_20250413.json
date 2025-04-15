@@ -1,0 +1,23 @@
+{
+  "executions": [
+    {
+      "execution_id": "20250413173629",
+      "start_time": "2025-04-13T17:36:29.313648",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-13T17:36:29.313648",
+          "status": "error",
+          "steps": [],
+          "end_time": "2025-04-13T17:36:32.421008",
+          "error": {
+            "message": "[Errno 22] Invalid argument: 'C:\\\\Users\\\\55619\\\\Desktop\\\\orchestrator\\\\core\\x07tualizar_google_sheets\\\\inputs\\\\portfolio.xlsx'",
+            "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\main.py\", line 50, in main\n    puxar_planilhas()\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\puxar_planilhas_sharepoint.py\", line 22, in puxar_planilhas\n    get_file(\"portfolio.xlsx\", \"DWPII/srinfo\", inputs)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\office365_api\\download_files.py\", line 25, in get_file\n    save_file(file_n, file_obj, dest)\n  File \"C:\\Users\\55619\\Desktop\\orchestrator\\core\\atualizar_google_sheets\\office365_api\\download_files.py\", line 19, in save_file\n    with open(file_dir_path, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^\nOSError: [Errno 22] Invalid argument: 'C:\\\\Users\\\\55619\\\\Desktop\\\\orchestrator\\\\core\\x07tualizar_google_sheets\\\\inputs\\\\portfolio.xlsx'\n"
+          },
+          "duration_seconds": 3.10736
+        }
+      ]
+    }
+  ]
+}

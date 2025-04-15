@@ -1,0 +1,409 @@
+{
+  "executions": [
+    {
+      "execution_id": "20250415090035",
+      "start_time": "2025-04-15T09:00:35.113335",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-15T09:00:35.113335",
+          "status": "success",
+          "steps": [
+            {
+              "name": "puxar_planilhas",
+              "time": "2025-04-15T09:01:17.533437",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_portfolio",
+              "time": "2025-04-15T09:01:35.231618",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos_empresas",
+              "time": "2025-04-15T09:01:38.608347",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_informacoes_empresas",
+              "time": "2025-04-15T09:01:41.952987",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_info_unidades_embrapii",
+              "time": "2025-04-15T09:01:44.273050",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_ue_linhas_atuacao",
+              "time": "2025-04-15T09:01:47.026688",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_macroentregas",
+              "time": "2025-04-15T09:02:00.547370",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_negociacoes_negociacoes",
+              "time": "2025-04-15T09:02:10.184289",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_classificacao_projetos",
+              "time": "2025-04-15T09:02:19.525111",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos",
+              "time": "2025-04-15T09:02:24.980797",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_prospeccao_prospeccao",
+              "time": "2025-04-15T09:02:47.311796",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_cnae_ibge",
+              "time": "2025-04-15T09:02:54.528429",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_pedidos_pi",
+              "time": "2025-04-15T09:02:57.903676",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-15T09:02:57.919626",
+          "duration_seconds": 142.806291
+        }
+      ]
+    },
+    {
+      "execution_id": "20250415094549",
+      "start_time": "2025-04-15T09:45:49.657285",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-15T09:45:49.657285",
+          "status": "success",
+          "steps": [
+            {
+              "name": "puxar_planilhas",
+              "time": "2025-04-15T09:46:30.722577",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_portfolio",
+              "time": "2025-04-15T09:46:47.284794",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos_empresas",
+              "time": "2025-04-15T09:46:50.210605",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_informacoes_empresas",
+              "time": "2025-04-15T09:46:53.393848",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_info_unidades_embrapii",
+              "time": "2025-04-15T09:46:56.786261",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_ue_linhas_atuacao",
+              "time": "2025-04-15T09:46:59.010565",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_macroentregas",
+              "time": "2025-04-15T09:47:12.613953",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_negociacoes_negociacoes",
+              "time": "2025-04-15T09:47:20.958000",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_classificacao_projetos",
+              "time": "2025-04-15T09:47:29.638704",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos",
+              "time": "2025-04-15T09:47:38.703994",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_prospeccao_prospeccao",
+              "time": "2025-04-15T09:47:56.565409",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_cnae_ibge",
+              "time": "2025-04-15T09:48:04.610052",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_pedidos_pi",
+              "time": "2025-04-15T09:48:07.662917",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-15T09:48:07.662917",
+          "duration_seconds": 138.005632
+        }
+      ]
+    },
+    {
+      "execution_id": "20250415102342",
+      "start_time": "2025-04-15T10:23:42.715998",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-15T10:23:42.715998",
+          "status": "success",
+          "steps": [
+            {
+              "name": "puxar_planilhas",
+              "time": "2025-04-15T10:24:26.264248",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_portfolio",
+              "time": "2025-04-15T10:24:47.050887",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos_empresas",
+              "time": "2025-04-15T10:24:50.683008",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_informacoes_empresas",
+              "time": "2025-04-15T10:24:54.426190",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_info_unidades_embrapii",
+              "time": "2025-04-15T10:24:57.049940",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_ue_linhas_atuacao",
+              "time": "2025-04-15T10:24:59.720527",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_macroentregas",
+              "time": "2025-04-15T10:25:13.181761",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_negociacoes_negociacoes",
+              "time": "2025-04-15T10:25:25.658345",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_classificacao_projetos",
+              "time": "2025-04-15T10:25:36.069615",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos",
+              "time": "2025-04-15T10:25:42.579751",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_prospeccao_prospeccao",
+              "time": "2025-04-15T10:26:04.679818",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_cnae_ibge",
+              "time": "2025-04-15T10:26:09.097516",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_pedidos_pi",
+              "time": "2025-04-15T10:26:12.514847",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-15T10:26:12.514847",
+          "duration_seconds": 149.798849
+        }
+      ]
+    },
+    {
+      "execution_id": "20250415110439",
+      "start_time": "2025-04-15T11:04:39.613875",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-15T11:04:39.613875",
+          "status": "success",
+          "steps": [
+            {
+              "name": "puxar_planilhas",
+              "time": "2025-04-15T11:05:27.337248",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_portfolio",
+              "time": "2025-04-15T11:05:55.112699",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos_empresas",
+              "time": "2025-04-15T11:05:59.131990",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_informacoes_empresas",
+              "time": "2025-04-15T11:06:03.696657",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_info_unidades_embrapii",
+              "time": "2025-04-15T11:06:06.900879",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_ue_linhas_atuacao",
+              "time": "2025-04-15T11:06:10.236492",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_macroentregas",
+              "time": "2025-04-15T11:06:34.166248",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_negociacoes_negociacoes",
+              "time": "2025-04-15T11:06:44.638477",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_classificacao_projetos",
+              "time": "2025-04-15T11:06:58.767557",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos",
+              "time": "2025-04-15T11:07:05.535066",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_prospeccao_prospeccao",
+              "time": "2025-04-15T11:07:46.434119",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_cnae_ibge",
+              "time": "2025-04-15T11:07:52.791962",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_pedidos_pi",
+              "time": "2025-04-15T11:07:57.288042",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-15T11:07:57.288042",
+          "duration_seconds": 197.674167
+        }
+      ]
+    },
+    {
+      "execution_id": "20250415113858",
+      "start_time": "2025-04-15T11:38:58.140949",
+      "status": "running",
+      "modules": [
+        {
+          "name": "atualizar_google_sheets",
+          "start_time": "2025-04-15T11:38:58.140949",
+          "status": "success",
+          "steps": [
+            {
+              "name": "puxar_planilhas",
+              "time": "2025-04-15T11:39:44.720304",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_portfolio",
+              "time": "2025-04-15T11:40:08.307899",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos_empresas",
+              "time": "2025-04-15T11:40:12.340089",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_informacoes_empresas",
+              "time": "2025-04-15T11:40:17.499733",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_info_unidades_embrapii",
+              "time": "2025-04-15T11:40:21.677838",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_ue_linhas_atuacao",
+              "time": "2025-04-15T11:40:27.174947",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_macroentregas",
+              "time": "2025-04-15T11:40:41.592258",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_negociacoes_negociacoes",
+              "time": "2025-04-15T11:40:51.509982",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_classificacao_projetos",
+              "time": "2025-04-15T11:41:02.366700",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_projetos",
+              "time": "2025-04-15T11:41:08.503777",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_prospeccao_prospeccao",
+              "time": "2025-04-15T11:41:27.819138",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_cnae_ibge",
+              "time": "2025-04-15T11:41:32.617767",
+              "status": "success"
+            },
+            {
+              "name": "atualizar_gsheet_raw_pedidos_pi",
+              "time": "2025-04-15T11:41:37.288164",
+              "status": "success"
+            }
+          ],
+          "end_time": "2025-04-15T11:41:37.288164",
+          "duration_seconds": 159.147215
+        }
+      ]
+    }
+  ]
+}

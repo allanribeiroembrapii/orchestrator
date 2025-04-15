@@ -1,0 +1,213 @@
+{
+  "executions": [
+    {
+      "execution_id": "20250413170616",
+      "start_time": "2025-04-13T17:06:16.262358",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-13T17:06:16.263368",
+          "status": "running",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-13T17:06:16.265376",
+              "status": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "execution_id": "20250413170628",
+      "start_time": "2025-04-13T17:06:28.408900",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-13T17:06:28.408900",
+          "status": "running",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-13T17:06:28.411511",
+              "status": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "execution_id": "20250413170640",
+      "start_time": "2025-04-13T17:06:40.327512",
+      "status": "running",
+      "modules": [
+        {
+          "name": "pipeline_embrapii_srinfo",
+          "start_time": "2025-04-13T17:06:40.327512",
+          "status": "success",
+          "steps": [
+            {
+              "name": "verificar_criar_pastas",
+              "time": "2025-04-13T17:06:40.327512",
+              "status": "success"
+            },
+            {
+              "name": "buscar_arquivos_sharepoint",
+              "time": "2025-04-13T17:09:28.177461",
+              "status": "success"
+            },
+            {
+              "name": "configurar_webdriver",
+              "time": "2025-04-13T17:09:29.230785",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_baixar",
+              "time": "2025-04-13T17:11:09.497483",
+              "status": "success"
+            },
+            {
+              "name": "main_empresas_contratantes",
+              "time": "2025-04-13T17:12:03.692708",
+              "status": "success"
+            },
+            {
+              "name": "main_info_unidades",
+              "time": "2025-04-13T17:12:31.614735",
+              "status": "success"
+            },
+            {
+              "name": "main_equipe_ue",
+              "time": "2025-04-13T17:15:34.190909",
+              "status": "success"
+            },
+            {
+              "name": "main_termos_cooperacao",
+              "time": "2025-04-13T17:16:03.154676",
+              "status": "success"
+            },
+            {
+              "name": "main_plano_acao",
+              "time": "2025-04-13T17:16:30.529670",
+              "status": "success"
+            },
+            {
+              "name": "main_sebrae",
+              "time": "2025-04-13T17:18:39.205834",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_contratados",
+              "time": "2025-04-13T17:19:32.828450",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos_empresas",
+              "time": "2025-04-13T17:19:37.708642",
+              "status": "success"
+            },
+            {
+              "name": "main_projetos",
+              "time": "2025-04-13T17:20:25.490002",
+              "status": "success"
+            },
+            {
+              "name": "main_contratos",
+              "time": "2025-04-13T17:21:07.098690",
+              "status": "success"
+            },
+            {
+              "name": "main_estudantes",
+              "time": "2025-04-13T17:21:56.268555",
+              "status": "success"
+            },
+            {
+              "name": "main_pedidos_pi",
+              "time": "2025-04-13T17:22:24.295351",
+              "status": "success"
+            },
+            {
+              "name": "main_macroentregas",
+              "time": "2025-04-13T17:24:33.033388",
+              "status": "success"
+            },
+            {
+              "name": "main_comunicacao",
+              "time": "2025-04-13T17:25:11.898470",
+              "status": "success"
+            },
+            {
+              "name": "main_eventos_srinfo",
+              "time": "2025-04-13T17:25:55.328566",
+              "status": "success"
+            },
+            {
+              "name": "main_prospeccao",
+              "time": "2025-04-13T17:27:44.418264",
+              "status": "success"
+            },
+            {
+              "name": "main_negociacoes",
+              "time": "2025-04-13T17:29:50.388635",
+              "status": "success"
+            },
+            {
+              "name": "main_propostas_tecnicas",
+              "time": "2025-04-13T17:32:15.068615",
+              "status": "success"
+            },
+            {
+              "name": "main_planos_trabalho",
+              "time": "2025-04-13T17:33:42.874643",
+              "status": "success"
+            },
+            {
+              "name": "encerrar_webdriver",
+              "time": "2025-04-13T17:33:45.383613",
+              "status": "success"
+            },
+            {
+              "name": "main_classificacao_projeto",
+              "time": "2025-04-13T17:33:54.703442",
+              "status": "success"
+            },
+            {
+              "name": "main_info_empresas_processar",
+              "time": "2025-04-13T17:33:58.483707",
+              "status": "success"
+            },
+            {
+              "name": "main_portfolio",
+              "time": "2025-04-13T17:34:02.298439",
+              "status": "success"
+            },
+            {
+              "name": "registrar_log",
+              "time": "2025-04-13T17:34:02.523602",
+              "status": "success"
+            },
+            {
+              "name": "levar_arquivos_sharepoint",
+              "time": "2025-04-13T17:36:21.618963",
+              "status": "success"
+            },
+            {
+              "name": "comparar_excel",
+              "time": "2025-04-13T17:36:24.118554",
+              "status": "success",
+              "details": {
+                "novos_projetos": 0,
+                "novas_empresas": 0,
+                "projetos_sem_classificacao": 29
+              }
+            }
+          ],
+          "end_time": "2025-04-13T17:36:24.123386",
+          "duration_seconds": 1783.795874
+        }
+      ]
+    }
+  ]
+}
