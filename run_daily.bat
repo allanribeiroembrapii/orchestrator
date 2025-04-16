@@ -25,6 +25,7 @@ echo - Raiz: %ROOT%
 echo - Pipeline: %ROOT_PIPELINE%
 echo - Google Sheets: %ROOT_GSHET%
 echo - API DataPII: %ROOT_DATAPII%
+echo - Alertas: %ROOT_DATAPII%
 echo - Log: %LOG_FILE%
 echo.
 
