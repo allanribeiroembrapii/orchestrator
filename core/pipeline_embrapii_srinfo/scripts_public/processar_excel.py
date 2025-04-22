@@ -1,7 +1,46 @@
 import os
 import pandas as pd
+import re
+import pyshorteners
+import sys
+from dotenv import load_dotenv
 
-def processar_excel(arquivo_origem, campos_interesse, novos_nomes_e_ordem, arquivo_destino, campos_data=None, campos_valor=None):
+# Carregar variáveis de ambiente
+load_dotenv()
+
+def encurtar_url(url, max_length=2000):
+    """
+    Encurta URLs que excedem o comprimento máximo especificado.
+    
+    Args:
+        url: A URL a ser verificada e possivelmente encurtada
+        max_length: O comprimento máximo permitido antes de encurtar
+        
+    Returns:
+        URL encurtada se exceder o comprimento máximo, caso contrário a URL original
+    """
+    # Verificar se o valor é uma string
+    if not isinstance(url, str):
+        return url
+    
+    # Verificar se parece ser uma URL (começa com http:// ou https://)
+    if not re.match(r'^https?://', url):
+        return url
+    
+    # Se a URL for menor que o comprimento máximo, retornar como está
+    if len(url) <= max_length:
+        return url
+    
+    try:
+        # Tentar encurtar a URL
+        s = pyshorteners.Shortener()
+        return s.tinyurl.short(url)
+    except Exception as e:
+        print(f"Erro ao encurtar URL: {e}")
+        # Em caso de erro, truncar a URL para evitar exceder o limite do Excel
+        return url[:max_length]
+
+def processar_excel(arquivo_origem, campos_interesse, novos_nomes_e_ordem, arquivo_destino, campos_data=None, campos_valor=None, campos_url=None):
     # Ler o arquivo Excel
     df = pd.read_excel(arquivo_origem)
 
@@ -10,6 +49,19 @@ def processar_excel(arquivo_origem, campos_interesse, novos_nomes_e_ordem, arqui
 
     # Renomear as colunas e definir a nova ordem
     df_renomeado = df_selecionado.rename(columns=novos_nomes_e_ordem)
+    
+    # Identificar automaticamente campos que podem conter URLs se campos_url não for fornecido
+    if campos_url is None:
+        campos_url = []
+        for coluna in df_renomeado.columns:
+            # Verificar nomes de coluna que provavelmente contêm URLs
+            if any(termo in coluna.lower() for termo in ['link', 'url', 'site', 'web', 'http']):
+                campos_url.append(coluna)
+    
+    # Encurtar URLs em campos identificados
+    for campo in campos_url:
+        if campo in df_renomeado.columns:
+            df_renomeado[campo] = df_renomeado[campo].apply(lambda x: encurtar_url(x) if pd.notna(x) else x)
 
     # Ajustar campos de data, se fornecidos
     if campos_data:
@@ -27,6 +79,17 @@ def processar_excel(arquivo_origem, campos_interesse, novos_nomes_e_ordem, arqui
 
     # Reordenar as colunas conforme especificado
     df_final = df_renomeado[list(novos_nomes_e_ordem.values())]
+    
+    # Verificar se há URLs longas em qualquer coluna (como medida de segurança adicional)
+    for coluna in df_final.columns:
+        if df_final[coluna].dtype == 'object':  # Apenas colunas de texto
+            # Verificar se algum valor parece ser uma URL longa
+            mask = df_final[coluna].astype(str).str.len() > 2000
+            if mask.any():
+                # Se encontrar URLs longas, aplicar o encurtador
+                df_final.loc[mask, coluna] = df_final.loc[mask, coluna].apply(
+                    lambda x: encurtar_url(x) if isinstance(x, str) else x
+                )
 
     # Garantir que o diretório de destino existe
     os.makedirs(os.path.dirname(arquivo_destino), exist_ok=True)

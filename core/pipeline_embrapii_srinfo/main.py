@@ -17,10 +17,6 @@ ROOT = os.getenv("ROOT_PIPELINE")
 USUARIO = os.getenv("USERNAME")
 sys.path.append(ROOT)
 
-# Importar o logger do orquestrador
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-from logs.orchestrator_logs import OrchestratorLogger
-
 # Importar o módulo principal de contratos
 from scripts_public.buscar_arquivos_sharepoint import buscar_arquivos_sharepoint
 from scripts_public.webdriver import configurar_webdriver
@@ -134,161 +130,122 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
     print("Início: ", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     inicio = datetime.now()
 
-    # Inicializar o logger
-    logger = OrchestratorLogger.get_instance()
-    module_idx = logger.start_module("pipeline_embrapii_srinfo")
-
     log = []
 
     try:
         # Verificar e criar pastas necessárias
         verificar_criar_pastas()
-        logger.add_step(module_idx, "verificar_criar_pastas")
 
         # SharePoint
         buscar_arquivos_sharepoint()
-        logger.add_step(module_idx, "buscar_arquivos_sharepoint")
 
         # Configurar o WebDriver
         driver = configurar_webdriver()
-        logger.add_step(module_idx, "configurar_webdriver")
 
         # Empresas
         print("SEÇÃO 1/5: COLETA DE DADOS")
         print("Subseção: Empresas")
         main_info_empresas_baixar(driver)
         log = logear(log, "info_empresas")
-        logger.add_step(module_idx, "main_info_empresas_baixar")
 
         main_empresas_contratantes(driver)
         log = logear(log, "empresas_contratantes")
-        logger.add_step(module_idx, "main_empresas_contratantes")
 
         # Unidades Embrapii
         print("Subseção: Unidades Embrapii")
         main_info_unidades(driver)
         log = logear(log, "info_unidades")
-        logger.add_step(module_idx, "main_info_unidades")
 
         main_equipe_ue(driver)
         log = logear(log, "equipe_ue")
-        logger.add_step(module_idx, "main_equipe_ue")
 
         main_termos_cooperacao(driver)
         log = logear(log, "ue_termos_cooperacao")
-        logger.add_step(module_idx, "main_termos_cooperacao")
 
         main_plano_acao(driver)
         log = logear(log, "ue_termos_cooperacao")
-        logger.add_step(module_idx, "main_plano_acao")
 
         if plano_metas:
             main_plano_metas(driver)
             log = logear(log, "ue_plano_metas")
-            logger.add_step(module_idx, "main_plano_metas")
 
         # Projetos
         print("Subseção: Projetos")
 
         main_sebrae(driver)
         log = logear(log, "sebrae")
-        logger.add_step(module_idx, "main_sebrae")
 
         main_projetos_contratados(driver)
         log = logear(log, "projetos_contratados")
-        logger.add_step(module_idx, "main_projetos_contratados")
 
         main_projetos_empresas()
         log = logear(log, "projetos_empresas")
-        logger.add_step(module_idx, "main_projetos_empresas")
 
         main_projetos(driver)
         log = logear(log, "projetos")
-        logger.add_step(module_idx, "main_projetos")
 
         main_contratos(driver)
         log = logear(log, "contratos")
-        logger.add_step(module_idx, "main_contratos")
 
         main_estudantes(driver)
         log = logear(log, "estudantes")
-        logger.add_step(module_idx, "main_estudantes")
 
         main_pedidos_pi(driver)
         log = logear(log, "pedidos_pi")
-        logger.add_step(module_idx, "main_pedidos_pi")
 
         main_macroentregas(driver)
         log = logear(log, "macroentregas")
-        logger.add_step(module_idx, "main_macroentregas")
 
         main_comunicacao(driver)
         log = logear(log, "comunicacao")
-        logger.add_step(module_idx, "main_comunicacao")
+        print("PASSOU comunicacao")
 
         main_eventos_srinfo(driver)
         log = logear(log, "eventos_srinfo")
-        logger.add_step(module_idx, "main_eventos_srinfo")
+        print("PASSOU eventos_srinfo")
 
         main_prospeccao(driver)
         log = logear(log, "prospeccao")
-        logger.add_step(module_idx, "main_prospeccao")
 
         main_negociacoes(driver)
         log = logear(log, "negociacoes")
-        logger.add_step(module_idx, "main_negociacoes")
+        print("PASSOU negociacoes")
 
         main_propostas_tecnicas(driver)
         log = logear(log, "propostas_tecnicas")
-        logger.add_step(module_idx, "main_propostas_tecnicas")
+        print("PASSOU propostas_tecnicas")
 
         main_planos_trabalho(driver)
         log = logear(log, "planos_trabalho")
-        logger.add_step(module_idx, "main_planos_trabalho")
+        print("PASSOU planos_trabalho")
 
         encerrar_webdriver(driver)
-        logger.add_step(module_idx, "encerrar_webdriver")
 
         # Processamento de dados
         print("SEÇÃO 2/5: PROCESSAMENTO DE DADOS")
         main_classificacao_projeto()
         log = logear(log, "classificacao_projetos")
-        logger.add_step(module_idx, "main_classificacao_projeto")
 
         main_info_empresas_processar()
         log = logear(log, "info_empresas")
-        logger.add_step(module_idx, "main_info_empresas_processar")
 
         main_portfolio()
         log = logear(log, "portfolio")
-        logger.add_step(module_idx, "main_portfolio")
 
         registrar_log(log)
-        logger.add_step(module_idx, "registrar_log")
 
         # SharePoint
         print("SEÇÃO 3/5: LEVAR ARQUIVOS PARA O SHAREPOINT")
         levar_arquivos_sharepoint()
-        logger.add_step(module_idx, "levar_arquivos_sharepoint")
 
         # Report Snapshot Embrapii
         if gerar_snapshot:
             print("SEÇÃO 4/5: GERAR SNAPSHOT")
             gerar_report_snapshot()
-            logger.add_step(module_idx, "gerar_report_snapshot")
 
         # Calculando num de novos projetos, empresas e proj sem classificacao
         print("SEÇÃO 5/5: ENCAMINHAR MENSAGEM")
         novos = comparar_excel()
-        logger.add_step(
-            module_idx,
-            "comparar_excel",
-            details={
-                "novos_projetos": novos[0],
-                "novas_empresas": novos[1],
-                "projetos_sem_classificacao": novos[2],
-            },
-        )
 
         fim = datetime.now()
         duracao = duracao_tempo(inicio, fim)
@@ -309,14 +266,10 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
 
         if enviar_wpp:
             enviar_whatsapp(mensagem)
-            logger.add_step(module_idx, "enviar_whatsapp")
 
-        # Finalizar o log do módulo com sucesso
-        logger.end_module(module_idx, "success")
 
     except Exception as e:
         # Registrar erro no log
-        logger.end_module(module_idx, "error", error=e)
         # Re-lançar a exceção para manter o comportamento original
         raise
 

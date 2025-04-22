@@ -62,9 +62,22 @@ novos_nomes_e_ordem = {
     "Link do evento": "link_publicacao",
 }
 
+# Campos que contêm URLs e precisam ser encurtados se forem muito longos
+campos_url = ["link_publicacao"]
+
+# Campos de data
+campos_data = ["data_publicacao"]
+
 
 def processar_dados():
-    processar_excel(arquivo_origem, campos_interesse, novos_nomes_e_ordem, arquivo_destino)
+    processar_excel(
+        arquivo_origem, 
+        campos_interesse, 
+        novos_nomes_e_ordem, 
+        arquivo_destino,
+        campos_data=campos_data,
+        campos_url=campos_url
+    )
 
 
 # Executar função

@@ -80,8 +80,8 @@ def processar_dados():
         campos_interesse,
         novos_nomes_e_ordem,
         arquivo_destino,
-        campos_data,
-        campos_valor,
+        campos_data=campos_data,
+        campos_valor=campos_valor,
     )
 
     # Criando planos de trabalho empresas

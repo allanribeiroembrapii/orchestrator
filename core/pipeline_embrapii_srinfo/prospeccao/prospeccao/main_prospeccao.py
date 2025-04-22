@@ -75,9 +75,18 @@ novos_nomes_e_ordem = {
     "Reconhecida pela EMBRAPII": "reconhecida_embrapii",
 }
 
+# Campos de data
+campos_data = ["data_prospeccao"]
+
 
 def processar_dados():
-    processar_excel(arquivo_origem, campos_interesse, novos_nomes_e_ordem, arquivo_destino)
+    processar_excel(
+        arquivo_origem, 
+        campos_interesse, 
+        novos_nomes_e_ordem, 
+        arquivo_destino,
+        campos_data=campos_data
+    )
 
 
 # Executar função

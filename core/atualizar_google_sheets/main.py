@@ -9,12 +9,6 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_dir)
 
-try:
-    from logs.orchestrator_logs import OrchestratorLogger
-except ImportError:
-    sys.path.append(os.path.join(root_dir, "logs"))
-    from orchestrator_logs import OrchestratorLogger
-
 # carregar .env
 load_dotenv()
 ROOT = os.getenv("ROOT_GSHET")
@@ -55,15 +49,11 @@ PEDIDOS_PI = os.path.abspath(os.path.join(ROOT, "inputs", "pedidos_pi.xlsx"))
 
 
 def main():
-    # Inicializar o logger
-    logger = OrchestratorLogger.get_instance()
-    module_idx = logger.start_module("atualizar_google_sheets")
 
     try:
         # Puxar planilhas do SharePoint
         print("🟡 puxar_planilhas")
         puxar_planilhas()
-        logger.add_step(module_idx, "puxar_planilhas", status="success")
         print("🟢 puxar_planilhas")
 
         # Atualizar Google Sheets
@@ -87,20 +77,12 @@ def main():
         for aba, caminho_arquivo in abas.items():
             try:
                 atualizar_gsheet(url, aba, caminho_arquivo)
-                logger.add_step(module_idx, f"atualizar_gsheet_{aba}", status="success")
             except Exception as e:
-                logger.add_step(
-                    module_idx, f"atualizar_gsheet_{aba}", status="error", error=e
-                )
                 print(f"Erro ao atualizar aba {aba}: {str(e)}")
         print("🟢 atualizar_gsheet")
 
-        # Finalizar o log do módulo com sucesso
-        logger.end_module(module_idx, "success")
 
     except Exception as e:
-        # Registrar erro no log
-        logger.end_module(module_idx, "error", error=e)
         # Re-lançar a exceção para manter o comportamento original
         raise
 
