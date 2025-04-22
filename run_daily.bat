@@ -103,7 +103,11 @@ if %ANY_SUCCESS% equ 0 (
 
 rem Enviar notificação com status
 cd /d "%ROOT%"
-python -c "import sys; sys.path.append('%ROOT%'); from logs.teams_notifier import enviar_notificacao_teams; stats = {'status': 'success' if %PIPELINE_SUCCESS% and %GSHEETS_SUCCESS% and %DATAPII_SUCCESS% else 'warning', 'inicio': '%date% %time%', 'fim': '%date% %time%', 'duracao': '00:30:00'}; enviar_notificacao_teams(stats)"
+if %PIPELINE_SUCCESS% equ 1 if %GSHEETS_SUCCESS% equ 1 if %DATAPII_SUCCESS% equ 1 (
+    python "%ROOT%\logs\send_teams_notification_fixed.py" --start "%date% %time%" --end "%date% %time%" --duration "00:30:00"
+) else (
+    python "%ROOT%\logs\send_teams_notification_fixed.py" --error --error-msg "Alguns módulos não foram executados com sucesso" --start "%date% %time%" --end "%date% %time%" --duration "00:30:00"
+)
 
 echo.
 echo ========================================
