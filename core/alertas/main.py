@@ -25,7 +25,8 @@ def main():
     """
     print("🟡 " + inspect.currentframe().f_code.co_name)
     try:
-        hoje = datetime.today().weekday()
+        hoje = datetime.today().weekday() # 0 = segunda-feira, 1 = terça-feira, ..., 6 = domingo
+        caminho = 'copy_sharepoint_atual/registro_alertas.xlsx'
 
         ## MOVENDO ARQUIVOS E BUSCANDO NOVOS ARQUIVOS NO SHAREPOINT ##
         # Apagar arquivos da pasta "copy_sharepoint_anterior"
@@ -43,11 +44,12 @@ def main():
 
         if mensagem_mover:
             enviar_mensagem_teams_mover(mensagem_mover)
-            registrar_envio(2, mensagem_mover)
+            registrar_envio(caminho, 2, mensagem_mover)
 
         
         ## TODA SEGUNDA - MANDAR ALERTA DE ATRASOS ##
         if hoje == 0:
+            caminho = 'atrasos/planilhas/registro_alertas.xlsx'
             # Apagar arquivos da pasta "anterior"
             apagar_arquivos_pasta(ANTERIOR_ATRASOS)
 
@@ -60,8 +62,11 @@ def main():
             # Mensagem
             mensagem_atrasos = mensagem_teams_atrasos()
         
-            enviar_mensagem_teams_atrasos(mensagem_atrasos)
-            registrar_envio(1, mensagem_atrasos)
+            # enviar_mensagem_teams_atrasos(mensagem_atrasos)
+            registrar_envio(caminho, 1, mensagem_atrasos)
+
+            # mover registro_alertas de 'planilhas' em 'atrasos' para 'copy_sharepoint_atual'
+            mover_arquivo_especifico('registro_alertas.xlsx', PLANILHAS_ATRASOS, PLANILHAS)
 
 
         ## REGISTRO DE ALERTAS ##
