@@ -29,6 +29,7 @@ def srinfo_negotiation():
             main.convertion_rank AS negotiation_convertion_rank,
             main.status AS negotiation_status,
             main.notes AS negotiation_notes,
+            main.structuring_project_identifier AS negotiation_structuring_project_identifier,
             unit.id AS unit_id,
             unit.name AS unit_name,
             unit.uf_state AS unit_uf,
