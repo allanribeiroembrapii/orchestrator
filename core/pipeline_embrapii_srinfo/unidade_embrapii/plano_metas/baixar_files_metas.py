@@ -13,7 +13,7 @@ import shutil
 # Carregar variáveis de ambiente do arquivo .env
 load_dotenv()
 
-IDS = "unidade_embrapii\plano_metas\step_1_data_raw\ids_tabela_plano_metas.xlsx"
+IDS = r"unidade_embrapii\plano_metas\step_1_data_raw\ids_tabela_plano_metas.xlsx"
 PASTA_DOWNLOAD = os.getenv("PASTA_DOWNLOAD")
 
 

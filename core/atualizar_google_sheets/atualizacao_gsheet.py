@@ -6,7 +6,7 @@ import os
 
 
 def atualizar_gsheet(spreadsheet_url, spreadsheet_aba, excel_file):
-
+    print("🟡 " + inspect.currentframe().f_code.co_name)
     # 1. Defina o caminho para o arquivo de credenciais na raiz do projeto
     # Obter o diretório raiz do projeto (2 níveis acima do diretório atual)
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -31,13 +31,6 @@ def atualizar_gsheet(spreadsheet_url, spreadsheet_aba, excel_file):
         # Se ainda não encontrar, usar o caminho relativo como fallback
         if not os.path.exists(SERVICE_ACCOUNT_FILE):
             SERVICE_ACCOUNT_FILE = "api_google_sheets.json"
-            print(
-                f"Aviso: Usando caminho relativo para o arquivo de credenciais: {SERVICE_ACCOUNT_FILE}"
-            )
-        else:
-            print(f"Usando arquivo de credenciais em: {SERVICE_ACCOUNT_FILE}")
-    else:
-        print(f"Usando arquivo de credenciais em: {SERVICE_ACCOUNT_FILE}")
 
     # 2. Defina o escopo de permissões
     SCOPES = [
@@ -67,3 +60,4 @@ def atualizar_gsheet(spreadsheet_url, spreadsheet_aba, excel_file):
 
     # 8. Atualize com os novos dados do DataFrame
     worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+    print("🟢 " + inspect.currentframe().f_code.co_name)

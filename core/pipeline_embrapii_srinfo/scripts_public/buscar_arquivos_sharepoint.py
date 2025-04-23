@@ -1,6 +1,7 @@
 import os
 import sys
 from dotenv import load_dotenv
+import inspect
 
 # carregar .env
 load_dotenv()
@@ -33,6 +34,7 @@ from scripts_public.apagar_arquivos_pasta import apagar_arquivos_pasta
 
 
 def buscar_arquivos_sharepoint():
+    print("🟡 " + inspect.currentframe().f_code.co_name)
     apagar_arquivos_pasta(CURRENT_DIR)
     apagar_arquivos_pasta(DWPII_UP)
     apagar_arquivos_pasta(DWPII_BACKUP)
@@ -46,8 +48,7 @@ def buscar_arquivos_sharepoint():
         CURRENT_DIR,
     )
     get_files(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "DWPII/srinfo", CURRENT_DIR)
-    print("Passou aqui")
-
+    print("🟢 " + inspect.currentframe().f_code.co_name)
 
 # Executar função
 if __name__ == "__main__":

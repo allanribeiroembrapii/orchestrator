@@ -1,7 +1,7 @@
 import os
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Add directories to path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -16,12 +16,17 @@ from logs.orchestrator_logs import OrchestratorLogger
 from core.pipeline_embrapii_srinfo.main import main_pipeline_srinfo as pipeline_main
 from core.atualizar_google_sheets.main import main as google_sheets_main
 from core.api_datapii.main import main as api_datapii_main
+from core.cg_classificacao_projetos_do.main import main as cg_classificacao_projetos_do
 from core.pipeline_embrapii_srinfo.scripts_public.comparar_excel import comparar_excel
-from core.pipeline_embrapii_srinfo.scripts_public.whatsapp import enviar_whatsapp
 from logs.teams_notifier import enviar_notificacao_teams
 
-def execute_module(module_name, module_function, logger, module_idx=None):
+def execute_module(module_name, module_function, logger, module_idx=None, frequency=None):
     """Execute a module and handle logging"""
+
+    if not should_execute_today(frequency):
+        print(f"\nSkipping {module_name} due to frequency setting: '{frequency}'")
+        return None
+    
     start_time = datetime.now()
     print(f"\n{'='*50}")
     print(f"Executing {module_name}...")
@@ -54,6 +59,55 @@ def execute_module(module_name, module_function, logger, module_idx=None):
         
         return False
 
+def should_execute_today(frequency: str | int | None) -> bool:
+    if frequency is None:
+        return True  # Executa sempre se não há frequência definida
+
+    today = datetime.today()
+    weekday = today.strftime('%A').lower()  # e.g., "monday"
+    day_of_month = today.day
+
+    if isinstance(frequency, str):
+        frequency = frequency.strip().lower()
+
+        # Frequência diária
+        if frequency == "daily":
+            return True
+
+        # Dia da semana
+        weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+        if frequency in weekdays:
+            return frequency == weekday
+
+        # Dia do mês (ex: "15")
+        if frequency.isdigit():
+            return int(frequency) == day_of_month
+
+        # Novo formato: N-ésimo dia útil (ex: "5º")
+        if frequency.endswith("º"):
+            try:
+                nth = int(frequency[:-1])  # remove "º" e converte
+                return is_nth_business_day(today, nth)
+            except ValueError:
+                return False  # formato inválido
+
+    elif isinstance(frequency, int):
+        return frequency == day_of_month
+
+    return False
+
+def is_nth_business_day(date: datetime, n: int) -> bool:
+    """Verifica se a data atual é o enésimo dia útil do mês"""
+    current = date.replace(day=1)
+    count = 0
+    while current.month == date.month:
+        if current.weekday() < 5:  # 0 = segunda, ..., 4 = sexta
+            count += 1
+            if count == n:
+                return current.date() == date.date()
+        current += timedelta(days=1)
+    return False
+
 def main():
     """Main orchestrator function"""
     # Initialize the logger
@@ -68,15 +122,19 @@ def main():
     
     # 1. Execute pipeline_embrapii_srinfo
     if success:
-        success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger)
+        success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
     
     # 2. Execute atualizar_google_sheets
     if success:
-        success = execute_module("atualizar_google_sheets", google_sheets_main, logger)
+        success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
     
     # 3. Execute api_datapii
     if success:
-        success = execute_module("api_datapii", api_datapii_main, logger)
+        success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
+
+    # 4. CG Classificação de Projetos - Validação Diretoria de Operações
+    if success:
+        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
     
     # Calculate total execution time
     end_time = datetime.now()
@@ -96,30 +154,6 @@ def main():
             # Get statistics for successful execution
             stats = comparar_excel()
             novos_projetos, novas_empresas, projetos_sem_classificacao = stats
-            print(f"New projects: {novos_projetos}")
-            print(f"New companies: {novas_empresas}")
-            print(f"Projects without classification: {projetos_sem_classificacao}")
-            
-            # Send WhatsApp notification
-            link = "https://embrapii.sharepoint.com/:x:/r/sites/GEPES/Documentos%20Compartilhados/DWPII/srinfo/classificacao_projeto.xlsx?d=wb7a7a439310f4d52a37728b9f1833961&csf=1&web=1&e=qXpfgA"
-            link_snapshot = "https://embrapii.sharepoint.com/:f:/r/sites/GEPES/Documentos%20Compartilhados/Reports?csf=1&web=1&e=aVdkyL"
-            mensagem = (
-                f"*Pipeline SRInfo*\n"
-                f'Iniciado em: {start_time.strftime("%d/%m/%Y %H:%M:%S")}\n'
-                f'Finalizado em: {end_time.strftime("%d/%m/%Y %H:%M:%S")}\n'
-                f"_Duração total: {duration_str}_\n\n"
-                f"Novos projetos: {novos_projetos}\n"
-                f"Novas empresas: {novas_empresas}\n"
-                f"Projetos sem classificação: {projetos_sem_classificacao}\n\n"
-                f"Relatório Executivo (snapshot): {link_snapshot}\n\n"
-                f"Link para classificação dos projetos: {link}"
-            )
-            
-            try:
-                enviar_whatsapp(mensagem)
-                print("WhatsApp notification sent successfully")
-            except Exception as e:
-                print(f"Error sending WhatsApp notification: {str(e)}")
                 
             # Send Teams notification for success
             try:
@@ -148,7 +182,7 @@ def main():
                     "inicio": start_time.strftime("%d/%m/%Y %H:%M:%S"),
                     "fim": end_time.strftime("%d/%m/%Y %H:%M:%S"),
                     "duracao": duration_str,
-                    "error_msg": "Pipeline execution failed. Check logs for details."
+                    "error_msg": "Orchestrator execution failed. Check logs for details."
                 }
                 
                 # Send the notification

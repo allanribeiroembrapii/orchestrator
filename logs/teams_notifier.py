@@ -27,7 +27,7 @@ def enviar_notificacao_teams(stats):
         bool: True se a notificação foi enviada com sucesso, False caso contrário
     """
     # Obter URL do webhook do arquivo .env
-    WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+    WEBHOOK_URL = os.getenv("CANAL_ORCHESTRATOR")
 
     if not WEBHOOK_URL:
         print("URL do webhook não encontrada no arquivo .env")
@@ -37,11 +37,12 @@ def enviar_notificacao_teams(stats):
     if stats.get("status") == "success":
         status_text = "✅ Sucesso"
         status_color = "Good"
-        title = "🚀 Pipeline EMBRAPII SRInfo Concluído com Sucesso!"
+        # title = "🔃 Orchestrator!"
+        title = ""
     else:
         status_text = "❌ Erro"
         status_color = "Attention"
-        title = "⚠️ Pipeline EMBRAPII SRInfo Interrompido com Erro"
+        title = "⚠️ Orchestrator Interrompido com Erro"
 
     # Construir o Adaptive Card
     message = {
@@ -65,9 +66,9 @@ def enviar_notificacao_teams(stats):
                         },
                         {
                             "type": "Image",
-                            "url": "https://placehold.co/600x200/3F51B5/FFFFFF.png?text=EMBRAPII+Pipeline+SRInfo",
+                            "url": "https://placehold.co/600x200/blue/FFFFFF.png?text=Orchestrator",
                             "size": "Stretch",
-                            "altText": "Banner EMBRAPII Pipeline",
+                            "altText": "Banner Orchestrator",
                             "horizontalAlignment": "Center",
                         },
                         {

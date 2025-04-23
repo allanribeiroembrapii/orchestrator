@@ -1,4 +1,0 @@
-Diariamente:
-1. pipeline_embrapii_srinfo (main.py)
-2. atualizar_google_sheets (main.py)
-3. api_datapii (main.py)

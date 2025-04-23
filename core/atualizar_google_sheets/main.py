@@ -1,8 +1,8 @@
 import os
 import sys
 from dotenv import load_dotenv
-from puxar_planilhas_sharepoint import puxar_planilhas
-from atualizacao_gsheet import atualizar_gsheet
+from atualizar_google_sheets.puxar_planilhas_sharepoint import puxar_planilhas
+from atualizar_google_sheets.atualizacao_gsheet import atualizar_gsheet
 
 # Adicionar o caminho do diretório raiz ao sys.path para importar o logger
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -52,9 +52,7 @@ def main():
 
     try:
         # Puxar planilhas do SharePoint
-        print("🟡 puxar_planilhas")
         puxar_planilhas()
-        print("🟢 puxar_planilhas")
 
         # Atualizar Google Sheets
         url = "https://docs.google.com/spreadsheets/d/1x7IUvZnXg2MH2k3QE9Kiq-_Db4eA-2xwFGuswbTDYjg/edit?usp=sharing"
@@ -73,13 +71,11 @@ def main():
             "raw_pedidos_pi": PEDIDOS_PI,
         }
 
-        print("🟡 atualizar_gsheet")
         for aba, caminho_arquivo in abas.items():
             try:
                 atualizar_gsheet(url, aba, caminho_arquivo)
             except Exception as e:
                 print(f"Erro ao atualizar aba {aba}: {str(e)}")
-        print("🟢 atualizar_gsheet")
 
 
     except Exception as e:
