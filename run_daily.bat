@@ -102,7 +102,6 @@ if %ANY_SUCCESS% equ 0 (
 )
 
 rem Enviar notificação com status
-cd /d "%ROOT%"
 if %PIPELINE_SUCCESS% equ 1 if %GSHEETS_SUCCESS% equ 1 if %DATAPII_SUCCESS% equ 1 (
     python "%ROOT%\logs\send_teams_notification_fixed.py" --start "%date% %time%" --end "%date% %time%" --duration "00:30:00"
 ) else (
