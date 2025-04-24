@@ -200,7 +200,7 @@ def post_api_site_embrapii(dados):
             "descricao": "Nº de Projetos Contratados pela Embrapii até a data de referência.",
         },
         "valor_total": {
-            "name": "Valor Total Corrigido",
+            "name": "Valor Total IPCA",
             "descricao": "Valor Total dos Projetos Contratados corrigidos pelo IPCA disponível até a data de referência.",
         },
         "unidades": {
