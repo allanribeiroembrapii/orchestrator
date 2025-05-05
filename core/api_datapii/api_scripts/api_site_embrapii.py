@@ -190,10 +190,9 @@ def post_api_site_embrapii(dados):
             }
     """
     print("🟡 " + inspect.currentframe().f_code.co_name)
-    rota = ROUTE_ROOT + "/records"
+    rota = ROUTE_ROOT + "site-embrapii/"
     data_hoje = datetime.now().isoformat()  # formato ISO: "2025-04-10T19:12:24.760Z"
     token = API_TOKEN
-
     dados_descricao = {
         "projetos": {
             "name": "Projetos Contratados",
@@ -222,9 +221,8 @@ def post_api_site_embrapii(dados):
             "vl_indice": valor,
             "ds_indice": dados_descricao[chave]["descricao"],
         }
-
         response = requests.post(rota, json=dado, headers=headers)
-
+        print(response)
         print("🟢 " + inspect.currentframe().f_code.co_name)
 
 
