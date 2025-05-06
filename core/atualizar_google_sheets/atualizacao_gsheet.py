@@ -7,18 +7,9 @@ import os
 
 def atualizar_gsheet(spreadsheet_url, spreadsheet_aba, excel_file):
     print("🟡 " + inspect.currentframe().f_code.co_name)
-    # 1. Defina o caminho para o arquivo de credenciais na raiz do projeto
-    # Obter o diretório raiz do projeto (2 níveis acima do diretório atual)
+
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    root_dir = os.path.dirname(os.path.dirname(os.path.dirname(current_dir)))
-
-    # Verificar se estamos no diretório correto
-    if os.path.basename(root_dir) != "orchestrator":
-        # Se não estamos no diretório correto, usar o diretório atual como base
-        root_dir = os.path.dirname(os.path.dirname(current_dir))
-
-    # Caminho absoluto para o arquivo de credenciais na raiz do projeto
-    SERVICE_ACCOUNT_FILE = os.path.join(root_dir, "api_google_sheets.json")
+    SERVICE_ACCOUNT_FILE = os.path.join(current_dir, "api_google_sheets.json")
 
     # Verificar se o arquivo existe
     if not os.path.exists(SERVICE_ACCOUNT_FILE):
