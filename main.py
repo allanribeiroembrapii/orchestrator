@@ -133,8 +133,8 @@ def main():
         success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
 
     # 4. CG Classificação de Projetos - Validação Diretoria de Operações
-    if success:
-        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
+    # if success:
+    #     success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
     
     # Calculate total execution time
     end_time = datetime.now()
