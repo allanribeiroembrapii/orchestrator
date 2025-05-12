@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import inspect
 import pandas as pd
+import win32com.client as win32
 
 # Carregar as variáveis de ambiente
 load_dotenv()
@@ -29,7 +30,7 @@ def truncate_text(text, max_length=15):
         print(f"🔴 Erro: {e}")
     
 
-def mensagem_teams_atrasos():
+def mensagem_atrasos(destinatarios):
     """
     Função para gerar a mensagem a ser enviada para o Teams, com imagens, textos e tabelas
 
@@ -482,9 +483,252 @@ def mensagem_teams_atrasos():
             ]
         }
 
+
+        # EMAIL
+        html = f"""
+        <html>
+            <head>
+            <style>
+                body {{
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                }}
+                .container {{
+                max-width: 800px;
+                margin: auto;
+                padding: 20px;
+                }}
+                .titulo {{
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 20px;
+                text-align: center;
+                }}
+                .subtitulo {{
+                border-top: 1px solid #ccc;
+                font-size: 18px;
+                font-weight: bold;
+                padding-top: 15px;
+                margin-top: 15px;
+                color: #0078D4;
+                }}
+                .tabela {{
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+                }}
+                .tabela th, .tabela td {{
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: center;
+                }}
+                .tabela th {{
+                background-color: #f4f4f4;
+                }}
+                .botao {{
+                display: inline-block;
+                background-color: #0078D4;
+                color: white;
+                padding: 12px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                margin-top: 80px;
+                }}
+                .imagem-banner {{
+                width: 100%;
+                height: auto;
+                }}
+            </style>
+            </head>
+            <body>
+            <div class="container">
+                <img src="https://i.imgur.com/aCPi0n8.png" alt="Banner Monitoramento de Projetos" class="imagem-banner">
+
+                <p><strong>Data: </strong>{data}</p>
+
+                <div class="subtitulo">📌 Números Gerais</div>
+                <table class="tabela">
+                <thead>
+                    <tr>
+                    <th>Indicador</th>
+                    <th>Total</th>
+                    <th>Nesta semana</th>
+                    </tr>
+                </thead>
+                <tbody>
+                """
+        
+        for i in range(len(tabela_geral["Indicador"])):
+            html += f"""
+                <tr>
+                    <td>{ tabela_geral["Indicador"][i] }</td>
+                    <td>{ tabela_geral["Total"][i] }</td>
+                    <td>{ tabela_geral["Última semana"][i] }</td>
+                    </tr>
+                """
+
+        html += f"""
+        </tbody>
+                </table>
+                    <div class="subtitulo">📌 Projetos Concluídos nesta semana</div>
+        """
+
+        if novos.empty:
+            html += """
+            <p>Nenhum.</p>
+            """
+        else:
+            html += f"""
+            <table class="tabela">
+            <thead>
+                <tr>
+                <th>Código</th>
+                <th>Modalidade</th>
+                <th>Duração</th>
+                </tr>
+            </thead>
+            <tbody>
+            """
+            for _, row in novos.iterrows():
+                html += f"""
+                <tr>
+                    <td>{row["codigo_projeto"]}</td>
+                    <td>{row["modalidade"]}</td>
+                    <td>{row["duracao_dias"]} dias</td>
+                </tr>
+                """
+
+        html += f"""
+        </tbody>
+                </table>
+        <div class="subtitulo">📌 Projetos Atrasados nesta semana</div>
+        """
+
+        if novos2.empty:
+            html += """
+            <p>Nenhum.</p>
+            """
+        else:
+            html += f"""
+            <table class="tabela">
+            <thead>
+                <tr>
+                <th>Código</th>
+                <th>Data de término</th>
+                <th>Prazo</th>
+                </tr>
+            </thead>
+            <tbody>
+            """
+            for _, row in novos2.iterrows():
+                html += f"""
+                <tr>
+                    <td>{row["codigo_projeto"]}</td>
+                    <td>{row["data_termino"]}</td>
+                    <td>{row["prazo"]} dias</td>
+                </tr>
+                """
+
+
+        html += """
+        </tbody>
+                </table>
+        <div class="subtitulo">📌 Macroentregas Atrasadas nesta semana</div>
+        """
+
+        if novas_macro.empty:
+            html += """
+            <p>Nenhuma.</p>
+            """
+        else:
+            html += f"""
+            <table class="tabela">
+            <thead>
+                <tr>
+                <th>Código</th>
+                <th>ME</th>
+                <th>Data de término planejada</th>
+                <th>Prazo</th>
+                </tr>
+            </thead>
+            <tbody>
+            """
+            for _, row in novas_macro.iterrows():
+                html += f"""
+                <tr>
+                    <td>{row["codigo_projeto"]}</td>
+                    <td>{row["num_macroentrega"]}</td>
+                    <td>{pd.to_datetime(row["data_termino_planejado"]).strftime("%d/%m/%Y")}</td>
+                    <td>{row["prazo"]} dias</td>
+                </tr>
+                """
+        
+        html += f"""
+        </tbody>
+                </table>
+        <div class="subtitulo">📌 Macroentregas sem Termo (+60 dias) nesta semana</div>
+        """
+
+        if macro_sem_termo_60_novas.empty:
+            html += """
+            <p>Nenhuma.</p>
+            """
+
+        else:
+            html += f"""
+            <table class="tabela">
+            <thead>
+                <tr>
+                <th>Código</th>
+                <th>ME</th>
+                <th>Prazo</th>
+                </tr>
+            </thead>
+            <tbody>
+            """
+            for _, row in macro_sem_termo_60_novas.iterrows():
+                html += f"""
+                <tr>
+                    <td>{row["codigo_projeto"]}</td>
+                    <td>{row["num_macroentrega"]}</td>
+                    <td>{row["prazo"]} dias</td>
+                </tr>
+                """
+        html += """
+        </tbody>
+                </table>
+                <div style="text-align: center; margin-top: 50px;">
+                <a href="https://app.powerbi.com/Redirect?action=OpenReport&appId=a545d987-6ef5-4df2-816d-df6e337bc2e8&reportObjectId=ee865143-b695-4537-97f6-f74173d6c652&ctid=8fb344f4-0740-4e5a-b2c1-53858c0c732f&reportPage=739ea8bad70e0d06a51a&pbi_source=appShareLink"
+                class="botao"
+                style="display: inline-block; margin: 10px; padding: 10px 20px; background-color: #0078d4; color: white; text-decoration: none; border-radius: 5px;">
+                🔗 Painel de Monitoramento
+                </a>
+
+                <a href="https://app.powerbi.com/groups/me/apps/ccbb1664-f0e2-439f-b607-12a98a3341e2/reports/da2a702a-8877-4eb1-a09a-76904e572776/be085ea1a58ee560d08a?ctid=8fb344f4-0740-4e5a-b2c1-53858c0c732f&experience=power-bi"
+                class="botao"
+                style="display: inline-block; margin: 10px; padding: 10px 20px; background-color: #0078d4; color: white; text-decoration: none; border-radius: 5px;">
+                🔗 Contato das Unidades
+                </a>
+            </div>
+
+
+                <img src="https://i.imgur.com/lhEXiPg.png" alt="Banner Final" class="imagem-banner" style="margin-top: 40px;">
+            </div>
+            </body>
+        </html>
+        """
+
+        outlook = win32.Dispatch("Outlook.Application")
+        mail = outlook.CreateItem(0)
+        mail.To = ";".join(destinatarios)
+        mail.Subject = "🔔 Monitoramento de Projetos | Alerta Semanal"
+        mail.HTMLBody = html
+        mail.Send()
+
         print("🟢 " + inspect.currentframe().f_code.co_name)
 
-        return payload
+        return payload, html
     
     except Exception as e:
         print(f"🔴 Erro: {e}")

@@ -4,8 +4,8 @@ from scripts.apagar_arquivos_pasta import apagar_arquivos_pasta
 from scripts.mover_arquivos import mover_arquivos_excel, mover_arquivo_especifico
 from scripts.buscar_arquivos_sharepoint import buscar_arquivos_sharepoint
 from scripts.levar_arquivos_sharepoint import levar_arquivos_sharepoint
-from atrasos.mensagem_chat_teams import mensagem_teams_atrasos, enviar_mensagem_teams_atrasos
-from mover.mensagem_chat_teams import mensagem_teams_mover, enviar_mensagem_teams_mover
+from atrasos.mensagem_chat_teams import mensagem_atrasos, enviar_mensagem_teams_atrasos
+from mover.mensagem_chat_teams import mensagem_mover, enviar_mensagem_teams_mover
 from scripts.registro_alertas import registrar_envio
 import inspect
 from datetime import datetime
@@ -40,11 +40,16 @@ def main():
 
 
         ## MOVER - PROJETOS NOVOS COM MAIS DE R$5 MILHÕES ##
-        mensagem_mover = mensagem_teams_mover()
+        destinatarios_mover = [
+            "milena.goncalves@embrapii.org.br",
+            "allan.ribeiro@embrapii.org.br"
+        ]
 
-        if mensagem_mover:
-            enviar_mensagem_teams_mover(mensagem_mover)
-            registrar_envio(caminho, 2, mensagem_mover)
+        mover, html_mover = mensagem_mover(destinatarios_mover)
+
+        if mover:
+            enviar_mensagem_teams_mover(mover)
+            registrar_envio(caminho, 2, html_mover)
 
         
         ## TODA SEGUNDA - MANDAR ALERTA DE ATRASOS ##
@@ -60,10 +65,15 @@ def main():
             mover_arquivos_excel(3, PLANILHAS, PLANILHAS_ATRASOS)
         
             # Mensagem
-            mensagem_atrasos = mensagem_teams_atrasos()
+            destinatarios_atrasos = [
+            "milena.goncalves@embrapii.org.br",
+            "allan.ribeiro@embrapii.org.br"
+            ]
+
+            atrasos, html_atrasos = mensagem_atrasos(destinatarios_atrasos)
         
-            # enviar_mensagem_teams_atrasos(mensagem_atrasos)
-            registrar_envio(caminho, 1, mensagem_atrasos)
+            enviar_mensagem_teams_atrasos(atrasos)
+            registrar_envio(caminho, 1, html_atrasos)
 
             # mover registro_alertas de 'planilhas' em 'atrasos' para 'copy_sharepoint_atual'
             mover_arquivo_especifico('registro_alertas.xlsx', PLANILHAS_ATRASOS, PLANILHAS)
