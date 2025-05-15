@@ -8,7 +8,6 @@ load_dotenv()
 ROOT = os.getenv('ROOT')
 
 #Definição dos caminhos
-DIR_PLANILHAS_ATRASOS = os.path.abspath(os.path.join(ROOT, 'atrasos', 'planilhas'))
 DIR_PLANILHAS = os.path.abspath(os.path.join(ROOT, 'copy_sharepoint_atual'))
 PATH_OFFICE = os.path.abspath(os.path.join(ROOT, 'connection', 'office365_api'))
 
@@ -30,7 +29,7 @@ def buscar_arquivos_sharepoint():
 
         get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "portfolio.xlsx", "DWPII/srinfo", DIR_PLANILHAS)
         get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "registro_alertas.xlsx", "DWPII/alertas", DIR_PLANILHAS)
-        get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "macroentregas.xlsx", "DWPII/srinfo", DIR_PLANILHAS_ATRASOS)
+        get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "macroentregas.xlsx", "DWPII/srinfo", DIR_PLANILHAS)
 
         print("🟢 " + inspect.currentframe().f_code.co_name)
     except Exception as e:

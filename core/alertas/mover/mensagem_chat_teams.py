@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import inspect
 from datetime import datetime
+import win32com.client as win32
 
 # Carregar as variáveis de ambiente
 load_dotenv()
@@ -15,7 +16,7 @@ WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 data = datetime.now().strftime('%d/%m/%Y')
 
 
-def mensagem_teams_mover():
+def mensagem_mover(destinatarios):
     """
     Função para gerar a mensagem a ser enviada para o Teams, com imagens, textos e tabelas
 
@@ -29,7 +30,7 @@ def mensagem_teams_mover():
         # Criar lista de colunas formatadas para o Teams
         if novos_acima_5mi.empty:
             print("🟡 Não há novos projetos acima de R$ 5 milhões.")
-            return None
+            return None, None
         else:
             cards = [
                 {
@@ -154,10 +155,116 @@ def mensagem_teams_mover():
                 }
             ]
         }
+            
+
+
+        # Enviar e-mail com as mesmas informações
+        if not novos_acima_5mi.empty:
+            # Corpo do e-mail (HTML)
+            html = f"""
+            <html>
+            <head>
+            <style>
+                body {{
+                    font-family: Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                }}
+                .container {{
+                    max-width: 800px;
+                    margin: auto;
+                    padding: 20px;
+                }}
+                .projeto {{
+                    border-top: 1px solid #ccc;
+                    padding-top: 15px;
+                    margin-top: 15px;
+                }}
+                .titulo {{
+                    text-align: center;
+                    font-size: 18px;
+                    font-weight: bold;
+                }}
+                .subtitulo {{
+                    text-align: center;
+                    font-size: 18px;
+                    font-weight: bold;
+                }}
+                .botao {{
+                    display: inline-block;
+                    background-color: #0078D4;
+                    color: white;
+                    padding: 12px 20px;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    margin: 30px auto;
+                    text-align: center;
+                }}
+            </style>
+            </head>
+            <body>
+            <div class="container">
+                <div style="text-align: center;">
+                <img src="https://i.imgur.com/Bw4dGHM.png" alt="Banner Mover" style="width: 100%;">
+                </div>
+
+                <p><b>Data:</b> {data}</p>
+
+                <!-- Título dinâmico -->
+                {"<div class='titulo'>⚠️ Um novo projeto MOVER</div><div class='subtitulo'>acima de R$ 5 milhões</div>" if len(novos_acima_5mi) == 1 else f"<div class='titulo'>⚠️ {len(novos_acima_5mi)} novos projetos MOVER</div><div class='subtitulo'>acima de R$ 5 milhões</div>"}
+            """
+
+            # Adiciona cada projeto ao HTML
+            for _, row in novos_acima_5mi.iterrows():
+                html += f"""
+                <div class="projeto">
+                <h4>📌 Projeto: {row['titulo']}</h4>
+                <ul>
+                    <li><b>Código do Projeto:</b> {row['codigo_projeto']}</li>
+                    <li><b>Código da Negociação:</b> {row['codigo_negociacao']}</li>
+                    <li><b>Unidade Embrapii:</b> {row['unidade_embrapii']}</li>
+                    <li><b>Data do Contrato:</b> {row['data_contrato'].strftime('%d/%m/%Y')}</li>
+                    <li><b>Modalidade de financiamento:</b> {row['modalidade_financiamento']}</li>
+                    <li><b>Valor Total:</b> {formatar_valor(row['valor_total'])}</li>
+                </ul>
+                </div>
+                """
+
+
+            # Botão e imagem final
+            html += """
+                <div style="text-align: center;">
+                <a href="https://app.powerbi.com/Redirect?action=OpenReport&appId=a545d987-6ef5-4df2-816d-df6e337bc2e8&reportObjectId=7c4d7ea7-9276-47c8-b24c-90d0399df3d5&ctid=8fb344f4-0740-4e5a-b2c1-53858c0c732f&reportPage=a191642d4504d5e26ffb&pbi_source=appShareLink&portalSessionId=8738083d-ca1b-446b-98a5-a06b7a02c39c"
+                    class="botao"
+                    style="display: inline-block; background-color: #006ba7; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">🔗 Acessar Painel MOVER</a>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                <img src="https://i.imgur.com/M2cS1iy.png" alt="Rodapé" style="width: 100%;">
+                </div>
+            </div>
+            </body>
+            </html>
+            """
+
+            # Definição do título com base na quantidade
+            if len(novos_acima_5mi) > 1:
+                titulo = f"<h2 style='text-align:center;'>⚠️ <b>{len(novos_acima_5mi)} novos projetos MOVER</b><br>acima de R$ 5 milhões</h2>"
+            else:
+                titulo = "<h2 style='text-align:center;'>⚠️ <b>Um novo projeto MOVER</b><br>acima de R$ 5 milhões</h2>"
+
+
+            outlook = win32.Dispatch("Outlook.Application")
+            mail = outlook.CreateItem(0)
+            mail.To = ";".join(destinatarios)
+            mail.Subject = "⚠️ Alerta de Novos Projetos MOVER acima de R$ 5 milhões"
+            mail.HTMLBody = html
+            mail.Send()
+
 
         print("🟢 " + inspect.currentframe().f_code.co_name)
 
-        return payload
+        return payload, html
     
     except Exception as e:
         print(f"🔴 Erro: {e}")
@@ -181,3 +288,7 @@ def enviar_mensagem_teams_mover(payload):
         print("🟢 " + inspect.currentframe().f_code.co_name)
     except Exception as e:
         print(f"🔴 Erro: {e}")
+
+
+def formatar_valor(valor):
+    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
