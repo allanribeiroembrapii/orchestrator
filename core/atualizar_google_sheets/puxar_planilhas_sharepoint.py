@@ -31,6 +31,8 @@ def puxar_planilhas():
     get_file("classificacao_projeto.xlsx", "DWPII/srinfo", inputs)
     get_file("projetos.xlsx", "DWPII/srinfo", inputs)
     get_file("prospeccao_prospeccao.xlsx", "DWPII/srinfo", inputs)
+    get_file("negociacoes_propostas_tecnicas.xlsx", "DWPII/srinfo", inputs)
+    get_file("qim.xlsx", "DWPII/qim_ues", inputs)
     get_file("cnae_ibge.xlsx", "DWPII/lookup_tables", inputs)
     print("🟢 " + inspect.currentframe().f_code.co_name)
 

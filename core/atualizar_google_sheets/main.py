@@ -46,6 +46,8 @@ PROSPECCOES = os.path.abspath(
 )
 CNAE_IBGE = os.path.abspath(os.path.join(ROOT, "inputs", "cnae_ibge.xlsx"))
 PEDIDOS_PI = os.path.abspath(os.path.join(ROOT, "inputs", "pedidos_pi.xlsx"))
+PROPOSTAS_TECNICAS = os.path.abspath(os.path.join(ROOT, "inputs", "negociacoes_propostas_tecnicas.xlsx"))
+QIM_UES = os.path.abspath(os.path.join(ROOT, "inputs", "qim.xlsx"))
 
 
 def main():
@@ -69,6 +71,8 @@ def main():
             "raw_prospeccao_prospeccao": PROSPECCOES,
             "raw_cnae_ibge": CNAE_IBGE,
             "raw_pedidos_pi": PEDIDOS_PI,
+            "raw_negociacoes_propostas_tecnicas": PROPOSTAS_TECNICAS,
+            "raw_qim_ues": QIM_UES,
         }
 
         for aba, caminho_arquivo in abas.items():

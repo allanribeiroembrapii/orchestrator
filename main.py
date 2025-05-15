@@ -18,6 +18,7 @@ from core.atualizar_google_sheets.main import main as google_sheets_main
 from core.api_datapii.main import main as api_datapii_main
 from core.cg_classificacao_projetos_do.main import main as cg_classificacao_projetos_do
 from core.pipeline_embrapii_srinfo.scripts_public.comparar_excel import comparar_excel
+from core.qim_ues.main import qim_ues
 from logs.teams_notifier import enviar_notificacao_teams
 
 def execute_module(module_name, module_function, logger, module_idx=None, frequency=None):
@@ -123,16 +124,20 @@ def main():
     # 1. Execute pipeline_embrapii_srinfo
     if success:
         success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
+
+    # 2. Execute pipeline_embrapii_srinfo
+    if success:
+        success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
     
-    # 2. Execute atualizar_google_sheets
+    # 3. Execute atualizar_google_sheets
     if success:
         success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
     
-    # 3. Execute api_datapii
+    # 4. Execute api_datapii
     if success:
         success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
 
-    # 4. CG Classificação de Projetos - Validação Diretoria de Operações
+    # 5. CG Classificação de Projetos - Validação Diretoria de Operações
     # if success:
     #     success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
     
