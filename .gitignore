@@ -72,3 +72,6 @@ core/office365_api/storage/
 # Arquivos de dados
 *.csv
 *.xlsx
+
+
+*.zip
