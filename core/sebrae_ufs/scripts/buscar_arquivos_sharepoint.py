@@ -29,11 +29,10 @@ if not os.path.exists(STEP3):
 sys.path.append(SCRIPTS)
 sys.path.append(PATH_OFFICE)
 
-from download_files import get_file
+from download_files import get_file, get_files
 from scripts.apagar_arquivos_pasta import apagar_arquivos_pasta
 
-
-def buscar_arquivos_sharepoint():
+def buscar_arquivos_sharepoint(gerar_novo = False):
     apagar_arquivos_pasta(STEP1)
     apagar_arquivos_pasta(STEP2)
     apagar_arquivos_pasta(STEP3)
@@ -42,5 +41,14 @@ def buscar_arquivos_sharepoint():
     get_file("macroentregas.xlsx", "DWPII//srinfo", STEP1)
     get_file("projetos_empresas.xlsx", "DWPII//srinfo", STEP1)
     get_file("informacoes_empresas.xlsx", "DWPII//srinfo", STEP1)
+    get_file("empresas_contratantes.xlsx", "DWPII//srinfo", STEP1)
     get_file("pedidos_pi.xlsx", "DWPII//srinfo", STEP1)
-    get_file("srinfo_sebrae_sourceamount.xlsx", "dw_pii", STEP1)
+    get_file("info_unidades_embrapii.xlsx", "DWPII//srinfo", STEP1)
+    get_file("ibge_municipios.xlsx", "DWPII//lookup_tables", STEP1)
+    get_file("oni_companies.xlsx", "dw_pii", STEP1)
+    get_file("Contas Bancárias - UE.xlsx", "DWPII//lookup_tables", STEP1)
+    # get_file("srinfo_sebrae_sourceamount.xlsx", "dw_pii", STEP1)
+    # get_file("srinfo_unit.xlsx", "dw_pii", STEP1)
+    # get_file("srinfo_company_company.xlsx", "dw_pii", STEP1)
+    if gerar_novo == False:
+        get_files("DWPII//sebrae_ufs", STEP1)
