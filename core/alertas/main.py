@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 from scripts.apagar_arquivos_pasta import apagar_arquivos_pasta
 from scripts.mover_arquivos import mover_arquivos_excel, mover_arquivo_especifico
-from scripts.buscar_arquivos_sharepoint import buscar_arquivos_sharepoint
+from scripts.buscar_arquivos_sharepoint import buscar_arquivos_sharepoint, buscar_arquivos_sharepoint2
 from scripts.levar_arquivos_sharepoint import levar_arquivos_sharepoint
 from atrasos.mensagem_chat_teams import mensagem_atrasos, enviar_mensagem_teams_atrasos
 from mover.mensagem_chat_teams import mensagem_mover, enviar_mensagem_teams_mover
@@ -33,7 +33,7 @@ def main():
         apagar_arquivos_pasta(ANTERIOR)
 
         # Mover arquivos de "copy_sharepoint_atual" para "copy_sharepoint_anterior"
-        mover_arquivos_excel(1, PLANILHAS, ANTERIOR)
+        mover_arquivos_excel(2, PLANILHAS, ANTERIOR)
 
         # Buscar arquivos no Sharepoint
         buscar_arquivos_sharepoint()
@@ -42,7 +42,11 @@ def main():
         ## MOVER - PROJETOS NOVOS COM MAIS DE R$5 MILHÕES ##
         destinatarios_mover = [
             "milena.goncalves@embrapii.org.br",
-            "allan.ribeiro@embrapii.org.br"
+            "allan.ribeiro@embrapii.org.br",
+            "luciano.sousa@embrapii.org.br",
+            "leticia.claro@embrapii.org.br",
+            "claudio.schefer@embrapii.org.br",
+            "willian.santos@embrapii.org.br"
         ]
 
         mover, html_mover = mensagem_mover(destinatarios_mover)
@@ -61,13 +65,16 @@ def main():
             # Mover arquivos de "planilhas" para "anterior"
             mover_arquivos_excel(2, PLANILHAS_ATRASOS, ANTERIOR_ATRASOS)
 
-            # Mover arquivos de "copy_sharepoint_atual" para "planilhas"
-            mover_arquivos_excel(3, PLANILHAS, PLANILHAS_ATRASOS)
+            # Buscar arquivos no Sharepoint
+            buscar_arquivos_sharepoint2()
         
             # Mensagem
             destinatarios_atrasos = [
             "milena.goncalves@embrapii.org.br",
-            "allan.ribeiro@embrapii.org.br"
+            "allan.ribeiro@embrapii.org.br",
+            "fabio@embrapii.org.br",
+            "michele.mamede@embrapii.org.br",
+            "etienne.arruda@embrapii.org.br"
             ]
 
             atrasos, html_atrasos = mensagem_atrasos(destinatarios_atrasos)
