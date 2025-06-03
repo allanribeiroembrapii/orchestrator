@@ -1,8 +1,8 @@
 import os
 import sys
 from dotenv import load_dotenv
-from atualizar_google_sheets.puxar_planilhas_sharepoint import puxar_planilhas
-from atualizar_google_sheets.atualizacao_gsheet import atualizar_gsheet
+from core.atualizar_google_sheets.puxar_planilhas_sharepoint import puxar_planilhas
+from core.atualizar_google_sheets.atualizacao_gsheet import atualizar_gsheet
 
 # Adicionar o caminho do diretório raiz ao sys.path para importar o logger
 current_dir = os.path.dirname(os.path.abspath(__file__))

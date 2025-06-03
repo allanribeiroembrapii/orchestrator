@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
-from qim_ues.scripts_public.apagar_arquivos_pasta import apagar_arquivos_pasta
-from qim_ues.office365_api.download_files import get_files
+from scripts_public.apagar_arquivos_pasta import apagar_arquivos_pasta
+from office365_api.download_files import get_files
 
 #carregar .env
 load_dotenv()

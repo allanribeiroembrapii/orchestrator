@@ -56,6 +56,8 @@ def sharepoint_get():
     get_file("portfolio.xlsx", "DWPII/srinfo", RAW)
     get_file("projetos_empresas.xlsx", "DWPII/srinfo", RAW)
     get_file("info_unidades_embrapii.xlsx", "DWPII/srinfo", RAW)
+    get_file("info_empresas.xlsx", "DWPII/srinfo", RAW)
+    get_file("equipe_ue.xlsx", "DWPII/srinfo", RAW)
     print("🟢 " + inspect.currentframe().f_code.co_name)
 
 

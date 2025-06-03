@@ -4,8 +4,8 @@ import shutil
 import win32com.client as win32
 import pandas as pd
 from dotenv import load_dotenv
-from cg_classificacao_projetos_do.office365_api.download_files import get_file
-from cg_classificacao_projetos_do.office365_api.upload_files import upload_files
+from core.cg_classificacao_projetos_do.office365_api.download_files import get_file
+from core.cg_classificacao_projetos_do.office365_api.upload_files import upload_files
 from datetime import datetime
 
 # carregar .env e tudo mais

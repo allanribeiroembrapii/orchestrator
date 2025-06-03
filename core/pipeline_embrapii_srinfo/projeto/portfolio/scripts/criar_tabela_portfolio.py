@@ -12,6 +12,11 @@ def criar_tabela_portfolio():
     raw_relatorio_projetos_contratados_path = os.path.join(base_dir, 'projeto', 'portfolio', 'step_1_data_raw', 'raw_relatorio_projetos_contratados_1.xlsx')
     raw_sebrae_path = os.path.join(base_dir, 'projeto', 'portfolio', 'step_1_data_raw', 'raw_sebrae.xlsx')
     raw_sebrae_srinfo_path = os.path.join(base_dir, 'projeto', 'portfolio', 'step_1_data_raw', 'raw_sebrae_srinfo.xlsx')
+    raw_ibge_ipca = os.path.join(base_dir, 'DWPII_copy', 'ipca_ibge.xlsx')
+    raw_projetos_empresas = os.path.join(base_dir, 'projeto', 'projetos_empresas', 'step_3_data_processed', 'projetos_empresas.xlsx')
+    raw_info_empresas = os.path.join(base_dir, 'projeto', 'projetos_empresas', 'step_3_data_processed', 'informacoes_empresas.xlsx')
+    raw_unidade_embrapii = os.path.join(base_dir, 'unidade_embrapii', 'info_unidades', 'step_3_data_processed', 'info_unidades_embrapii.xlsx')
+    raw_pedidos_pi = os.path.join(base_dir, 'projeto', 'pedidos_pi', 'step_3_data_processed', 'pedidos_pi.xlsx')
     destino = os.path.join(base_dir, 'projeto', 'portfolio', 'step_3_data_processed')
     arquivo_destino = os.path.join(destino, 'portfolio.xlsx')
 
@@ -22,6 +27,11 @@ def criar_tabela_portfolio():
     df_relatorio_projetos_contratados = pd.read_excel(raw_relatorio_projetos_contratados_path)
     df_sebrae = pd.read_excel(raw_sebrae_path)
     df_sebrae_srinfo = pd.read_excel(raw_sebrae_srinfo_path)
+    df_ipca = pd.read_excel(raw_ibge_ipca)
+    df_projetos_empresas = pd.read_excel(raw_projetos_empresas)
+    df_info_empresas = pd.read_excel(raw_info_empresas)
+    df_unidade_embrapii = pd.read_excel(raw_unidade_embrapii)
+    df_pedidos_pi = pd.read_excel(raw_pedidos_pi)
 
     # Escolher somente colunas desejadas sebrae
     df_sebrae = df_sebrae[['Código', 'Valor aportado SEBRAE', 'Valor aportado Empresa (SEBRAE)', 'Valor aportado pela Unidade', 'Valor aportado EMBRAPII']]
@@ -198,6 +208,75 @@ def criar_tabela_portfolio():
 
     for campo in campos_valores:
         df_portfolio[campo] = df_portfolio[campo].apply(pd.to_numeric, errors='coerce').fillna(0)
+    
+    # Aplicar correção
+    colunas_valores = [
+        "valor_embrapii",
+        "valor_empresa",
+        "valor_unidade_embrapii",
+        "valor_sebrae",
+    ]
+    for col in colunas_valores:
+        nova_col = f"_ipca_{col}"
+        df_portfolio[nova_col] = df_portfolio.apply(
+            lambda row: corrigir_valor_ipca(
+                df_ipca, row["data_contrato"].year, row["data_contrato"].month, row[col]
+            ),
+            axis=1,
+        )
+    # Criar a coluna _ipca_valor_total com a soma das colunas corrigidas
+    colunas_ipca = [f"_ipca_{col}" for col in colunas_valores]
+    df_portfolio["_ipca_valor_total"] = df_portfolio[colunas_ipca].sum(axis=1)
+
+    # Empresas
+    df_info_empresas['info_empresa'] = df_info_empresas.apply(
+        lambda x: f"[{x['cnpj']}] {x['empresa']} [{x['uf']}] [{x['porte']}] [CNAE: {x['cnae_subclasse']}]",
+        axis=1
+    )
+    df_projetos_empresas = df_projetos_empresas.merge(
+        df_info_empresas[['cnpj', 'info_empresa']],
+        on='cnpj',
+        how='left'
+    )
+    df_empresas_agregadas_por_projeto = (
+        df_projetos_empresas.groupby('codigo_projeto')['info_empresa']
+        .apply(lambda x: '; '.join(x.dropna().astype(str)))
+        .reset_index()
+    )
+    df_portfolio = df_portfolio.merge(
+        df_empresas_agregadas_por_projeto,
+        on='codigo_projeto',
+        how='left'
+    )
+    df_portfolio['n_empresas'] = df_portfolio['info_empresa'].apply(
+        lambda x: len(x.split(';')) if pd.notnull(x) else 0
+    )
+
+    # Unidades Embrapii
+    df_unidade_embrapii_renomeado = df_unidade_embrapii.rename(columns={
+        'uf': 'ue_uf',
+        'tipo_instituicao': 'ue_tipo_instituicao',
+        'competencias_tecnicas': 'ue_competencias_tecnicas',
+        'status_credenciamento': 'ue_status'
+    })
+    df_portfolio = df_portfolio.merge(
+        df_unidade_embrapii_renomeado[['unidade_embrapii', 'ue_uf', 'ue_tipo_instituicao', 'ue_competencias_tecnicas', 'ue_status']],
+        on='unidade_embrapii',
+        how='left'
+    )
+
+    # Pedidos de PI
+    df_pedidos_pi_count = (
+        df_pedidos_pi.groupby('codigo_projeto')
+        .size()
+        .reset_index(name='n_pedidos_pi')
+    )
+    df_portfolio = df_portfolio.merge(
+        df_pedidos_pi_count,
+        on='codigo_projeto',
+        how='left'
+    )
+    df_portfolio['n_pedidos_pi'] = df_portfolio['n_pedidos_pi'].fillna(0).astype(int)
 
     # Garantir que o diretório de destino existe
     os.makedirs(destino, exist_ok=True)
@@ -228,6 +307,52 @@ def criar_tabela_portfolio():
             if campo in df_portfolio.columns:
                 col_idx = df_portfolio.columns.get_loc(campo)
                 worksheet.set_column(col_idx, col_idx, 20, format_currency)
+
+
+def corrigir_valor_ipca(ipca_df, ano_contrato, mes_contrato, valor):
+    """
+    Corrige um valor monetário com base na variação do IPCA entre o mês anterior ao início do contrato
+    e o último mês disponível no IPCA, conforme metodologia do IBGE.
+
+    Se o contrato for posterior ao último IPCA disponível, retorna o valor original (sem correção).
+
+    https://www.ibge.gov.br/explica/inflacao.php
+    """
+    ipca_df["Mês (Código)"] = ipca_df["Mês (Código)"].astype(str)
+
+    # Definir o mês anterior ao contrato
+    if mes_contrato == 1:
+        mes_anterior = 12
+        ano_anterior = ano_contrato - 1
+    else:
+        mes_anterior = mes_contrato - 1
+        ano_anterior = ano_contrato
+
+    mes_anterior_str = f"{ano_anterior}{mes_anterior:02d}"
+
+    # Verifica o último mês disponível na base do IPCA
+    ultimo_mes_ipca = ipca_df["Mês (Código)"].iloc[-1]
+
+    # Se o mês anterior ao contrato for posterior ao último IPCA, não corrige
+    if mes_anterior_str > ultimo_mes_ipca:
+        return valor  # valor nominal
+
+    try:
+        ipca_base = float(
+            ipca_df.loc[ipca_df["Mês (Código)"] == mes_anterior_str, "Valor"].values[0]
+        )
+        ipca_final = float(
+            ipca_df.loc[ipca_df["Mês (Código)"] == ultimo_mes_ipca, "Valor"].values[0]
+        )
+
+        if ipca_base == 0:
+            return None
+
+        fator = ipca_final / ipca_base
+        return valor * fator
+    except IndexError:
+        return None
+
 
 # Exemplo de chamada da função
 if __name__ == "__main__":

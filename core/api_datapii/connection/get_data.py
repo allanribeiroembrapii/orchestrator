@@ -1,5 +1,6 @@
 import os
 import sys
+import inspect
 from dotenv import load_dotenv
 
 # Obter o diretório atual e o diretório raiz
@@ -52,6 +53,7 @@ if not STEP_3_DATA_PROCESSED:
 
 
 def get_data():
+    print("🟡 " + inspect.currentframe().f_code.co_name)
     # Verificar e criar diretórios necessários
     RAW = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW))
     STAGE = os.path.abspath(os.path.join(ROOT, STEP_2_STAGE_AREA))
@@ -64,3 +66,4 @@ def get_data():
     # Obter dados
     sharepoint_get()
     api_ibge()
+    print("🟢 " + inspect.currentframe().f_code.co_name)

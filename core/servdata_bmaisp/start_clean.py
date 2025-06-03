@@ -1,16 +1,11 @@
 import os
 import shutil
 import inspect
-from dotenv import load_dotenv
-
-load_dotenv()
-
-ROOT = os.getenv('ROOT_CLICKHOUSE_QUERYS')
 
 def start_clean():
     print("🟡 " + inspect.currentframe().f_code.co_name)
     # Corrigindo o caminho base para ser absoluto e garantindo que funciona em qualquer sistema operacional
-    base_path = os.path.abspath(os.path.join(ROOT, './data'))
+    base_path = os.path.abspath('./data')
 
     # Verifica se a pasta data existe e apaga se existir
     if os.path.exists(base_path):

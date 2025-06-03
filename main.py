@@ -2,11 +2,12 @@ import os
 import sys
 import time
 from datetime import datetime, timedelta
+import locale
 
-# Add directories to path
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_dir)
-sys.path.append(os.path.join(current_dir, 'core'))
+# # Add directories to path
+# current_dir = os.path.dirname(os.path.abspath(__file__))
+# sys.path.append(current_dir)
+# sys.path.append(os.path.join(current_dir, 'core'))
 
 # Import orchestrator logger
 from logs.orchestrator_logs import OrchestratorLogger
@@ -19,6 +20,10 @@ from core.api_datapii.main import main as api_datapii_main
 from core.cg_classificacao_projetos_do.main import main as cg_classificacao_projetos_do
 from core.pipeline_embrapii_srinfo.scripts_public.comparar_excel import comparar_excel
 from core.qim_ues.main import qim_ues
+from core.clickhouse_saldo_bancario.main import main_agfinanceiro
+from core.clickhouse_querys.main import clickhouse_querys
+from core.servdata_bmaisp.main import main_bmaisp as bmaisp
+from core.rvg_repositorio_visuais_graficos.main import main_rvg
 from logs.teams_notifier import enviar_notificacao_teams
 
 def execute_module(module_name, module_function, logger, module_idx=None, frequency=None):
@@ -26,7 +31,7 @@ def execute_module(module_name, module_function, logger, module_idx=None, freque
 
     if not should_execute_today(frequency):
         print(f"\nSkipping {module_name} due to frequency setting: '{frequency}'")
-        return None
+        return True
     
     start_time = datetime.now()
     print(f"\n{'='*50}")
@@ -64,8 +69,9 @@ def should_execute_today(frequency: str | int | None) -> bool:
     if frequency is None:
         return True  # Executa sempre se não há frequência definida
 
+    locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
     today = datetime.today()
-    weekday = today.strftime('%A').lower()  # e.g., "monday"
+    weekday = today.strftime('%A').lower()
     day_of_month = today.day
 
     if isinstance(frequency, str):
@@ -121,39 +127,65 @@ def main():
     # Execute modules in sequence
     success = True
     
-    # 1. Execute pipeline_embrapii_srinfo
-    if success:
-        success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
-
-    # 2. Execute pipeline_embrapii_srinfo
-    if success:
-        success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
+    # # # pipeline_embrapii_srinfo
+    # # if success:
+    # #     success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
     
-    # 3. Execute atualizar_google_sheets
-    if success:
-        success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
+    # # # # # qim_ues
+    # # if success:
+    # #     success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
     
-    # 4. Execute api_datapii
-    if success:
-        success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
-
-    # 5. CG Classificação de Projetos - Validação Diretoria de Operações
+    # # # # atualizar_google_sheets
+    # # if success:
+    # #     success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
+    
+    # # # api_datapii
     # if success:
-    #     success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
+    #     success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
+
+    # # # CG Classificação de Projetos - Validação Diretoria de Operações
+    # # if success:
+    # #     success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
     
-    # Calculate total execution time
+    # # Brasil Mais Produtivo
+    # # if success:
+    # #     success = execute_module("bmaisp", bmaisp, logger, frequency='monday')
+
+    # # Agenda de Dados Financeiros - Saldo Financeiro
+    # if success:
+    #     success = execute_module("main_agfinanceiro", main_agfinanceiro, logger, frequency='daily')
+
+    # # Clickhouse querys
+    # if success:
+    #     success = execute_module("clickhouse_querys", clickhouse_querys, logger, frequency='daily')
+
+    # Repositório de visuais gráficos
+    if success:
+        success = execute_module("rvg", main_rvg, logger, frequency='daily')
+        return
+
+    # Mensagem de Finalização
+    if success:
+        finalizacao_mensagem(success, start_time)
+        
+        
+    # End the execution in the logger
+    logger.end_execution("success" if success else "error")
+    
+    return 0 if success else 1
+
+
+def finalizacao_mensagem(success, start_time):
     end_time = datetime.now()
     duration = end_time - start_time
     duration_str = f"{duration.seconds//3600:02}:{(duration.seconds//60)%60:02}:{duration.seconds%60:02}"
-    
     print(f"\n{'='*50}")
     print(f"Orchestration {'completed successfully' if success else 'failed'}")
     print(f"Start time: {start_time.strftime('%d/%m/%Y %H:%M:%S')}")
     print(f"End time: {end_time.strftime('%d/%m/%Y %H:%M:%S')}")
     print(f"Total duration: {duration_str}")
     print(f"{'='*50}")
-    
-    # Get statistics and send notifications
+
     try:
         if success:
             # Get statistics for successful execution
@@ -197,11 +229,6 @@ def main():
                 print(f"Error sending Teams error notification: {str(e)}")
     except Exception as e:
         print(f"Error in notification process: {str(e)}")
-    
-    # End the execution in the logger
-    logger.end_execution("success" if success else "error")
-    
-    return 0 if success else 1
 
 if __name__ == "__main__":
     sys.exit(main())

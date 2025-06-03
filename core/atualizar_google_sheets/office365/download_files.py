@@ -2,7 +2,7 @@ import re
 import sys, os
 from pathlib import PurePath
 from dotenv import load_dotenv
-from atualizar_google_sheets.office365_api.office365_api import SharePoint
+from .office365_api import SharePoint
 
 #Adicionar o caminho do diretório raiz ao sys.path
 load_dotenv()

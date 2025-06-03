@@ -1,18 +1,16 @@
 from dotenv import load_dotenv
 import os
 import sys
-from connection.query_clickhouse import query_clickhouse
-from querys.ws_financeiro.processar_csv import processar_csv
+from core.clickhouse_querys.connection.query_clickhouse import query_clickhouse
+from core.clickhouse_querys.querys.ws_financeiro.processar_csv import processar_csv
 
 load_dotenv()
 
-ROOT = os.getenv('ROOT')
-sys.path.append(ROOT)
-
+ROOT = os.getenv('ROOT_CLICKHOUSE_QUERYS')
 HOST = os.getenv('HOST')
 PORT = os.getenv('PORT')
 USER = os.getenv('USER')
-PASSWORD = os.getenv('PASSWORD')
+PASSWORD = os.getenv('CLICKHOUSE_PASSWORD')
 STEP_1_DATA_RAW = os.getenv('STEP_1_DATA_RAW')
 STEP_2_STAGE_AREA = os.getenv('STEP_2_STAGE_AREA')
 STEP_3_DATA_PROCESSED = os.getenv('STEP_3_DATA_PROCESSED')
@@ -20,89 +18,10 @@ STEP_3_DATA_PROCESSED = os.getenv('STEP_3_DATA_PROCESSED')
 
 def registros_financeiros():
     query = """
-        SELECT  UE.name                                     AS ue_name
-        ,PC.name                                    AS call_name
-        ,M.month_year                               AS ms_date
-        ,FB.embrapii_account_balance                AS  SALDO_ContaMAEEMBRAPII
-        ,FB.project_account_balance                 AS  SALDO_Totalprojetoembrapii
-        ,FB.project_company_account                 AS  SALDO_Totalprojetoempresa
-        ,IFNULL(SUM(MA.main_account_balance), 0)    AS  SALDO_Outrascontasespecificas
-        ,IFNULL(SUM(MA.balance), 0)                 AS  SALDO_Totaloutrascontasprojeto
-        ,IC.transferred_amounts                     AS  TRANSFERENCIAS
-        ,EX.embrapii_amounts                        AS  DESPESAS_EMBRAPII
-        ,EX.company_amounts                         AS  DESPESAS_Empresa
-        ,EX.ue_financial_amounts                    AS  DESPESAS_financeirosUE
-        ,EX.ue_economic_amounts                     AS  DESPESAS_economicosUE
-        ,IFNULL(SUM(MA.expense_amount), 0)          AS  DESPESA_Recursosoutrasfontes
-        ,'Totaloutrascontasprojeto'
-        ,SEBRAE_SALDO_Totaloutrascontasprojeto
-        ,PPI_SALDO_Totaloutrascontasprojeto
-        ,ROTA2030_SALDO_Totaloutrascontasprojeto
-        ,BNDES_SALDO_Totaloutrascontasprojeto
-        ,'Outrascontasespecificas'
-        ,SEBRAE_SALDO_Outrascontasespecificas
-        ,PPI_SALDO_Outrascontasespecificas
-        ,ROTA2030_SALDO_Outrascontasespecificas
-        ,BNDES_SALDO_Outrascontasespecificas
-        ,'Recursosoutrasfontes'
-        ,SEBRAE_DESPESA_Recursosoutrasfontes
-        ,PPI_DESPESA_Recursosoutrasfontes
-        ,ROTA2030_DESPESA_Recursosoutrasfontes
-        ,BNDES_DESPESA_Recursosoutrasfontes
-
-FROM            db_bronze_srinfo.financial_monthlystatement M
-LEFT OUTER JOIN db_bronze_srinfo.financial_msaccount        MA  ON M.id       = MA.reference_id AND M.data_inativacao IS NULL AND MA.data_inativacao IS NULL
-INNER JOIN      db_bronze_srinfo.ue_unit                    UE  ON M.ue_id    = UE.id           AND UE.data_inativacao IS NULL
-LEFT OUTER JOIN db_bronze_srinfo.partnership_call           PC  ON M.call_id  = PC.id           AND PC.data_inativacao IS NULL
-LEFT OUTER JOIN db_bronze_srinfo.financial_balance          FB  ON M.id       = FB.reference_id AND FB.data_inativacao IS NULL
-LEFT OUTER JOIN db_bronze_srinfo.financial_income           IC  ON M.id       = IC.reference_id AND IC.data_inativacao IS NULL
-LEFT OUTER JOIN db_bronze_srinfo.financial_expense          EX  ON M.id       = EX.reference_id AND EX.data_inativacao IS NULL
-LEFT JOIN       (
-                SELECT  SMA.reference_id
-                        ,SUMIf(SMA.balance               ,account = '3') AS SEBRAE_SALDO_Totaloutrascontasprojeto
-                        ,SUMIf(SMA.main_account_balance  ,account = '3') AS SEBRAE_SALDO_Outrascontasespecificas
-                        ,SUMIf(SMA.expense_amount        ,account = '3') AS SEBRAE_DESPESA_Recursosoutrasfontes
-                        ,SUMIf(SMA.balance               ,account = '4') AS PPI_SALDO_Totaloutrascontasprojeto
-                        ,SUMIf(SMA.main_account_balance  ,account = '4') AS PPI_SALDO_Outrascontasespecificas
-                        ,SUMIf(SMA.expense_amount        ,account = '4') AS PPI_DESPESA_Recursosoutrasfontes
-                        ,SUMIf(SMA.balance               ,account = '5') AS ROTA2030_SALDO_Totaloutrascontasprojeto
-                        ,SUMIf(SMA.main_account_balance  ,account = '5') AS ROTA2030_SALDO_Outrascontasespecificas
-                        ,SUMIf(SMA.expense_amount        ,account = '5') AS ROTA2030_DESPESA_Recursosoutrasfontes
-                        ,SUMIf(SMA.balance               ,account = '7') AS BNDES_SALDO_Totaloutrascontasprojeto
-                        ,SUMIf(SMA.main_account_balance  ,account = '7') AS BNDES_SALDO_Outrascontasespecificas
-                        ,SUMIf(SMA.expense_amount        ,account = '7') AS BNDES_DESPESA_Recursosoutrasfontes
-                FROM db_bronze_srinfo.financial_msaccount   SMA
-                WHERE SMA.data_inativacao   IS NULL
-                GROUP BY SMA.reference_id
-                )                                           DMA ON  M.id       = DMA.reference_id
-
-GROUP BY UE.name
-        ,PC.name
-        ,M.month_year
-        ,FB.embrapii_account_balance
-        ,FB.project_account_balance
-        ,FB.project_company_account
-        ,IC.transferred_amounts
-        ,EX.embrapii_amounts
-        ,EX.company_amounts
-        ,EX.ue_financial_amounts
-        ,EX.ue_economic_amounts
-        ,SEBRAE_SALDO_Totaloutrascontasprojeto
-        ,PPI_SALDO_Totaloutrascontasprojeto
-        ,ROTA2030_SALDO_Totaloutrascontasprojeto
-        ,BNDES_SALDO_Totaloutrascontasprojeto
-        ,SEBRAE_SALDO_Outrascontasespecificas
-        ,PPI_SALDO_Outrascontasespecificas
-        ,ROTA2030_SALDO_Outrascontasespecificas
-        ,BNDES_SALDO_Outrascontasespecificas
-        ,SEBRAE_DESPESA_Recursosoutrasfontes
-        ,PPI_DESPESA_Recursosoutrasfontes
-        ,ROTA2030_DESPESA_Recursosoutrasfontes
-        ,BNDES_DESPESA_Recursosoutrasfontes
-
-ORDER BY UE.name                    ASC
-        ,M.month_year               DESC
-        ,PC.name                    ASC
+        SELECT * FROM db_ouro.srinfo_registros_financeiros
+                WHERE data_extracao = (
+                        SELECT MAX(data_extracao) FROM db_ouro.srinfo_registros_financeiros
+                )
     """
     nome_arquivo = "registros_financeiros"
     query_clickhouse(HOST, PORT, USER, PASSWORD, query, nome_arquivo)

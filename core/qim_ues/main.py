@@ -1,8 +1,8 @@
-from qim_ues.scripts_public.buscar_arquivos_sharepoint import buscar_arquivos_sharepoint
-from qim_ues.scripts_public.webdriver import configurar_webdriver
-from qim_ues.scripts_public.baixar_dados_srinfo import baixar_dados_srinfo
-from qim_ues.scripts_public.manipulacoes import pa_qim, resultados
-from qim_ues.scripts_public.levar_arquivos_sharepoint import levar_arquivos_sharepoint
+from core.qim_ues.scripts_public.buscar_arquivos_sharepoint import buscar_arquivos_sharepoint
+from core.qim_ues.scripts_public.webdriver import configurar_webdriver
+from core.qim_ues.scripts_public.baixar_dados_srinfo import baixar_dados_srinfo
+from core.qim_ues.scripts_public.manipulacoes import pa_qim, resultados
+from core.qim_ues.scripts_public.levar_arquivos_sharepoint import levar_arquivos_sharepoint
 import inspect
 
 

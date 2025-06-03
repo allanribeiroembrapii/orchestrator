@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ROOT = os.getenv('ROOT_CLICKHOUSE_QUERYS')
+ROOT = os.getenv('ROOT_SALDO_BANCARIO')
 USUARIO = os.getenv('usuario_vpn')
 SENHA = os.getenv('senha_vpn')
 FORTICLIENT_PATH = os.getenv('forticlient_path')

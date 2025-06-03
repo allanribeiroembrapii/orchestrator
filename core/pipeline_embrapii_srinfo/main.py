@@ -127,6 +127,9 @@ def verificar_criar_pastas():
 
 
 def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=False):
+    """
+    O **pipeline_embrapii_srinfo** tem como objetivo realizar a extração, transformação e carga de dados do SRInfo da Embrapii para o DWPII no sharepoint.
+    """
     print("Início: ", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     inicio = datetime.now()
 
@@ -138,7 +141,7 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
 
         # SharePoint
         buscar_arquivos_sharepoint()
-
+        
         # Configurar o WebDriver
         driver = configurar_webdriver()
 
@@ -198,26 +201,21 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
 
         main_comunicacao(driver)
         log = logear(log, "comunicacao")
-        print("PASSOU comunicacao")
 
         main_eventos_srinfo(driver)
         log = logear(log, "eventos_srinfo")
-        print("PASSOU eventos_srinfo")
 
         main_prospeccao(driver)
         log = logear(log, "prospeccao")
 
         main_negociacoes(driver)
         log = logear(log, "negociacoes")
-        print("PASSOU negociacoes")
 
         main_propostas_tecnicas(driver)
         log = logear(log, "propostas_tecnicas")
-        print("PASSOU propostas_tecnicas")
 
         main_planos_trabalho(driver)
         log = logear(log, "planos_trabalho")
-        print("PASSOU planos_trabalho")
 
         encerrar_webdriver(driver)
 
@@ -231,7 +229,7 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
 
         main_portfolio()
         log = logear(log, "portfolio")
-
+        
         registrar_log(log)
 
         # SharePoint

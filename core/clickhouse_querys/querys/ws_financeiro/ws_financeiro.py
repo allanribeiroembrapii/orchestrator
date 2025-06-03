@@ -1,6 +1,6 @@
 import inspect
-from querys.ws_financeiro.repasses import repasses
-from querys.ws_financeiro.registros_financeiros import registros_financeiros
+from core.clickhouse_querys.querys.ws_financeiro.repasses import repasses
+from core.clickhouse_querys.querys.ws_financeiro.registros_financeiros import registros_financeiros
 
 def ws_financeiro():
     print("🟡 " + inspect.currentframe().f_code.co_name)

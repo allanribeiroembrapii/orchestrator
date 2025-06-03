@@ -1,17 +1,12 @@
 import os
 from dotenv import load_dotenv
 import inspect
-from atualizar_google_sheets.office365_api.download_files import get_file
+from core.atualizar_google_sheets.office365.download_files import get_file
 
-# Obter o diretório atual e o diretório raiz
-current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # carregar .env e tudo mais
 load_dotenv()
-ROOT = os.getenv("ROOT_GSHET")
-if not ROOT:
-    ROOT = current_dir
+ROOT = os.getenv("ROOT_GSHEET")
 
 
 # puxar planilhas do sharepoint
