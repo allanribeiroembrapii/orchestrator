@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 from core.cg_classificacao_projetos_do.office365_api.download_files import get_file
 from core.cg_classificacao_projetos_do.office365_api.upload_files import upload_files
 from datetime import datetime
+import time
+import pyautogui
+import pygetwindow as gw
 
 # carregar .env e tudo mais
 load_dotenv()
@@ -23,6 +26,7 @@ SA_CLASS_PROJETOS_CG = os.path.abspath(os.path.join(ROOT, 'step_2_stage_area', '
 DP_CLASS_PROJETOS_CG = os.path.abspath(os.path.join(ROOT, 'step_3_data_processed', 'classificacao_projeto_cg.xlsx'))
 STEP3 = os.path.join(ROOT, "step_3_data_processed")
 OUTPUT = os.path.join(ROOT, "output")
+OUTPUT_CG_PROJETOS = os.path.abspath(os.path.join(OUTPUT, 'CG_Classificação de Projetos.xlsx'))
 
 # Dicionário de Calls
 CALL_SIMPLIFICADA = {
@@ -114,6 +118,7 @@ def preparar_dados():
     try:
         # Definir os dataframes
         df_class_projeto = pd.read_excel(RAW_CLASS_PROJETOS)
+        df_class_projeto = df_class_projeto[df_class_projeto["Áreas de Aplicação"] == "Saúde"]
         df_class_projeto_cg = pd.read_excel(RAW_CLASS_PROJETOS_CG)
         df_portfolio = pd.read_excel(RAW_PORTFOLIO)
         df_ue_prioritario = pd.read_excel(RAW_UE_FONTE_PRIORITARIO, sheet_name="unidades_embrapii")
@@ -191,7 +196,6 @@ def classificar_cg():
         
         # Regra 0: Não se aplica
         df_class_projeto_cg.loc[filtro_nao_definido & (df_class_projeto_cg["Call_Simplificada"] != "CG"), ["AUT_Classificação CG", "AUT_Critério"]] = ["Não se aplica", ""]
-                
         
         # Salvar a planilha atualizada
         df_class_projeto_cg.to_excel(DP_CLASS_PROJETOS_CG, index=False)
@@ -206,12 +210,18 @@ def add_novas_linhas_tratada():
         # Buscar os dados
         df_raw = pd.read_excel(RAW_CLASS_PROJETOS_CG, sheet_name="analise_do")
         df_processed = pd.read_excel(DP_CLASS_PROJETOS_CG)
+        df_processed = df_processed[df_processed["Call_Simplificada"] == "CG"]
+        df_processed = df_processed[df_processed["Fonte Prioritária da UE"] != "MS"]
+        df_portfolio = pd.read_excel(RAW_PORTFOLIO)
         
         # Comparar os arquivos e identificar novos registros
         df_novos_registros = df_processed[~df_processed["Código"].isin(df_raw["Código"])]
+
+        # contar número de novos registros
+        novos_registros = df_novos_registros.shape[0]
         
         # Eliminar colunas desnecessárias
-        colunas_remover = ["DO_Análise", "DO_Classificação", "DO_Data Análise", "DO_Responsável Análise", "DO_Observações", "Classificação Final"]
+        colunas_remover = ["DO_Análise", "DO_Data Análise", "DO_Responsável Análise", "DO_Observações"]
         df_novos_registros = df_novos_registros.drop(columns=[col for col in colunas_remover if col in df_novos_registros.columns], errors="ignore")
         
         # Converter colunas de data para string formatada
@@ -232,6 +242,35 @@ def add_novas_linhas_tratada():
             for j, value in enumerate(row, start=1):
                 sheet.Cells(i, j).Value = str(value) if isinstance(value, pd.Timestamp) else value
         
+
+        # Remover valor 65535 das colunas B, I, Q, R, T nas linhas inseridas
+        colunas_alvo = [2, 9, 17, 18, 20]
+        for i in range(last_row, last_row + len(df_novos_registros)):
+            for col in colunas_alvo:
+                if sheet.Cells(i, col).Value == 65535:
+                    sheet.Cells(i, col).Value = ""
+        for i in range(last_row, last_row + len(df_novos_registros)):
+            if sheet.Cells(i, 17).Value == "Área de Aplicação":
+                sheet.Cells(i, 17).Value = ""
+        
+        # Adicionar valores na coluna I - Valor Total Embrapii
+        df_portfolio["valor_total"] = (
+            df_portfolio["valor_embrapii"].fillna(0) +
+            df_portfolio["valor_empresa"].fillna(0) +
+            df_portfolio["valor_unidade_embrapii"].fillna(0) +
+            df_portfolio["valor_sebrae"].fillna(0)
+        )
+
+        # Criar um dicionário para lookup rápido (como um PROCV)
+        mapa_valores = df_portfolio.set_index("codigo_projeto")["valor_total"].to_dict()
+
+        # Preencher a coluna I com os valores correspondentes da coluna A (código do projeto)
+        for i in range(last_row, last_row + len(df_novos_registros)):
+            codigo = sheet.Cells(i, 1).Value  # Coluna A = código do projeto
+            valor_total = mapa_valores.get(codigo, "")
+            sheet.Cells(i, 9).Value = valor_total  # Coluna I = coluna 9
+
+
         # Salvar e fechar o arquivo Excel
         workbook.Save()
         workbook.Close()
@@ -241,6 +280,9 @@ def add_novas_linhas_tratada():
         shutil.copy(RAW_CLASS_PROJETOS_CG, os.path.join(OUTPUT, os.path.basename(RAW_CLASS_PROJETOS_CG)))
         
         print("🟢 " + inspect.currentframe().f_code.co_name)
+
+        return novos_registros
+    
     except Exception as e:
         print(f"🔴 Erro: {e}")
 
@@ -262,6 +304,94 @@ def duracao_tempo(inicio, fim):
 
     return duracao_formatada
 
+def ordenar_com_pyautogui():
+    # Abre o Excel com o arquivo
+    excel = win32.gencache.EnsureDispatch("Excel.Application")
+    excel.Visible = True
+    excel.WindowState = -4137 
+    workbook = excel.Workbooks.Open(OUTPUT_CG_PROJETOS)
+
+    # Espera o Excel carregar (ajuste se necessário)
+    time.sleep(5)
+
+    for window in gw.getWindowsWithTitle('Excel'):
+        if window.isMinimized:
+            window.restore()
+        window.activate()
+        break  # Ativa a primeira janela do Excel encontrada
+
+    time.sleep(3)
+
+    # Seleciona a célula ativa e navega até E1
+    pyautogui.hotkey('ctrl', 'up')
+    pyautogui.hotkey('ctrl', 'left')
+    for _ in range(4):
+        pyautogui.press('right')
+
+    # Acessa Alt+C, depois S, depois Z para ordenar decrescente
+    time.sleep(0.5)
+    pyautogui.keyDown('alt')
+    pyautogui.press('c')
+    pyautogui.keyUp('alt')
+    time.sleep(0.5)
+    pyautogui.press('s')  # Classificar
+    time.sleep(0.5)
+    pyautogui.press('z')  # Decrescente
+
+    time.sleep(1)
+
+    # Salvar e fechar
+    workbook.Save()
+    workbook.Close(SaveChanges=True)
+    excel.Quit()
+
+def molde_email(dados, hoje):
+    return f"""
+    <div class="container">
+        <div style="margin: 10px">
+            <b>Planilha de Classificação de Projetos CG-MS atualizada: {hoje}</b>
+            <ul>
+                <li>Novos registros: <b>{dados['novos_registros']}</b></li>
+            </ul>
+        </div>
+        <span>
+            Link da planilha: <a href="https://embrapii.sharepoint.com/:x:/r/sites/GEPES/Documentos%20Compartilhados/DWPII/srinfo/CG_Classifica%C3%A7%C3%A3o%20de%20Projetos.xlsx?d=w2957507e953c4f91849d72517de138ff&csf=1&web=1&e=LCu6js">clique aqui</a>
+        </span>
+    </div>
+    """
+
+def alerta_email(novos_registros):
+
+    # Dados finais para o email
+    dados = {
+        'novos_registros': novos_registros,
+    }
+
+    data_formatada = datetime.today().strftime('%d/%m/%Y')
+    # Gera HTML e envia
+    html = molde_email(dados, data_formatada)
+    enviar_email(html)
+
+def enviar_email(html):
+    print("🟡 " + inspect.currentframe().f_code.co_name)
+    destinatarios = [
+        "allan.ribeiro@embrapii.org.br",
+        "milena.goncalves@embrapii.org.br",
+        "juliana.oliveira@embrapii.org.br",
+        "eduardo.duarte@embrapii.org.br",
+        "emanoel.querette@embrapii.org.br"
+    ]
+
+    outlook = win32.Dispatch("Outlook.Application")
+    mail = outlook.CreateItem(0)
+    mail.To = ";".join(destinatarios)
+    mail.Subject = "🤖 - Projetos CG MS - Saúde | Alerta de Atualização"
+    mail.HTMLBody = html
+
+    mail.Send()
+    print("🟢 " + inspect.currentframe().f_code.co_name)
+
+
 def main():
     #início
     print('Início: ', datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
@@ -271,8 +401,10 @@ def main():
     puxar_planilhas()
     preparar_dados()
     classificar_cg()
-    add_novas_linhas_tratada()
+    novos_registros = add_novas_linhas_tratada()
+    ordenar_com_pyautogui()
     levar_sharepoint()
+    alerta_email(novos_registros)
 
     #fim
     fim = datetime.now()

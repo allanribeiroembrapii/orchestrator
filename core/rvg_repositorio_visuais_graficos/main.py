@@ -136,7 +136,10 @@ def atualizar_excel():
     time.sleep(4)
 
     # Pressiona Tab para mover para o campo de pesquisa
-    pyautogui.press('tab')
+    pyautogui.press('alt')
+    pyautogui.press('a')
+    pyautogui.press('o')
+    pyautogui.press('e')
     time.sleep(1)
 
     # Digita o nome do arquivo (você pode ajustar conforme necessário)

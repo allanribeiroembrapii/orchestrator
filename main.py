@@ -3,6 +3,7 @@ import sys
 import time
 from datetime import datetime, timedelta
 import locale
+from connect_vpn import connect_vpn, disconnect_vpn
 
 # # Add directories to path
 # current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -24,6 +25,8 @@ from core.clickhouse_saldo_bancario.main import main_agfinanceiro
 from core.clickhouse_querys.main import clickhouse_querys
 from core.servdata_bmaisp.main import main_bmaisp as bmaisp
 from core.rvg_repositorio_visuais_graficos.main import main_rvg
+from core.classificacao_financeira.main import main_classificacao_financeira
+from core.portfolio2.main import main_portfolio2
 from logs.teams_notifier import enviar_notificacao_teams
 
 def execute_module(module_name, module_function, logger, module_idx=None, frequency=None):
@@ -127,47 +130,60 @@ def main():
     # Execute modules in sequence
     success = True
     
-    # # # pipeline_embrapii_srinfo
-    # # if success:
-    # #     success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
-    
-    # # # # # qim_ues
-    # # if success:
-    # #     success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
-    
-    # # # # atualizar_google_sheets
-    # # if success:
-    # #     success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
-    
-    # # # api_datapii
+    # #pipeline_embrapii_srinfo
     # if success:
-    #     success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
-
-    # # # CG Classificação de Projetos - Validação Diretoria de Operações
-    # # if success:
-    # #     success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
-    
-    # # Brasil Mais Produtivo
-    # # if success:
-    # #     success = execute_module("bmaisp", bmaisp, logger, frequency='monday')
-
-    # # Agenda de Dados Financeiros - Saldo Financeiro
+    #     success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
+  
+    # # qim_ues
     # if success:
-    #     success = execute_module("main_agfinanceiro", main_agfinanceiro, logger, frequency='daily')
+    #     success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
 
-    # # Clickhouse querys
-    # if success:
-    #     success = execute_module("clickhouse_querys", clickhouse_querys, logger, frequency='daily')
-
-    # Repositório de visuais gráficos
+    # atualizar_google_sheets
     if success:
-        success = execute_module("rvg", main_rvg, logger, frequency='daily')
-        return
+        success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
+    return
+
+    # CG Classificação de Projetos - Validação Diretoria de Operações
+    if success:
+        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='monday')
+    
+    # Classificação Financeira dos Projetos Modelo Embrapii
+    if success:
+        success = execute_module("classificacao_financeira", main_classificacao_financeira, logger, frequency='daily')
+    
+    # Brasil Mais Produtivo
+    if success:
+        success = execute_module("bmaisp", bmaisp, logger, frequency='monday')
+
+    # api_datapii
+    if success:
+        success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
+
+    if success:
+        connect_vpn()
+
+        # Agenda de Dados Financeiros - Saldo Financeiro
+        if success:
+            success = execute_module("main_agfinanceiro", main_agfinanceiro, logger, frequency='daily')
+
+        # Clickhouse querys
+        if success:
+            success = execute_module("clickhouse_querys", clickhouse_querys, logger, frequency='daily')
+
+        # Repositório de visuais gráficos
+        # if success:
+        #     success = execute_module("rvg", main_rvg, logger, frequency='daily')
+        #     return
+
+        disconnect_vpn()
+    
+    # Portfolio2
+    if success:
+        success = execute_module("portfolio2", main_portfolio2, logger, frequency='daily')
 
     # Mensagem de Finalização
     if success:
         finalizacao_mensagem(success, start_time)
-        
         
     # End the execution in the logger
     logger.end_execution("success" if success else "error")

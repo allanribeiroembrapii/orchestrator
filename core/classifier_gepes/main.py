@@ -9,7 +9,7 @@ DB_PASS = 'p895a87e702cb837c9a1a83505f0c5eab91d65f4a870fcf303120f278a7dc4fe1'
 DB_PORT = '5432'
 
 # Tabelas que queremos baixar
-tables = ['projetos', 'classificacoes_adicionais', 'logs']
+tables = ['projetos', 'classificacoes_adicionais', 'logs', 'categorias', 'categoria_listas']
 schema = 'gepes'
 
 # Conectar ao banco de dados

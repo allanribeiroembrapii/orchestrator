@@ -11,14 +11,14 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_SEBRAE_UFS')
 STEP3 = os.path.abspath(os.path.join(ROOT, 'step_3_data_processed'))
 
 
 def main():
     # Carregar arquivos do SharePoint
     print("Passo 1/4: Buscando arquivos do SharePoint")
-    buscar_arquivos_sharepoint(gerar_novo=False)
+    # buscar_arquivos_sharepoint(gerar_novo=False)
 
     # Consulta clickhouse
     print("Passo 2/4: Consultando valores por fonte no ClickHouse")
@@ -32,9 +32,9 @@ def main():
 
     # # Gerando planilhas
     print("Passo 3/4: Gerando planilhas")
-    planilha_geral, combinado, municipios, port_ue, proj_emp, port_emp, port_me = gerar_planilha_geral(gerar_novo=False, enviar_pasta_sebrae=False)
+    planilha_geral, combinado, municipios, port_ue, proj_emp, port_emp, port_me = gerar_planilha_geral(gerar_novo=False, enviar_pasta_sebrae=True)
     gerar_planilha_erros(planilha_geral)
-    gerar_planilhas_uf(planilha_geral, combinado, municipios, port_ue, proj_emp, port_emp, port_me, gerar_novo=False, enviar_pasta_sebrae=False)
+    gerar_planilhas_uf(planilha_geral, combinado, municipios, port_ue, proj_emp, port_emp, port_me, gerar_novo=False, enviar_pasta_sebrae=True)
 
     # Levando arquivos para o SharePoint
     print("Passo 4/4: Levando planilhas para o SharePoint")
