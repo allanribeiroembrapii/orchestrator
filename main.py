@@ -26,6 +26,7 @@ from core.clickhouse_querys.main import clickhouse_querys
 from core.servdata_bmaisp.main import main_bmaisp as bmaisp
 from core.rvg_repositorio_visuais_graficos.main import main_rvg
 from core.classificacao_financeira.main import main_classificacao_financeira
+from core.classifier_gepes.main import main_classifier_gepes
 from core.portfolio2.main import main_portfolio2
 from logs.teams_notifier import enviar_notificacao_teams
 
@@ -131,17 +132,16 @@ def main():
     success = True
     
     # #pipeline_embrapii_srinfo
-    # if success:
-    #     success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
+    if success:
+        success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
   
-    # # qim_ues
-    # if success:
-    #     success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
+    # qim_ues
+    if success:
+        success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
 
     # atualizar_google_sheets
     if success:
         success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
-    return
 
     # CG Classificação de Projetos - Validação Diretoria de Operações
     if success:
@@ -177,6 +177,10 @@ def main():
 
         disconnect_vpn()
     
+    # Classifier
+    if success:
+        success = execute_module("classifier_gepes", main_classifier_gepes, logger, frequency='daily')
+
     # Portfolio2
     if success:
         success = execute_module("portfolio2", main_portfolio2, logger, frequency='daily')

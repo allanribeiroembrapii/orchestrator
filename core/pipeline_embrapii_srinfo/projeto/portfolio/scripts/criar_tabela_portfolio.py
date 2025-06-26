@@ -81,6 +81,8 @@ def criar_tabela_portfolio():
         "nota_avaliacao",
         "observacoes",
         "tags",
+        "projeto_rede",
+        "projeto_rede_papel",
     ]
     df_projetos_selecionado = df_projetos[colunas_projetos]
 
@@ -184,7 +186,9 @@ def criar_tabela_portfolio():
         "valor_sebrae",
         "codigo_negociacao",
         "macroentregas",
-        "pct_aceites"
+        "pct_aceites",
+        "projeto_rede",
+        "projeto_rede_papel",
     ]
     df_portfolio = df_portfolio[colunas_finais]
 

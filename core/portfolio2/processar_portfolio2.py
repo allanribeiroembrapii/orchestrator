@@ -67,6 +67,8 @@ def processar_portfolio2():
     #alterar o nome e a ordem das colunas -> seguir o apresentado em:
     nome_ordem_colunas = {
         'codigo_projeto': 'id_codigo_projeto',
+        'projeto_rede': 'rede_projeto_codigo',
+        'projeto_rede_papel': 'rede_projeto_papel_ue',
         'status': 'st_status_projeto',
         'codigo_negociacao': 'negociacao_id',
         '_negociacao': 'negociacao_negociacao',
