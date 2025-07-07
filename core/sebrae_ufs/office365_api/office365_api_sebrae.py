@@ -11,9 +11,9 @@ load_dotenv()
 
 USERNAME = os.getenv('sharepoint_email')
 PASSWORD = os.getenv('sharepoint_password')
-SHAREPOINT_SITE_SEBRAE = os.getenv('sharepoint_url_site_sebrae')
-SHAREPOINT_SITE_NAME_SEBRAE = os.getenv('sharepoint_site_name_sebrae')
-SHAREPOINT_DOC_SEBRAE = os.getenv('sharepoint_doc_library_sebrae')
+SHAREPOINT_SITE_SEBRAE = os.getenv('sharepoint_url_site_sebrae_share')
+SHAREPOINT_SITE_NAME_SEBRAE = os.getenv('sharepoint_site_name_sebrae_share')
+SHAREPOINT_DOC_SEBRAE = os.getenv('sharepoint_doc_library_sebrae_share')
 
 class SharePoint:
     def _auth(self):

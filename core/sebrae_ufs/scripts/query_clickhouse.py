@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_SEBRAE_UFS')
 USUARIO = os.getenv('usuario_vpn')
 SENHA = os.getenv('senha_vpn')
 FORTICLIENT_PATH = os.getenv('forticlient_path')

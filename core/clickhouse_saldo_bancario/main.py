@@ -11,13 +11,13 @@ def main_agfinanceiro():
     start_clean()
 
     #Ligar VPN
-    connect_vpn()
+    # connect_vpn()
 
     #Executar querys
     ws_agfinanceiro()
 
     #Desligar VPN
-    disconnect_vpn()
+    # disconnect_vpn()
 
     #Levar dados para o Sharepoint
     up_sharepoint()

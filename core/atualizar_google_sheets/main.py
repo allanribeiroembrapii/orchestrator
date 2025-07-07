@@ -48,6 +48,8 @@ CNAE_IBGE = os.path.abspath(os.path.join(ROOT, "inputs", "cnae_ibge.xlsx"))
 PEDIDOS_PI = os.path.abspath(os.path.join(ROOT, "inputs", "pedidos_pi.xlsx"))
 PROPOSTAS_TECNICAS = os.path.abspath(os.path.join(ROOT, "inputs", "negociacoes_propostas_tecnicas.xlsx"))
 QIM_UES = os.path.abspath(os.path.join(ROOT, "inputs", "qim.xlsx"))
+EQUIPE_UE = os.path.abspath(os.path.join(ROOT, "inputs", "equipe_ue.xlsx"))
+ESTUDANTES = os.path.abspath(os.path.join(ROOT, "inputs", "estudantes.xlsx"))
 
 
 def main():
@@ -59,20 +61,22 @@ def main():
         # Atualizar Google Sheets
         url = "https://docs.google.com/spreadsheets/d/1x7IUvZnXg2MH2k3QE9Kiq-_Db4eA-2xwFGuswbTDYjg/edit?usp=sharing"
         abas = {
-            "raw_portfolio": PORTFOLIO,
-            "raw_projetos_empresas": PROJETOS_EMPRESAS,
-            "raw_informacoes_empresas": INFORMACOES_EMPRESAS,
-            "raw_info_unidades_embrapii": INFO_UNIDADES_EMBRAPII,
-            "raw_ue_linhas_atuacao": UE_LINHAS_ATUACAO,
-            "raw_macroentregas": MACROENTREGAS,
-            "raw_negociacoes_negociacoes": NEGOCIACOES,
-            "raw_classificacao_projetos": CLASSIFICACAO_PROJETO,
-            "raw_projetos": PROJETOS,
-            "raw_prospeccao_prospeccao": PROSPECCOES,
-            "raw_cnae_ibge": CNAE_IBGE,
-            "raw_pedidos_pi": PEDIDOS_PI,
-            "raw_negociacoes_propostas_tecnicas": PROPOSTAS_TECNICAS,
-            "raw_qim_ues": QIM_UES,
+            # "raw_portfolio": PORTFOLIO,
+            # "raw_projetos_empresas": PROJETOS_EMPRESAS,
+            # "raw_informacoes_empresas": INFORMACOES_EMPRESAS,
+            # "raw_info_unidades_embrapii": INFO_UNIDADES_EMBRAPII,
+            # "raw_ue_linhas_atuacao": UE_LINHAS_ATUACAO,
+            # "raw_macroentregas": MACROENTREGAS,
+            # "raw_negociacoes_negociacoes": NEGOCIACOES,
+            # "raw_classificacao_projetos": CLASSIFICACAO_PROJETO,
+            # "raw_projetos": PROJETOS,
+            # "raw_prospeccao_prospeccao": PROSPECCOES,
+            # "raw_cnae_ibge": CNAE_IBGE,
+            # "raw_pedidos_pi": PEDIDOS_PI,
+            # "raw_negociacoes_propostas_tecnicas": PROPOSTAS_TECNICAS,
+            # "raw_qim_ues": QIM_UES,
+            # "raw_equipe_ue": EQUIPE_UE,
+            "raw_estudantes": ESTUDANTES,
         }
 
         for aba, caminho_arquivo in abas.items():

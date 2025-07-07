@@ -2,11 +2,11 @@ import re
 import sys, os
 from pathlib import PurePath
 from dotenv import load_dotenv
-from office365_api.office365_api import SharePoint
+from core.cg_classificacao_projetos_do.office365_api.office365_api import SharePoint
 
 #Adicionar o caminho do diretório raiz ao sys.path
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_CG_CLASSIFICACAO_PROJETOS_DO')
 
 
 def save_file(file_n, file_obj, dest):

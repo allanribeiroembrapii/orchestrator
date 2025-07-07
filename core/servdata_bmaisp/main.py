@@ -135,7 +135,6 @@ def molde_email(dados, hoje):
     </div>
     """
 
-
 def alerta_email():
     PASTA_STEP_1 = BASE_DATA / 'step_1_data_raw'
     PASTA_STEP_2 = BASE_DATA / 'step_2_stage_area'
@@ -180,8 +179,6 @@ def alerta_email():
     # Gera HTML e envia
     html = molde_email(dados, data_formatada)
     enviar_email(html)
-
-
 
 def enviar_email(html):
     print("🟡 " + inspect.currentframe().f_code.co_name)

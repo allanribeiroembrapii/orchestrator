@@ -60,6 +60,8 @@ campos_interesse = [
     "Nota da Avaliação",
     "Observações ou comentários",
     "Tags",
+    "Projeto em Rede",
+    "Papel da Unidade na Rede",
 ]
 
 novos_nomes_e_ordem = {
@@ -76,6 +78,8 @@ novos_nomes_e_ordem = {
     "Nota da Avaliação": "nota_avaliacao",
     "Observações ou comentários": "observacoes",
     "Tags": "tags",
+    "Projeto em Rede": "projeto_rede",
+    "Papel da Unidade na Rede": "projeto_rede_papel",
 }
 
 

@@ -7,7 +7,7 @@ from datetime import datetime
 
 #carregar .env
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_CLICKHOUSE_QUERYS')
 STEP_3_DATA_PROCESSED = os.getenv('STEP_3_DATA_PROCESSED')
 
 #Definição dos caminhos

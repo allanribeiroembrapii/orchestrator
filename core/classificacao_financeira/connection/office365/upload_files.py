@@ -2,24 +2,20 @@ import re
 import sys, os
 from pathlib import PurePath
 from dotenv import load_dotenv
-from office365_api.office365_api import SharePoint
+from .office365_api import SharePoint
 
 #Adicionar o caminho do diretório raiz ao sys.path
 load_dotenv()
-ROOT = os.getenv('ROOT_SEBRAE_UFS')
+ROOT = os.getenv('ROOT')
 
 
-def upload_files(pasta_arquivos, destino, keyword=None, arquivo_especifico=None):
-    if arquivo_especifico:
-        file_list = [[os.path.basename(arquivo_especifico), arquivo_especifico]]
-    else:
-        file_list = get_list_of_files(pasta_arquivos)
-    
+
+def upload_files(pasta_arquivos, destino, sharepoint_site, sharepoint_site_name, sharepoint_doc, keyword=None):
+    file_list = get_list_of_files(pasta_arquivos)
     for file in file_list:
         if keyword is None or keyword == 'None' or re.search(keyword, file[0]):
             file_content = get_file_content(file[1])
-            SharePoint().upload_file(file[0], destino, file_content)
-
+            SharePoint().upload_file(destino, sharepoint_site, sharepoint_site_name, sharepoint_doc, file[0], file_content)
 
 def get_list_of_files(folder):
     file_list = []

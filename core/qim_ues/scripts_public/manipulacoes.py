@@ -14,7 +14,7 @@ UP = os.path.abspath(os.path.join(ROOT, 'up'))
 def pa_qim():
     # data de hoje
     today = datetime.now()
-
+    
     # Ler o arquivo Excel
     df = pd.read_excel(os.path.join(ARQUIVOS_BRUTOS, 'pa_qim.xlsx'))
     df['pa_vigente'] = df['pa_vigente'].str.split(': ', n=1).str[1]
@@ -32,7 +32,7 @@ def pa_qim():
     })
 
     pa = comparar_excel("pa.xlsx", pa, manter_duplicados = False)
-
+    
     qim = pd.DataFrame({
         'unidade_embrapii': df['unidade_embrapii'],
         'pa_vigente': df['pa_vigente'],
@@ -51,7 +51,7 @@ def pa_qim():
                                                                                                                                             'data_inicio_ref', 'data_termino_ref',
                                                                                                                                             'data_extracao']]
 
-
+    
     with pd.ExcelWriter(os.path.join(UP, 'pa.xlsx'), engine="xlsxwriter") as writer:
         pa.to_excel(writer, index=False, sheet_name="Sheet1")
         workbook = writer.book
@@ -149,15 +149,22 @@ def resultados(pa, today):
 
 # Função para converter datas do formato "dd de mês de yyyy" para "dd/mm/yyyy"
 def converte_data(data):
+    """
+    Converte uma string de data para um objeto datetime ou pd.NaT.
+    Suporta formatos "dd de mês de yyyy" e "dd/mm/yyyy".
+    """
+    if not isinstance(data, str):
+        return pd.NaT # Retorna Not a Time para entradas não-string
+
     try:
-        # Tentar converter o formato "5 de março de 2024" para "05/03/2024"
-        return datetime.strptime(data, "%d de %B de %Y").strftime("%d/%m/%Y")
+        # Tenta converter o formato "dd de mês de yyyy" (e.g., "5 de março de 2024")
+        return datetime.strptime(data, "%d de %B de %Y")
     except ValueError:
         try:
             # Caso já esteja no formato "dd/mm/yyyy"
-            return datetime.strptime(data, "%d/%m/%Y").strftime("%d/%m/%Y")
+            return datetime.strptime(data, "%d/%m/%Y")
         except ValueError:
-            return None  # Retorna None caso o formato seja inválido
+            return pd.NaT  # Retorna pd.NaT caso o formato seja inválido
 
 # Função para extrair e formatar as datas
 def extrair_datas(periodo):

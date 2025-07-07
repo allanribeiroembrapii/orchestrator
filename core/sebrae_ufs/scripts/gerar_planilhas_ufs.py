@@ -8,7 +8,7 @@ from openpyxl import load_workbook
 
 #carregar .env
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_SEBRAE_UFS')
 
 STEP1 = os.path.abspath(os.path.join(ROOT, 'step_1_data_raw'))
 STEP2 = os.path.abspath(os.path.join(ROOT, 'step_2_stage_area'))

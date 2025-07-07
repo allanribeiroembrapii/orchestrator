@@ -6,13 +6,13 @@ from scripts.query_clickhouse import query_clickhouse
 
 load_dotenv()
 
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_SEBRAE_UFS')
 sys.path.append(ROOT)
 
 HOST = os.getenv('HOST')
 PORT = os.getenv('PORT')
 USER = os.getenv('USER')
-PASSWORD = os.getenv('PASSWORD')
+PASSWORD = os.getenv('CLICKHOUSE_PASSWORD')
 STEP1 = os.path.abspath(os.path.join(ROOT, 'step_1_data_raw'))
 STEP3 = os.path.abspath(os.path.join(ROOT, 'step_3_data_processed'))
 

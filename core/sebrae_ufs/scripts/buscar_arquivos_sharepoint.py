@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 #carregar .env
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_SEBRAE_UFS')
 
 #Definição dos caminhos
 STEP1 = os.path.abspath(os.path.join(ROOT, 'step_1_data_raw'))
@@ -29,7 +29,7 @@ if not os.path.exists(STEP3):
 sys.path.append(SCRIPTS)
 sys.path.append(PATH_OFFICE)
 
-from download_files import get_file, get_files
+from office365_api.download_files import get_file, get_files
 from scripts.apagar_arquivos_pasta import apagar_arquivos_pasta
 
 def buscar_arquivos_sharepoint(gerar_novo = False):

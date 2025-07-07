@@ -8,7 +8,7 @@ from copy import copy
 
 #carregar .env
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_SEBRAE_UFS')
 
 #sys.path
 STEP1 = os.path.abspath(os.path.join(ROOT, 'step_1_data_raw'))
