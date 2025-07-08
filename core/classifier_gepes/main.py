@@ -185,8 +185,8 @@ def tratar_tec_habilitadora():
     ]]
 
     df_ai = df_ai.rename(columns={'techabilitadora_categoria': 'categoria'})
-    df_ai = df_ai.rename(columns={'tecverde_classe': 'subcategoria'})
-    df_ai = df_ai.rename(columns={'tecverde_justificativa': 'observacoes'})
+    df_ai = df_ai.rename(columns={'techabilitadora_subcategoria': 'subcategoria'})
+    df_ai = df_ai.rename(columns={'techabilitadora_justificativa': 'observacoes'})
 
     # Adiciona ao df_tec_habilitadora todos os registros novos de df_ai
     ids_existentes = df_tec_habilitadora['id_projeto'].unique()
@@ -472,7 +472,7 @@ def tratar_tipo_entregavel():
     )
 
     # Criar coluna "tipo_classificacao"
-    df_final['tipo_classificacao'] = 'Público Alvo'
+    df_final['tipo_classificacao'] = 'Tipo de Entregável'
     df_final['nivel_2'] = 'Não se aplica'
     df_final['nivel_3'] = 'Não se aplica'
 

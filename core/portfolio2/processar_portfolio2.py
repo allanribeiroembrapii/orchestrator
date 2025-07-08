@@ -171,7 +171,7 @@ def ajustar_macroentregas():
         "data_termino_planejado: " + safe_format_date(df_macroentregas['data_termino_planejado']) + "; " +
         "data_inicio_real: " + safe_format_date(df_macroentregas['data_inicio_real']) + "; " +
         "data_termino_real: " + safe_format_date(df_macroentregas['data_termino_real']) + "; " +
-        "versao: " + df_macroentregas['versao'].fillna('Não informado').astype(str) + "; " +
+        "versao: Não informado; " +
         "percentual_executado: " + df_macroentregas['percentual_executado'].fillna('').astype(str) + "; " +
         "me_atrasada: " + df_macroentregas['me_atrasada'].fillna('Não informado').astype(str) + "; " +
         "data_aceitacao: " + safe_format_date(df_macroentregas['data_aceitacao']) + "; " +

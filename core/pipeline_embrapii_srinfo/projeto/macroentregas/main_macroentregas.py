@@ -57,10 +57,11 @@ campos_interesse = [
     "Término planejado",
     "Início real",
     "Término real",
-    "Versão do replanejmanto",
+    # "Versão do replanejmanto",
     "Percentual executado",
-    "Em atraso?",
+    # "Em atraso?",
     "Data de aceitação",
+    "Status",
     "Observações ou comentários",
 ]
 
@@ -77,9 +78,10 @@ novos_nomes_e_ordem = {
     "Término planejado": "data_termino_planejado",
     "Início real": "data_inicio_real",
     "Término real": "data_termino_real",
-    "Versão do replanejmanto": "versao",
+    # "Versão do replanejmanto": "versao",
     "Percentual executado": "percentual_executado",
-    "Em atraso?": "me_atrasada",
+    # "Em atraso?": "me_atrasada",
+    "Status": "me_atrasada",
     "Data de aceitação": "data_aceitacao",
     "Observações ou comentários": "observacoes",
 }
