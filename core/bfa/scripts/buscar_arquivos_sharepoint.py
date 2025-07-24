@@ -57,3 +57,4 @@ def buscar_arquivos_sharepoint():
     get_file_gepes("bfa_status_macroentregas.xlsx", "dw_pii", COPY)
     get_file_gepes("bfa_comentarios.xlsx", "dw_pii", COPY)
     get_file_gepes("bfa_stage_gates.xlsx", "dw_pii", COPY)
+    get_file_gepes("bfa_empresas_info.xlsx", "dw_pii", COPY)
