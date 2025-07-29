@@ -29,6 +29,8 @@ def gerar_planilhas():
                          sheet_name='Stage Gate')
     stage_gates_rep = pd.read_excel(os.path.abspath(os.path.join(STEP1, 'BFA - Base de Dados para BI.xlsx')),
                          sheet_name='Representantes Stage Gates')
+    startups = pd.read_excel(os.path.abspath(os.path.join(STEP1, 'bfa_me_discriminado.xlsx')),
+                         sheet_name='startups')
     
     # juntando projetos com recurso
     proj = proj.merge(recurso, on='Codigo do Projeto', how='left')
@@ -55,7 +57,14 @@ def gerar_planilhas():
     # pegando o código do projeto para incluir nos comentários
     comentarios = comentarios.merge(proj[['Codigo do Projeto', 'Nome Projeto']], on='Nome Projeto', how='left')
 
-    # salvando as planilhas no step1
+    # adicionando as colunas de startup em empresas
+    startups = startups.rename(columns={'cnpj': 'CNPJ',
+                                        'codigo_projeto': 'Código'})
+    startups['startup'] = 'Sim'
+    proj_emp['startup'] = 'Não'
+    proj_emp = pd.concat([proj_emp, startups], ignore_index=True)
+
+    # salvando as planilhas no step2
     proj.to_excel(os.path.join(STEP2, 'bfa_projetos.xlsx'), index=False)
     proj_emp.to_excel(os.path.join(STEP2, 'bfa_projetos_empresas.xlsx'), index=False)
     proj_ue.to_excel(os.path.join(STEP2, 'bfa_projetos_unidades.xlsx'), index=False)
@@ -149,14 +158,16 @@ def processar_planilhas():
     campos_interesse_proj_emp = [
         "Código",
         "CNPJ",
+        "startup",
     ]
 
     novos_nomes_proj_emp = {
         "Código": "codigo_projeto",
         "CNPJ": "cnpj",
+        "startup": "startup",
     }
 
-    campos_string_proj_emp = ["codigo_projeto", "cnpj"]
+    campos_string_proj_emp = ["codigo_projeto", "cnpj", "startup"]
 
     processar_excel(
         arquivo_origem_proj_emp,
