@@ -23,8 +23,9 @@ def get_files_from_sharepoint():
         data_raw = os.path.join(ROOT, STEP_1_DATA_RAW)
         get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "portfolio.xlsx", "DWPII/srinfo", data_raw)
         get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "agfin_projetos_modelo_tradicional_classificacao_financeira.xlsx", "dw_pii", data_raw)
+        get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "portfolio2.xlsx", "dw_pii", data_raw)
         get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "[GEPES25-038] Agenda de Dados Financeiros - Base Ouro.xlsx", "General/Agenda de Dados Financeiros", data_raw)
-        get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "CG_Classificação de Projetos.xlsx", "DWPII/srinfo", data_raw)
+        # get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "CG_Classificação de Projetos.xlsx", "DWPII/srinfo", data_raw)
 
         print("🟢 " + inspect.currentframe().f_code.co_name)
     except Exception as e:

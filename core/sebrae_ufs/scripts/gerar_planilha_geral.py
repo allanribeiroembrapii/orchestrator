@@ -483,14 +483,14 @@ def gerar_planilha_geral(gerar_novo = False, enviar_pasta_sebrae = False):
         wb.worksheets[0].sheet_state = 'visible'
     wb.save(caminho_arquivo)
     wb.close()
-
+    print('aqui')
     if enviar_pasta_sebrae:
         upload_files(
             pasta_arquivos=STEP3,
-            destino='Acompanhamento Descentralizado//base_de_dados_sebrae_nacional',
+            destino='Acompanhamento Descentralizado//base_de_dados_sebrae_geral',
             arquivo_especifico=caminho_arquivo
         )
-
+    print('aqui2')
     return planilha_geral, combinado, municipios, port_ue, proj_emp, port_emp, port_me
 
 # Gerando a planilha de erros

@@ -136,16 +136,16 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
     log = []
 
     try:
-        # Verificar e criar pastas necessárias
+        # # Verificar e criar pastas necessárias
         verificar_criar_pastas()
 
-        # SharePoint
+        # # SharePoint
         buscar_arquivos_sharepoint()
         
         # Configurar o WebDriver
         driver = configurar_webdriver()
 
-        # Empresas
+        # # Empresas
         print("SEÇÃO 1/5: COLETA DE DADOS")
         print("Subseção: Empresas")
         main_info_empresas_baixar(driver)
@@ -154,7 +154,7 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
         main_empresas_contratantes(driver)
         log = logear(log, "empresas_contratantes")
 
-        # Unidades Embrapii
+        # # Unidades Embrapii
         print("Subseção: Unidades Embrapii")
         main_info_unidades(driver)
         log = logear(log, "info_unidades")
@@ -174,46 +174,58 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
 
         # Projetos
         print("Subseção: Projetos")
-
+        print("Sebrae")
         main_sebrae(driver)
         log = logear(log, "sebrae")
 
+        print("Projetos Contratados")
         main_projetos_contratados(driver)
         log = logear(log, "projetos_contratados")
 
+        print("Projetos Empresas")
         main_projetos_empresas()
         log = logear(log, "projetos_empresas")
 
+        print("Projetos")
         main_projetos(driver)
         log = logear(log, "projetos")
 
+        print("Contratos")
         main_contratos(driver)
         log = logear(log, "contratos")
 
+        print("Estudantes")
         main_estudantes(driver)
         log = logear(log, "estudantes")
 
+        print("Pedidos de PI")
         main_pedidos_pi(driver)
         log = logear(log, "pedidos_pi")
 
+        print("Macroentregas")
         main_macroentregas(driver)
         log = logear(log, "macroentregas")
 
-        main_comunicacao(driver)
-        log = logear(log, "comunicacao")
+        # main_comunicacao(driver)
+        # log = logear(log, "comunicacao")
 
+        print("Eventos SRInfo")
         main_eventos_srinfo(driver)
         log = logear(log, "eventos_srinfo")
 
+        print("Prospecção")
         main_prospeccao(driver)
         log = logear(log, "prospeccao")
 
+        print("Negociações")
         main_negociacoes(driver)
         log = logear(log, "negociacoes")
 
+        print("Propostas Técnicas")
         main_propostas_tecnicas(driver)
         log = logear(log, "propostas_tecnicas")
 
+        print("Plano de Trabalho")
         main_planos_trabalho(driver)
         log = logear(log, "planos_trabalho")
 

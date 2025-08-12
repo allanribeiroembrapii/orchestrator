@@ -254,12 +254,13 @@ def add_novas_linhas_tratada():
                 sheet.Cells(i, 17).Value = ""
         
         # Adicionar valores na coluna I - Valor Total Embrapii
-        df_portfolio["valor_total"] = (
-            df_portfolio["valor_embrapii"].fillna(0) +
-            df_portfolio["valor_empresa"].fillna(0) +
-            df_portfolio["valor_unidade_embrapii"].fillna(0) +
-            df_portfolio["valor_sebrae"].fillna(0)
-        )
+        # df_portfolio["valor_total"] = (
+        #     df_portfolio["valor_embrapii"].fillna(0) +
+        #     df_portfolio["valor_empresa"].fillna(0) +
+        #     df_portfolio["valor_unidade_embrapii"].fillna(0) +
+        #     df_portfolio["valor_sebrae"].fillna(0)
+        # )
+        df_portfolio["valor_total"] = df_portfolio["valor_embrapii"].fillna(0)
 
         # Criar um dicionário para lookup rápido (como um PROCV)
         mapa_valores = df_portfolio.set_index("codigo_projeto")["valor_total"].to_dict()

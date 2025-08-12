@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Usar as variáveis em maiúsculas conforme definido no .env
-USERNAME = os.getenv("SHAREPOINT_EMAIL")
-PASSWORD = os.getenv("sharepoint_password_orcado")
+USERNAME = os.getenv("sharepoint_email")
+PASSWORD = os.getenv("sharepoint_password")
 
 
 class SharePoint:

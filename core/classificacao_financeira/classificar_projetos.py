@@ -14,19 +14,21 @@ STEP_1_DATA_RAW = os.getenv("STEP_1_DATA_RAW")
 STEP_2_STAGE_AREA = os.getenv("STEP_2_STAGE_AREA")
 STEP_3_DATA_PROCESSED = os.getenv("STEP_3_DATA_PROCESSED")
 PORTFOLIO = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'portfolio.xlsx'))
+PORTFOLIO2 = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'portfolio2.xlsx'))
 AGFIN_PROJETOS = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'agfin_projetos_modelo_tradicional_classificacao_financeira.xlsx'))
 AGFIN_REFERENCIA = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, '[GEPES25-038] Agenda de Dados Financeiros - Base Ouro.xlsx'))
 PORTFOLIO_STAGE_AREA = os.path.abspath(os.path.join(ROOT, STEP_2_STAGE_AREA, 'portfolio_stage_area.xlsx'))
+NOVOS_PROJETOS_TAGS = os.path.abspath(os.path.join(ROOT, STEP_2_STAGE_AREA, 'novos_projetos_tags.xlsx'))
 AGFIN_PROJETOS_PROCESSED = os.path.abspath(os.path.join(ROOT, STEP_3_DATA_PROCESSED, 'agfin_projetos_modelo_tradicional_classificacao_financeira.xlsx'))
-PROJETOS_SAUDE_DO = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'CG_Classificação de Projetos.xlsx'))
 
 def classificar_projetos():
-        # Ler os DataFrames
+    # Ler os DataFrames
     df_portfolio = pd.read_excel(PORTFOLIO)
+    df_portfolio2 = pd.read_excel(PORTFOLIO2)
+    df_portfolio_tags = df_portfolio2[['id_codigo_projeto', 'fin_parceiro', 'outros_tags']].copy()
     df_agfin_projetos = pd.read_excel(AGFIN_PROJETOS)
     df_agfin_referencia = pd.read_excel(AGFIN_REFERENCIA, sheet_name='referencia_class_projetos')
     df_fonte_prioritaria = pd.read_excel(AGFIN_REFERENCIA, sheet_name='unidades_prioritarias')
-    df_projetos_saude = pd.read_excel(PROJETOS_SAUDE_DO, sheet_name='analise_do')
 
     # Encontrar os códigos de projetos que estão em df_portfolio mas não estão em df_agfin_projetos
     codigos_agfin_projetos = df_agfin_projetos['codigo_projeto'].astype(str).unique()
@@ -34,9 +36,9 @@ def classificar_projetos():
 
     # Filtrar apenas os novos projetos no df_portfolio
     df_novos_projetos = df_portfolio[df_portfolio['codigo_projeto'].astype(str).isin(codigos_novos.astype(str))]
-
+    
     # Manter somente as colunas desejadas
-    colunas_desejadas = ['codigo_projeto', 'unidade_embrapii', 'parceria_programa', 'call', 'cooperacao_internacional', 'modalidade_financiamento']
+    colunas_desejadas = ['codigo_projeto', 'unidade_embrapii', 'parceria_programa', 'call', 'cooperacao_internacional', 'modalidade_financiamento', 'tags']
     df_novos_projetos = df_novos_projetos[colunas_desejadas]
 
     # Criar a coluna de concatenação dos parâmetros
@@ -84,7 +86,6 @@ def classificar_projetos():
         'ncf_sebrae_eixo_regra': 'sebrae_eixo_regra',
         'ncf_sebrae_eixo_regra2': 'sebrae_eixo_regra2'
     }
-
     df_novos_projetos = df_novos_projetos.rename(columns=alterar_nome_colunas)
     df_agfin_projetos = pd.concat([df_agfin_projetos, df_novos_projetos], ignore_index=True)
 
@@ -105,14 +106,13 @@ def classificar_projetos():
     df_agfin_projetos.loc[indices_sem_parceiro, 'parceiro'] = df_temp['parceiro_novo'].values
     df_agfin_projetos.loc[indices_sem_parceiro, 'contrato_eixo'] = df_temp['contrato_eixo_novo'].values
 
-
     # Projetos MS
-    df_projetos_saude = df_projetos_saude[['Código','DO_Análise']]
-    codigos_ms = df_projetos_saude['Código'].astype(str).unique()
-
-    # Atualizar os campos desejados nos projetos encontrados
+    codigos_ms = df_portfolio_tags[
+        df_portfolio_tags['outros_tags'].str.contains('Ministério da Saúde', na=False)
+    ][['id_codigo_projeto', 'fin_parceiro']].copy()
+    codigos_ms = codigos_ms[codigos_ms['fin_parceiro'] != 'MS']
     df_agfin_projetos.loc[
-        df_agfin_projetos['codigo_projeto'].astype(str).isin(codigos_ms),
+        df_agfin_projetos['codigo_projeto'].astype(str).isin(codigos_ms['id_codigo_projeto'].astype(str)),
         ['id_parceiro', 'parceiro', 'contrato_eixo']
     ] = [5, 'MS', 'Saúde']
 
