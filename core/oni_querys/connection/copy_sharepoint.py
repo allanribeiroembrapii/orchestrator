@@ -6,7 +6,7 @@ import inspect
 #carregar .env
 load_dotenv()
 ROOT = os.getenv('ROOT')
-STEP_1_DATA_RAW = os.getenv('STEP_1_DATA_RAW')
+STEP1 = os.getenv('STEP_1_DATA_RAW')
 
 #Definição dos caminhos
 CURRENT_DIR = os.path.abspath(os.path.join(ROOT, 'connection'))
@@ -24,10 +24,8 @@ from connection.office365.download_files import get_file
 def copy_sharepoint():    
     print("🟡 " + inspect.currentframe().f_code.co_name)
     try:
-        get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "srinfo_company_company.xlsx",
-                "dw_pii", STEP_1_DATA_RAW)
         get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "oni_companies.xlsx",
-                "dw_pii", STEP_1_DATA_RAW)
+                "dw_pii", STEP1)
         print("🟢 " + inspect.currentframe().f_code.co_name)
     except Exception as e:
         print(f"🔴 Erro: {e}")
