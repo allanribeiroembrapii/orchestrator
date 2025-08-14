@@ -5,7 +5,7 @@ import pandas as pd
 import os
 from dotenv import load_dotenv
 # Assumindo que a função up_sharepoint está neste local
-from connection.up_sharepoint import up_sharepoint
+from core.orcado_realizado.connection.up_sharepoint import up_sharepoint
 
 
 def buscar_e_salvar_orcado_realizado():
@@ -16,11 +16,11 @@ def buscar_e_salvar_orcado_realizado():
     load_dotenv()
 
     # --- 1. CONFIGURAÇÕES DA CONEXÃO ---
-    servidor = os.getenv("DB_SERVER")
-    banco_de_dados = os.getenv("DB_DATABASE")
-    usuario = os.getenv("DB_USER")
-    senha = os.getenv("DB_PASSWORD")
-    driver_name = os.getenv("DRIVER_NAME", "SQL Server")
+    servidor = os.getenv("MS_DB_SERVER")
+    banco_de_dados = os.getenv("MS_DB_DATABASE")
+    usuario = os.getenv("MS_DB_USER")
+    senha = os.getenv("MS_DB_PASSWORD")
+    driver_name = os.getenv("MS_DRIVER_NAME", "SQL Server")
 
     if not all([servidor, banco_de_dados, usuario, senha, driver_name]):
         print("❌ ERRO: Verifique as variáveis de ambiente no arquivo .env.")
@@ -51,7 +51,7 @@ def buscar_e_salvar_orcado_realizado():
 
         if not df.empty:
             # --- 4. SALVAR OS DADOS E GERAR CAMINHO ABSOLUTO ---
-            output_dir = "step_3_data_processed"
+            output_dir = os.path.join(os.getenv("ROOT_ORCADO"), os.getenv("STEP_3_DATA_PROCESSED"))
             file_name = "orcado_realizado.xlsx"
 
             os.makedirs(output_dir, exist_ok=True)

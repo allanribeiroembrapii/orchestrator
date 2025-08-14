@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 #Adicionar o caminho do diretório raiz ao sys.path
 load_dotenv()
-ROOT = os.getenv('ROOT')
+ROOT = os.getenv('ROOT_SEBRAE_UFS')
 PATH_OFFICE = os.path.abspath(os.path.join(ROOT, 'office365_api'))
 
 # Adiciona o diretório correto ao sys.path

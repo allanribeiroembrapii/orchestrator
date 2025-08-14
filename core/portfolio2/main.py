@@ -1,4 +1,4 @@
-from start_clean import start_clean
+from core.portfolio2.start_clean import start_clean
 from core.portfolio2.connection.sharepoint import get_files_from_sharepoint, sharepoint_post
 from core.portfolio2.processar_portfolio2 import processar_portfolio2
 

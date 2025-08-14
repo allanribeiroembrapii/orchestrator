@@ -17,6 +17,8 @@ STEP3 = os.path.abspath(os.path.join(ROOT, 'step_3_data_processed'))
 
 
 def srinfo_sebrae_sourceamount():
+    print('user: ', USER)
+    print('senha: ', PASSWORD)
     query = """
         		SELECT
                     ue_negotiation.code codigo_negociacao,

@@ -29,8 +29,8 @@ from scripts_public.criar_db_sqlite import gerar_db_sqlite
 def levar_arquivos_sharepoint():
 
     # gerar_db_sqlite()
-    # zipar_arquivos(DWII_COPY, DWII_BACKUP)
-    # upload_files(DWII_BACKUP, "DWPII_backup", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
+    zipar_arquivos(DWII_COPY, DWII_BACKUP)
+    upload_files(DWII_BACKUP, "DWPII_backup", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
     upload_files(
         PASTA_ARQUIVOS, "DWPII/srinfo", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC
     )

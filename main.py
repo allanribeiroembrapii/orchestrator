@@ -28,6 +28,8 @@ from core.rvg_repositorio_visuais_graficos.main import main_rvg
 from core.classificacao_financeira.main import main_classificacao_financeira
 from core.classifier_gepes.main import main_classifier_gepes
 from core.portfolio2.main import main_portfolio2
+from core.orcado_realizado.main import main as main_orcamento
+from core.sap_repasses.main import main as main_repasses
 from logs.teams_notifier import enviar_notificacao_teams
 
 def execute_module(module_name, module_function, logger, module_idx=None, frequency=None):
@@ -131,57 +133,61 @@ def main():
     # Execute modules in sequence
     success = True
     
-    # #pipeline_embrapii_srinfo
-    if success:
-        success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
+    # if success:
+    #         success = execute_module("main_orcamento", main_orcamento, logger, frequency='daily')
+
+    # if success:
+    #     connect_vpn()
+
+    #     # Agenda de Dados Financeiros - Saldo Financeiro
+    #     if success:
+    #         success = execute_module("main_agfinanceiro", main_agfinanceiro, logger, frequency='daily')
+
+    #     # Clickhouse querys
+    #     if success:
+    #         success = execute_module("clickhouse_querys", clickhouse_querys, logger, frequency='daily')
+
+    #     disconnect_vpn()
+        
+
+    # # pipeline_embrapii_srinfo
+    # if success:
+    #     success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
   
-    # qim_ues
-    if success:
-        success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
+    # # qim_ues
+    # if success:
+    #     success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
 
-    # atualizar_google_sheets
-    if success:
-        success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
+    # # atualizar_google_sheets
+    # if success:
+    #     success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
 
-    # CG Classificação de Projetos - Validação Diretoria de Operações
-    if success:
-        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='monday')
+    # # CG Classificação de Projetos - Validação Diretoria de Operações
+    # if success:
+    #     success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='monday')
+    #     return
     
-    # Classificação Financeira dos Projetos Modelo Embrapii
-    if success:
-        success = execute_module("classificacao_financeira", main_classificacao_financeira, logger, frequency='daily')
+    # # Classificação Financeira dos Projetos Modelo Embrapii
+    # if success:
+    #     success = execute_module("classificacao_financeira", main_classificacao_financeira, logger, frequency='daily')
     
-    # Brasil Mais Produtivo
-    if success:
-        success = execute_module("bmaisp", bmaisp, logger, frequency='monday')
+    # if success:
+    #     success = execute_module("classificar_repasses", main_repasses, logger, frequency='daily')
+    
+    # # Brasil Mais Produtivo
+    # if success:
+    #     success = execute_module("bmaisp", bmaisp, logger, frequency='monday')
 
     # api_datapii
     if success:
         success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
+        return
 
-    if success:
-        connect_vpn()
+    # # Classifier
+    # if success:
+    #     success = execute_module("classifier_gepes", main_classifier_gepes, logger, frequency='daily')
 
-        # Agenda de Dados Financeiros - Saldo Financeiro
-        if success:
-            success = execute_module("main_agfinanceiro", main_agfinanceiro, logger, frequency='daily')
-
-        # Clickhouse querys
-        if success:
-            success = execute_module("clickhouse_querys", clickhouse_querys, logger, frequency='daily')
-
-        # Repositório de visuais gráficos
-        # if success:
-        #     success = execute_module("rvg", main_rvg, logger, frequency='daily')
-        #     return
-
-        disconnect_vpn()
-    
-    # Classifier
-    if success:
-        success = execute_module("classifier_gepes", main_classifier_gepes, logger, frequency='daily')
-
-    # Portfolio2
+    # # Portfolio2
     if success:
         success = execute_module("portfolio2", main_portfolio2, logger, frequency='daily')
 

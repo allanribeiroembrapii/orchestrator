@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from scripts_public.zipar_arquivos import zipar_arquivos
+from core.qim_ues.scripts_public.zipar_arquivos import zipar_arquivos
 from office365_api.upload_files import upload_files
 
 #carregar .env

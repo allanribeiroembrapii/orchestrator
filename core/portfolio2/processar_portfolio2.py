@@ -14,6 +14,7 @@ STEP_1_DATA_RAW = os.getenv("STEP_1_DATA_RAW")
 STEP_2_STAGE_AREA = os.getenv("STEP_2_STAGE_AREA")
 STEP_3_DATA_PROCESSED = os.getenv("STEP_3_DATA_PROCESSED")
 PORTFOLIO = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'portfolio.xlsx'))
+CLASSIFICACAO_PROJETO = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'classificacao_projeto.xlsx'))
 MACROENTREGAS = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'macroentregas.xlsx'))
 NEGOCIACOES = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'negociacoes_negociacoes.xlsx'))
 AGFIN_PROJETOS = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, 'agfin_projetos_modelo_tradicional_classificacao_financeira.xlsx'))
@@ -28,6 +29,7 @@ def processar_portfolio2():
     
     # Ler os arquivos
     df_portfolio = pd.read_excel(PORTFOLIO)
+    df_classificacao = pd.read_excel(CLASSIFICACAO_PROJETO)
     df_agfin_projetos = pd.read_excel(AGFIN_PROJETOS)
     df_negociacoes_agregadas = pd.read_excel(NEGOCIACOES_AGREGADAS)
     df_macroentregas_agregadas = pd.read_excel(MACROENTREGAS_AGREGADAS)
@@ -35,6 +37,29 @@ def processar_portfolio2():
     # Merge entre os dois DataFrames (tipo left join, para agregar as colunas financeiras ao portfolio)
     df_novo_portfolio = df_portfolio.merge(
         df_agfin_projetos,
+        left_on='codigo_projeto',
+        right_on='codigo_projeto',
+        how='left',
+    )
+
+    # Merge Classificação Projetos
+    df_classificacao["Economia Circular"] = (
+        (df_classificacao["Tecnologias Verdes"].isin(["Não se aplica", "Não definido"]) == False) |
+        (df_classificacao["Plano Transformação Ecológica"] == "PTE-5 Economia Circular") |
+        (df_classificacao["Descarbonização"] == "Sim") |
+        (df_classificacao["Áreas de Aplicação"] == "Sustentabilidade")
+    ).map({True: "Sim", False: "Não"})
+    df_classificacao = df_classificacao[[
+        "Código", "Energia Renovável", "Economia Circular", "Tecnologias Verdes"
+    ]]
+    df_classificacao = df_classificacao.rename(columns={
+        "Código": "codigo_projeto",
+        "Energia Renovável": "class_energia_renovavel",
+        "Economia Circular": "class_economia_circular",
+        "Tecnologias Verdes": "class_tecnologia_verde"
+    })
+    df_novo_portfolio = df_novo_portfolio.merge(
+        df_classificacao,
         left_on='codigo_projeto',
         right_on='codigo_projeto',
         how='left',
@@ -111,6 +136,9 @@ def processar_portfolio2():
         'tecnologia_habilitadora': 'class_tecnologia_habilitadora',
         'missoes_cndi': 'class_nib',
         'brasil_mais_produtivo': 'class_bmaisp',
+        'class_energia_renovavel': 'class_energia_renovavel',
+        'class_economia_circular': 'class_economia_circular',
+        'class_tecnologia_verde': 'class_tecnologia_verde',
         'valor_embrapii': 'val_nominal_embrapii',
         'valor_empresa': 'val_nominal_empresa',
         'valor_sebrae': 'val_nominal_sebrae',
@@ -142,6 +170,10 @@ def processar_portfolio2():
 
     # Exportar
     df_novo_portfolio.to_excel(PORTFOLIO2, index=False)
+
+def portfolio2_to_clickhouse():
+    pass
+
 
 def safe_format_date(col):
     return pd.to_datetime(col, errors='coerce').dt.strftime('%d/%m/%Y').fillna('')

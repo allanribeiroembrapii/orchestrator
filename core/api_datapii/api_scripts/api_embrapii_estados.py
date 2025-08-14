@@ -25,8 +25,10 @@ STEP_3_DATA_PROCESSED = "data/step_3_data_processed"
 # Definir caminhos dos arquivos
 PORTFOLIO = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "portfolio.xlsx"))
 UNIDADES = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "info_unidades_embrapii.xlsx"))
+EQUIPE_UE = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "equipe_ue.xlsx"))
 PROJETOS_EMPRESAS = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "projetos_empresas.xlsx"))
 INFO_EMPRESAS = os.path.abspath(os.path.join(ROOT, STEP_1_DATA_RAW, "info_empresas.xlsx"))
+EQUIPE_UE_SA = os.path.abspath(os.path.join(ROOT, STEP_2_STAGE_AREA, "equipe_ue_sa.xlsx"))
 PROJETOS_EMPRESAS_PRO = os.path.abspath(os.path.join(ROOT, STEP_3_DATA_PROCESSED, "projetos_empresas_pro.xlsx"))
 
 API_TOKEN = os.getenv("API_TOKEN")
@@ -81,6 +83,7 @@ def criar_planilha_projetos_empresas_pro():
 def calcular_valores_por_uf():
     df_projetos_empresas_pro = pd.read_excel(PROJETOS_EMPRESAS_PRO)
     df_unidades = pd.read_excel(UNIDADES)
+    df_equipe = pd.read_excel(EQUIPE_UE)
 
     lista_ufs = [
         "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", 
@@ -94,10 +97,23 @@ def calcular_valores_por_uf():
         # Filtrar pela UF
         df_projetos_empresas_filtrado = df_projetos_empresas_pro[df_projetos_empresas_pro['uf_empresa'] == uf]
         df_unidades_filtrado = df_unidades[(df_unidades['uf'] == uf) & (df_unidades['status_credenciamento'] == "Ativado")]
+        
+        # filtro: apenas equipes da UF, com unidade Ativada e sem data de saída
+        df_equipe_temp = df_equipe.copy()
+        df_equipe_temp = df_equipe_temp.merge(
+            df_unidades_filtrado[['unidade_embrapii', 'uf', 'status_credenciamento']],
+            on='unidade_embrapii',
+            how='left'
+        )
+        df_equipe_filtrado = df_equipe_temp.loc[
+            (df_equipe_temp['uf'].eq(uf)) &
+            (df_equipe_temp['status_credenciamento'].eq("Ativado")) &
+            (df_equipe_temp['data_saida'].fillna('').astype(str).str.strip().eq(''))
+        ].copy()
 
         # Calcular áreas de aplicação
         areas_aplicacao = calcular_areas_aplicacao(df_projetos_empresas_filtrado)
-        impacto_uf = calcular_impacto_uf(df_projetos_empresas_filtrado, df_unidades_filtrado)
+        impacto_uf = calcular_impacto_uf(df_projetos_empresas_filtrado, df_unidades_filtrado, df_equipe_filtrado)
         unidades = listar_unidades(df_unidades_filtrado)
         dados = {
             'area_aplicacao': areas_aplicacao,
@@ -136,9 +152,10 @@ def calcular_areas_aplicacao(dataframe):
 
     return resultado
 
-def calcular_impacto_uf(dataframe_projetos_empresas, dataframe_unidades):
+def calcular_impacto_uf(dataframe_projetos_empresas, dataframe_unidades, dataframe_equipe):
     df_projetos_empresas = dataframe_projetos_empresas
     df_unidades = dataframe_unidades
+    df_equipe = dataframe_equipe
 
     # Contagem única de projetos
     total_projetos = df_projetos_empresas['codigo_projeto'].nunique()
@@ -146,13 +163,15 @@ def calcular_impacto_uf(dataframe_projetos_empresas, dataframe_unidades):
     total_empresas = df_projetos_empresas['cnpj'].nunique()
     total_pi = df_projetos_empresas.drop_duplicates(subset='codigo_projeto')['n_pedidos_pi'].sum()
     total_unidades = df_unidades['unidade_embrapii'].nunique()
+    total_equipe = df_equipe['cpf'].nunique()
 
     return {
         'projetos_contratados': int(total_projetos),
         'valor_total': round(float(total_valor), 0),
         'empresas': int(total_empresas),
         'pedidos_pi': int(total_pi),
-        'unidades_embrapii': int(total_unidades)
+        'unidades_embrapii': int(total_unidades),
+        'equipe': int(total_equipe),
     }
 
 def listar_unidades(dataframe):
