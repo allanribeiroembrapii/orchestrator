@@ -3,6 +3,7 @@ import inspect
 from dotenv import load_dotenv
 from .office365.upload_files import upload_files
 from .office365.download_files import get_file
+from core.api_datapii.connection.connect_sharepoint import SharepointClient
 
 # carregar .env
 load_dotenv()
@@ -53,11 +54,33 @@ def sharepoint_get():
     verificar_criar_diretorio(RAW)
     apagar_arquivos_pasta(RAW)
 
-    get_file("portfolio.xlsx", "DWPII/srinfo", RAW)
-    get_file("projetos_empresas.xlsx", "DWPII/srinfo", RAW)
-    get_file("info_unidades_embrapii.xlsx", "DWPII/srinfo", RAW)
-    get_file("info_empresas.xlsx", "DWPII/srinfo", RAW)
-    get_file("equipe_ue.xlsx", "DWPII/srinfo", RAW)
+    sp = SharepointClient()
+
+    pasta_srinfo = "DWPII/srinfo"
+
+    lista_arquivos = {
+        pasta_srinfo: {
+            "portfolio",
+            "projetos_empresas",
+            "info_unidades_embrapii",
+            "info_empresas",
+            "equipe_ue",
+        },
+    }
+
+    for pasta, nomes in lista_arquivos.items():
+        for nome in nomes:
+            filename = f"{nome}.xlsx"
+            remote_path = f"{pasta}/{filename}"
+            local_file = os.path.join(RAW, filename)
+            print(f"⬇️  Baixando: {remote_path} -> {local_file}")
+            sp.download_file(remote_path, local_file)
+
+    # get_file("portfolio.xlsx", "DWPII/srinfo", RAW)
+    # get_file("projetos_empresas.xlsx", "DWPII/srinfo", RAW)
+    # get_file("info_unidades_embrapii.xlsx", "DWPII/srinfo", RAW)
+    # get_file("info_empresas.xlsx", "DWPII/srinfo", RAW)
+    # get_file("equipe_ue.xlsx", "DWPII/srinfo", RAW)
     print("🟢 " + inspect.currentframe().f_code.co_name)
 
 

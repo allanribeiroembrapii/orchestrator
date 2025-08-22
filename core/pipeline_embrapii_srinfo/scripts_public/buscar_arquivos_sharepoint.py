@@ -4,6 +4,10 @@ from dotenv import load_dotenv
 import inspect
 import requests
 import pandas as pd
+from .connect_sharepoint import SharepointClient
+import inspect
+import requests
+from requests.exceptions import Timeout, RequestException
 
 # carregar .env
 load_dotenv()
@@ -41,15 +45,24 @@ def buscar_arquivos_sharepoint():
     apagar_arquivos_pasta(DWPII_UP)
     apagar_arquivos_pasta(DWPII_BACKUP)
 
-    get_file(
-        SHAREPOINT_SITE_SEBRAE,
-        SHAREPOINT_SITE_NAME_SEBRAE,
-        SHAREPOINT_DOC_SEBRAE,
-        "sebrae_bi_interno_base_2.0.xlsx",
-        "Contratos SEBRAE/Transferência de Atividades (Handsover)/",
-        CURRENT_DIR,
+    sp = SharepointClient()
+    pasta_origem = "DWPII/srinfo"
+    arquivos = sp.list_files(pasta_origem)
+    for arquivo in arquivos:
+        nome_arquivo = arquivo["name"]
+        sp.download_file(f"{pasta_origem}/{nome_arquivo}", os.path.join(CURRENT_DIR, nome_arquivo))
+
+    sp.download_file_from_other_site(
+        site_url="embrapii.sharepoint.com:/sites/GEAEDGovernanadeContratos",
+        doc_library="Documents",  # só o nome da lib
+        file_path="Contratos SEBRAE/Transferência de Atividades (Handsover)/sebrae_bi_interno_base_2.0.xlsx",
+        output_path=os.path.join(CURRENT_DIR, "sebrae_bi_interno_base_2.0.xlsx")
     )
-    get_files(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "DWPII/srinfo", CURRENT_DIR)
+
+    sp = SharepointClient()
+    site_id = "embrapii.sharepoint.com,8b15e48e-d76c-46e3-99ed-b26938c118bc,34cff5a0-961f-4738-9269-df1fb2dac987"
+    sp.listar_drives_site(site_id)
+
     api_ibge()
     print("🟢 " + inspect.currentframe().f_code.co_name)
 
@@ -59,26 +72,20 @@ IPCA_IBGE = "https://apisidra.ibge.gov.br/values/t/1737/p/all/v/2266/N1/1?format
 
 def api_ibge():
     print("🟡 " + inspect.currentframe().f_code.co_name)
-
-    # Pegar os dados da API
-    response = requests.get(IPCA_IBGE)
-    if response.status_code != 200:
-        raise Exception("Erro ao buscar dados da API do IBGE")
+    try:
+        response = requests.get(IPCA_IBGE, timeout=10)
+        response.raise_for_status()
+    except Timeout:
+        raise Exception("⏱️ Timeout: API do IBGE demorou para responder.")
+    except RequestException as e:
+        raise Exception(f"❌ Erro ao conectar com API do IBGE: {e}")
 
     dados = response.json()
-
-    # Extrair cabeçalho da segunda linha (índice 1)
     header = list(dados[0].values())
-
-    # Criar lista de dados a partir da terceira linha em diante (dados reais)
     data = [list(row.values()) for row in dados[1:]]
 
-    # Criar DataFrame com o novo cabeçalho
     df = pd.DataFrame(data, columns=header)
-
-    # Salvar planilha XLSX no caminho RAW
     output_path = os.path.join(CURRENT_DIR, "ipca_ibge.xlsx")
-    # Garantir que o diretório existe antes de salvar o arquivo
     df.to_excel(output_path, index=False)
 
     print("🟢 " + inspect.currentframe().f_code.co_name)

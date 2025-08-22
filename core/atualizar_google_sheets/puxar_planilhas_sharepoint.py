@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import inspect
 from core.atualizar_google_sheets.office365.download_files import get_file
+from core.atualizar_google_sheets.connect_sharepoint import SharepointClient
 
 
 # carregar .env e tudo mais
@@ -13,24 +14,48 @@ ROOT = os.getenv("ROOT_GSHEET")
 def puxar_planilhas():
     print("🟡 " + inspect.currentframe().f_code.co_name)
     inputs = os.path.join(ROOT, "inputs")
+    os.makedirs(inputs, exist_ok=True)
     apagar_arquivos_pasta(inputs)
 
-    get_file("portfolio.xlsx", "DWPII/srinfo", inputs)
-    get_file("projetos_empresas.xlsx", "DWPII/srinfo", inputs)
-    get_file("informacoes_empresas.xlsx", "DWPII/srinfo", inputs)
-    get_file("info_unidades_embrapii.xlsx", "DWPII/srinfo", inputs)
-    get_file("pedidos_pi.xlsx", "DWPII/srinfo", inputs)
-    get_file("ue_linhas_atuacao.xlsx", "DWPII/srinfo", inputs)
-    get_file("macroentregas.xlsx", "DWPII/srinfo", inputs)
-    get_file("negociacoes_negociacoes.xlsx", "DWPII/srinfo", inputs)
-    get_file("classificacao_projeto.xlsx", "DWPII/srinfo", inputs)
-    get_file("projetos.xlsx", "DWPII/srinfo", inputs)
-    get_file("prospeccao_prospeccao.xlsx", "DWPII/srinfo", inputs)
-    get_file("negociacoes_propostas_tecnicas.xlsx", "DWPII/srinfo", inputs)
-    get_file("qim.xlsx", "DWPII/qim_ues", inputs)
-    get_file("cnae_ibge.xlsx", "DWPII/lookup_tables", inputs)
-    get_file("equipe_ue.xlsx", "DWPII/srinfo", inputs)
-    get_file("estudantes.xlsx", "DWPII/srinfo", inputs)
+    sp = SharepointClient()
+
+    pasta_srinfo = "DWPII/srinfo"
+    pasta_qim_ues = "DWPII/qim_ues"
+    pasta_lookup = "DWPII/lookup_tables"
+
+    lista_arquivos = {
+        pasta_srinfo: {
+            "portfolio",
+            "projetos_empresas",
+            "informacoes_empresas",
+            "info_unidades_embrapii",
+            "pedidos_pi",
+            "ue_linhas_atuacao",
+            "macroentregas",
+            "negociacoes_negociacoes",
+            "classificacao_projeto",
+            "projetos",
+            "prospeccao_prospeccao",
+            "negociacoes_propostas_tecnicas",
+            "equipe_ue",
+            "estudantes",
+        },
+        pasta_qim_ues: {
+            "qim",
+        },
+        pasta_lookup: {
+            "cnae_ibge",
+        }
+    }
+
+    for pasta, nomes in lista_arquivos.items():
+        for nome in nomes:
+            filename = f"{nome}.xlsx"
+            remote_path = f"{pasta}/{filename}"
+            local_file = os.path.join(inputs, filename)
+            print(f"⬇️  Baixando: {remote_path} -> {local_file}")
+            sp.download_file(remote_path, local_file)
+
     print("🟢 " + inspect.currentframe().f_code.co_name)
 
 
