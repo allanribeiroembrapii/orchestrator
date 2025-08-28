@@ -4,9 +4,11 @@ import pyodbc
 import pandas as pd
 import os
 from dotenv import load_dotenv
-# Assumindo que a função up_sharepoint está neste local
-from core.orcado_realizado.connection.up_sharepoint import up_sharepoint
+from core.orcado_realizado.connect_sharepoint import SharepointClient
 
+
+load_dotenv()
+PASTA_SHAREPOINT_DESTINO = os.getenv("sharepoint_repositorio")
 
 def buscar_e_salvar_orcado_realizado():
     """
@@ -40,15 +42,11 @@ def buscar_e_salvar_orcado_realizado():
 
     conexao = None
     try:
-        print(f"Tentando conectar ao servidor '{servidor}'...")
         conexao = pyodbc.connect(string_de_conexao, autocommit=True)
         print("✅ Conexão bem-sucedida!")
 
-        print("\nExecutando a busca dos dados na tabela...")
-        # A linha abaixo pode gerar um UserWarning, isso é normal com pyodbc e pandas.
         df = pd.read_sql(comando_sql, conexao)
-        print(f"🔎 {len(df)} registros encontrados.")
-
+        
         if not df.empty:
             # --- 4. SALVAR OS DADOS E GERAR CAMINHO ABSOLUTO ---
             output_dir = os.path.join(os.getenv("ROOT_ORCADO"), os.getenv("STEP_3_DATA_PROCESSED"))
@@ -61,8 +59,6 @@ def buscar_e_salvar_orcado_realizado():
             # Converte o caminho para um caminho absoluto (ex: C:\Users\...)
             caminho_absoluto = os.path.abspath(caminho_relativo)
 
-            print(
-                f"\nSalvando os dados no arquivo Excel '{caminho_absoluto}'...")
             df.to_excel(caminho_absoluto, index=False)
             print(f"✅ Arquivo '{caminho_absoluto}' salvo com sucesso!")
 
@@ -82,7 +78,6 @@ def buscar_e_salvar_orcado_realizado():
     finally:
         if conexao:
             conexao.close()
-            print("\nConexão com o banco fechada. 👋")
 
 
 def main():
@@ -97,7 +92,9 @@ def main():
     # 2. Verificamos se o caminho foi retornado com sucesso
     if caminho_do_arquivo:
         # 3. CHAMADA CORRETA: Passamos a variável com o caminho para a função up_sharepoint
-        up_sharepoint(caminho_do_arquivo)
+        print("Pasta de destino: ", PASTA_SHAREPOINT_DESTINO)
+        sp = SharepointClient()
+        sp.upload_file_to_folder(caminho_do_arquivo, PASTA_SHAREPOINT_DESTINO)
     else:
         print(
             "🔴 Upload para o SharePoint não foi executado porque o arquivo não foi gerado.")

@@ -3,6 +3,7 @@ import inspect
 from dotenv import load_dotenv
 from .office365.download_files import get_file
 from .office365.upload_files import upload_files
+from core.classificacao_financeira.connection.connect_sharepoint import SharepointClient
 
 # carregar .env e tudo mais
 load_dotenv()
@@ -20,8 +21,15 @@ def get_files_from_sharepoint():
 
     # Baixar arquivos do SharePoint
     try:
-        data_raw = os.path.join(ROOT, STEP_1_DATA_RAW)
-        get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, "[GEPES25-038] Agenda de Dados Financeiros - Base Ouro.xlsx", "General/Agenda de Dados Financeiros", data_raw)
+        data_raw = os.path.join(ROOT, STEP_1_DATA_RAW) 
+
+        sp = SharepointClient()
+        pasta = "General/Agenda de Dados Financeiros"
+        filename = "[GEPES25-038] Agenda de Dados Financeiros - Base Ouro.xlsx"
+        remote_path = f"{pasta}/{filename}"
+        local_file = os.path.join(data_raw, filename) 
+
+        sp.download_file(remote_path, local_file)
 
         print("🟢 " + inspect.currentframe().f_code.co_name)
     except Exception as e:
@@ -33,9 +41,17 @@ def get_files_from_sharepoint():
 def sharepoint_post():
     print("🟡 " + inspect.currentframe().f_code.co_name)
     try:
-        upload_files(
-            STEP_3_DATA_PROCESSED, "dw_pii", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC
-        )
+        sp = SharepointClient()
+
+        # Listar arquivos na pasta
+        for nome_arquivo in os.listdir(STEP_3_DATA_PROCESSED):
+            caminho_do_arquivo = os.path.join(STEP_3_DATA_PROCESSED, nome_arquivo)
+            if os.path.isfile(caminho_do_arquivo):
+                sp.upload_file_to_folder(caminho_do_arquivo, 'dw_pii')
+
+        # upload_files(
+        #     STEP_3_DATA_PROCESSED, "dw_pii", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC
+        # )
         print("🟢 " + inspect.currentframe().f_code.co_name)
     except Exception as e:
         print(f"🔴 Erro: {e}")

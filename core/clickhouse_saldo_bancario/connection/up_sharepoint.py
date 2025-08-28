@@ -2,8 +2,8 @@ import os
 import zipfile
 import inspect
 from dotenv import load_dotenv
-from .office365.upload_files import upload_files
 from datetime import datetime
+from .connect_sharepoint import SharepointClient
 
 #carregar .env
 load_dotenv()
@@ -39,10 +39,13 @@ def zipar_arquivos(origem, destino):
 def up_sharepoint():
     print("🟡 " + inspect.currentframe().f_code.co_name)
     try:
-        # zipar_arquivos(RAW, BACKUP)
-        # upload_files(BACKUP, "DWPII_backup", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
-        upload_files(PASTA_ARQUIVOS, "dw_pii", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
-        print("🟢 " + inspect.currentframe().f_code.co_name)
+        sp = SharepointClient()
+
+        # Listar arquivos na pasta
+        for nome_arquivo in os.listdir(PASTA_ARQUIVOS):
+            caminho_do_arquivo = os.path.join(PASTA_ARQUIVOS, nome_arquivo)
+            if os.path.isfile(caminho_do_arquivo):
+                sp.upload_file_to_folder(caminho_do_arquivo, 'dw_pii')
     except Exception as e:
         print(f"🔴 Erro: {e}")
 

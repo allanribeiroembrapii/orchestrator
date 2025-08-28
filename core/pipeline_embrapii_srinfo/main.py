@@ -5,7 +5,7 @@ import psutil
 import inspect
 import pyshorteners
 from dotenv import load_dotenv
-from datetime import datetime
+import datetime
 
 # Adicionar o caminho do diretório raiz ao sys.path
 load_dotenv()
@@ -130,22 +130,23 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
     """
     O **pipeline_embrapii_srinfo** tem como objetivo realizar a extração, transformação e carga de dados do SRInfo da Embrapii para o DWPII no sharepoint.
     """
-    print("Início: ", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
-    inicio = datetime.now()
+    print("Início: ", datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    inicio = datetime.datetime.now()
+    weekday = datetime.date.today().strftime("%A")
 
     log = []
 
     try:
-        # # Verificar e criar pastas necessárias
+        # Verificar e criar pastas necessárias
         verificar_criar_pastas()
 
-        # # SharePoint
+        # SharePoint
         buscar_arquivos_sharepoint()
         
         # Configurar o WebDriver
         driver = configurar_webdriver()
 
-        # # Empresas
+        # Empresas
         print("SEÇÃO 1/5: COLETA DE DADOS")
         print("Subseção: Empresas")
         main_info_empresas_baixar(driver)
@@ -159,14 +160,15 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
         main_info_unidades(driver)
         log = logear(log, "info_unidades")
 
-        main_equipe_ue(driver)
-        log = logear(log, "equipe_ue")
+        if weekday == "Monday":
+            main_equipe_ue(driver)
+            log = logear(log, "equipe_ue")
 
-        main_termos_cooperacao(driver)
-        log = logear(log, "ue_termos_cooperacao")
+            main_termos_cooperacao(driver)
+            log = logear(log, "ue_termos_cooperacao")
 
-        main_plano_acao(driver)
-        log = logear(log, "ue_termos_cooperacao")
+            main_plano_acao(driver)
+            log = logear(log, "ue_termos_cooperacao")
 
         if plano_metas:
             main_plano_metas(driver)
@@ -194,14 +196,6 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
         main_contratos(driver)
         log = logear(log, "contratos")
 
-        print("Estudantes")
-        main_estudantes(driver)
-        log = logear(log, "estudantes")
-
-        print("Pedidos de PI")
-        main_pedidos_pi(driver)
-        log = logear(log, "pedidos_pi")
-
         print("Macroentregas")
         main_macroentregas(driver)
         log = logear(log, "macroentregas")
@@ -209,25 +203,34 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
         # main_comunicacao(driver)
         # log = logear(log, "comunicacao")
 
-        print("Eventos SRInfo")
-        main_eventos_srinfo(driver)
-        log = logear(log, "eventos_srinfo")
+        if weekday == "Monday":
+            print("Estudantes")
+            main_estudantes(driver)
+            log = logear(log, "estudantes")
 
-        print("Prospecção")
-        main_prospeccao(driver)
-        log = logear(log, "prospeccao")
+            print("Pedidos de PI")
+            main_pedidos_pi(driver)
+            log = logear(log, "pedidos_pi")
 
-        print("Negociações")
-        main_negociacoes(driver)
-        log = logear(log, "negociacoes")
+            print("Eventos SRInfo")
+            main_eventos_srinfo(driver)
+            log = logear(log, "eventos_srinfo")
 
-        print("Propostas Técnicas")
-        main_propostas_tecnicas(driver)
-        log = logear(log, "propostas_tecnicas")
+            print("Prospecção")
+            main_prospeccao(driver)
+            log = logear(log, "prospeccao")
 
-        print("Plano de Trabalho")
-        main_planos_trabalho(driver)
-        log = logear(log, "planos_trabalho")
+            print("Negociações")
+            main_negociacoes(driver)
+            log = logear(log, "negociacoes")
+
+            print("Propostas Técnicas")
+            main_propostas_tecnicas(driver)
+            log = logear(log, "propostas_tecnicas")
+
+            print("Plano de Trabalho")
+            main_planos_trabalho(driver)
+            log = logear(log, "planos_trabalho")
 
         encerrar_webdriver(driver)
 
@@ -257,7 +260,7 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
         print("SEÇÃO 5/5: ENCAMINHAR MENSAGEM")
         novos = comparar_excel()
 
-        fim = datetime.now()
+        fim = datetime.datetime.now()
         duracao = duracao_tempo(inicio, fim)
         link = "https://embrapii.sharepoint.com/:x:/r/sites/GEPES/Documentos%20Compartilhados/DWPII/srinfo/classificacao_projeto.xlsx?d=wb7a7a439310f4d52a37728b9f1833961&csf=1&web=1&e=qXpfgA"
         link_snapshot = "https://embrapii.sharepoint.com/:f:/r/sites/GEPES/Documentos%20Compartilhados/Reports?csf=1&web=1&e=aVdkyL"
@@ -283,7 +286,7 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
         # Re-lançar a exceção para manter o comportamento original
         raise
 
-    print("Fim: ", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    print("Fim: ", datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 
 
 def encerrar_webdriver(driver):
@@ -299,7 +302,7 @@ def encerrar_webdriver(driver):
 
 
 def logear(log, entidade):
-    log.append([datetime.now().strftime("%d/%m/%Y %H:%M:%S"), USUARIO, entidade])
+    log.append([datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"), USUARIO, entidade])
     return log
 
 

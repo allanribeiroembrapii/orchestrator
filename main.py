@@ -134,54 +134,53 @@ def main():
     success = True
     
     # if success:
-    #         success = execute_module("main_orcamento", main_orcamento, logger, frequency='daily')
+    #     success = execute_module("main_orcamento", main_orcamento, logger, frequency='daily')
 
-    # if success:
-    #     connect_vpn()
+    if success:
+        connect_vpn()
 
-    #     # Agenda de Dados Financeiros - Saldo Financeiro
-    #     if success:
-    #         success = execute_module("main_agfinanceiro", main_agfinanceiro, logger, frequency='daily')
+        # Agenda de Dados Financeiros - Saldo Financeiro
+        if success:
+            success = execute_module("main_agfinanceiro", main_agfinanceiro, logger, frequency='daily')
 
-    #     # Clickhouse querys
-    #     if success:
-    #         success = execute_module("clickhouse_querys", clickhouse_querys, logger, frequency='daily')
+        # Clickhouse querys
+        if success:
+            success = execute_module("clickhouse_querys", clickhouse_querys, logger, frequency='daily')
 
-    #     disconnect_vpn()
-        
+        disconnect_vpn()  
 
-    # # pipeline_embrapii_srinfo
-    # if success:
-    #     success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
+    # pipeline_embrapii_srinfo
+    if success:
+        success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
   
-    # # qim_ues
-    # if success:
-    #     success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
+    # qim_ues
+    if success:
+        success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
 
-    # # atualizar_google_sheets
-    # if success:
-    #     success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
+    #atualizar_google_sheets
+    if success:
+        success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
 
-    # # CG Classificação de Projetos - Validação Diretoria de Operações
-    # if success:
-    #     success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='monday')
-    #     return
+    # CG Classificação de Projetos - Validação Diretoria de Operações
+    if success:
+        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='monday')
+        
     
-    # # Classificação Financeira dos Projetos Modelo Embrapii
-    # if success:
-    #     success = execute_module("classificacao_financeira", main_classificacao_financeira, logger, frequency='daily')
+    # Classificação Financeira dos Projetos Modelo Embrapii
+    if success:
+        success = execute_module("classificacao_financeira", main_classificacao_financeira, logger, frequency='daily')
     
-    # if success:
-    #     success = execute_module("classificar_repasses", main_repasses, logger, frequency='daily')
+    if success:
+        success = execute_module("classificar_repasses", main_repasses, logger, frequency='daily')
     
-    # # Brasil Mais Produtivo
-    # if success:
-    #     success = execute_module("bmaisp", bmaisp, logger, frequency='monday')
+    # Brasil Mais Produtivo
+    if success:
+        success = execute_module("bmaisp", bmaisp, logger, frequency='monday')
 
     # api_datapii
     if success:
         success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
-        return
+        
 
     # # Classifier
     # if success:
