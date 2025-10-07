@@ -22,7 +22,7 @@ SCRIPTS_PUBLIC_PATH = os.path.abspath(os.path.join(ROOT, "scripts_public"))
 sys.path.append(SCRIPTS_PUBLIC_PATH)
 sys.path.append(CURRENT_DIR)
 
-from scripts_public.mover_arquivos import mover_arquivos_excel
+from scripts_public.mover_arquivos import mover_arquivos_excel, mover_arquivos_csv
 from .scripts.baixar_dados_srinfo import baixar_dados_srinfo_projetos_contratados
 
 
@@ -30,11 +30,17 @@ def main_projetos_contratados(driver):
     baixar_dados_srinfo_projetos_contratados(driver)
     pasta_download = os.getenv("PASTA_DOWNLOAD")
     nome_arquivo = "raw_relatorio_projetos_contratados"
-    mover_arquivos_excel(1, pasta_download, CURRENT_DIR, nome_arquivo)
-    caminho = os.path.join(
+    mover_arquivos_csv(1, pasta_download, CURRENT_DIR, nome_arquivo)
+    raw_relatorio_projetos_contratados_path = os.path.join(
+        CURRENT_DIR, "step_1_data_raw", "raw_relatorio_projetos_contratados_1.csv"
+    )
+    caminho_excel = os.path.join(
         CURRENT_DIR, "step_1_data_raw", "raw_relatorio_projetos_contratados_1.xlsx"
     )
-    filtrar_main_projetos_contratados(caminho)
+    df = pd.read_csv(raw_relatorio_projetos_contratados_path, sep='\t')
+    df.to_excel(caminho_excel, index=False)
+    filtrar_main_projetos_contratados(caminho_excel)
+    os.remove(raw_relatorio_projetos_contratados_path)
 
 
 def filtrar_main_projetos_contratados(caminho):

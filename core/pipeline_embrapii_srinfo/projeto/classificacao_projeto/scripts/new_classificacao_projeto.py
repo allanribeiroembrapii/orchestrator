@@ -95,7 +95,7 @@ def new_classificacao_projeto():
                 "Valor total",
                 "Valor aportado EMBRAPII",
                 "Valor aportado Empresa",
-                "Valor aportado Unidade",
+                "Valor aportado pela Unidade",
             ]
         ],
         left_on="codigo_projeto",

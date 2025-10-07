@@ -6,10 +6,12 @@ import pandas as pd
 from dotenv import load_dotenv
 from core.cg_classificacao_projetos_do.office365_api.download_files import get_file
 from core.cg_classificacao_projetos_do.office365_api.upload_files import upload_files
+from core.cg_classificacao_projetos_do.connect_sharepoint import SharepointClient
 from datetime import datetime
 import time
 import pyautogui
 import pygetwindow as gw
+
 
 # carregar .env e tudo mais
 load_dotenv()
@@ -69,7 +71,6 @@ CALL_SIMPLIFICADA = {
     "SEBRAE Ciclo Integrado 4º Contrato": "CG",
 }
 
-# puxar planilhas do sharepoint
 def puxar_planilhas():
     print("🟡 " + inspect.currentframe().f_code.co_name)
     
@@ -84,13 +85,35 @@ def puxar_planilhas():
     apagar_arquivos_pasta(stage_area)
     apagar_arquivos_pasta(data_processed)
     apagar_arquivos_pasta(output)
-    
-    #Buscar dados
-    get_file('portfolio.xlsx', 'DWPII/srinfo', data_raw)
-    get_file('classificacao_projeto.xlsx', 'DWPII/srinfo', data_raw)
-    get_file('CG_Classificação de Projetos.xlsx', 'DWPII/srinfo', data_raw)
-    get_file('ue_fonte_recurso_prioritario.xlsx', 'DWPII/unidades_embrapii', data_raw)
+
+    sp = SharepointClient()
+
+    pasta_srinfo = "DWPII/srinfo"
+    pasta_unidades = "DWPII/unidades_embrapii"
+
+    lista_arquivos = {
+        pasta_srinfo: {
+            "portfolio",
+            "classificacao_projeto",
+            "CG_Classificação de Projetos",
+        },
+        pasta_unidades: {
+            "ue_fonte_recurso_prioritario",
+        },
+    }
+
+    baixar_arquivos(sp, lista_arquivos, data_raw)
+
     print("🟢 " + inspect.currentframe().f_code.co_name)
+
+def baixar_arquivos(sp, lista, inputs):
+    for pasta, nomes in lista.items():
+        for nome in nomes:
+            filename = f"{nome}.xlsx"
+            remote_path = f"{pasta}/{filename}"
+            local_file = os.path.join(inputs, filename)
+            print(f"⬇️  Baixando: {remote_path} -> {local_file}")
+            sp.download_file(remote_path, local_file)
 
 def apagar_arquivos_pasta(caminho_pasta):
     try:
@@ -295,6 +318,25 @@ def levar_sharepoint():
     except Exception as e:
         print(f"🔴 Erro: {e}")
 
+
+def sharepoint_post():
+    print("🟡 " + inspect.currentframe().f_code.co_name)
+    try:
+        sp = SharepointClient()
+
+        # Listar arquivos na pasta
+        for nome_arquivo in os.listdir(OUTPUT):
+            caminho_do_arquivo = os.path.join(OUTPUT, nome_arquivo)
+            if os.path.isfile(caminho_do_arquivo):
+                sp.upload_file_to_folder(caminho_do_arquivo, 'DWPII/srinfo')
+
+        # upload_files(
+        #     STEP_3_DATA_PROCESSED, "dw_pii", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC
+        # )
+        print("🟢 " + inspect.currentframe().f_code.co_name)
+    except Exception as e:
+        print(f"🔴 Erro: {e}")
+
 def duracao_tempo(inicio, fim):
     duracao = fim - inicio
     horas, resto = divmod(duracao.total_seconds(), 3600)
@@ -404,7 +446,7 @@ def main():
     classificar_cg()
     novos_registros = add_novas_linhas_tratada()
     ordenar_com_pyautogui()
-    levar_sharepoint()
+    sharepoint_post()
     alerta_email(novos_registros)
 
     #fim

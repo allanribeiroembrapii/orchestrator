@@ -42,7 +42,7 @@ def criar_tabela_portfolio():
 
 
     # juntar negociacao com valores sebrae para os que não estão na base do nicolas
-    df_subset = df_relatorio_projetos_contratados[df_relatorio_projetos_contratados['Parcerias'].str.contains('SEBRAE', case=False, na=False)]
+    df_subset = df_relatorio_projetos_contratados[df_relatorio_projetos_contratados['Parceria / Programa'].str.contains('SEBRAE', case=False, na=False)]
     df_comparacao = df_subset[~df_subset['Código'].isin(df_sebrae['Código'])]
     df_merge = df_comparacao.merge(df_sebrae_srinfo, left_on = 'Negociação', right_on = 'codigo_negociacao', how = 'left')
     df_final = df_merge[['Código', 'valor_sebrae', 'valor_empresa', 'valor_unidade_embrapii', 'valor_embrapii', 'codigo_negociacao']]

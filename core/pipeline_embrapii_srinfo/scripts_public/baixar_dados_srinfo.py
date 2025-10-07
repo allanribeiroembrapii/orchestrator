@@ -57,18 +57,16 @@ def baixar_dados_srinfo(driver, link_listagem, num_pages=None, option1000=None, 
             option = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, "//option[@value='1000']"))
             )
+            option.click()
 
         else:
             option = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, "//option[@value='9999']"))
             )
+            option.click()
 
         if sebrae:
-            time.sleep(30)
-            option.click()
-
-        else:
-            option.click()
+            time.sleep(60)
 
         carregar_dados_e_fazer_download(driver=driver)
         numero_download = 1

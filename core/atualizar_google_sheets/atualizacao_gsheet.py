@@ -40,7 +40,7 @@ def atualizar_gsheet(spreadsheet_url, spreadsheet_aba, excel_file):
 
     # 5. Selecione a aba que deseja atualizar
     worksheet = spreadsheet.worksheet(spreadsheet_aba)
-
+    
     # 6. Leia o arquivo Excel com pandas
     df = pd.read_excel(excel_file)
     df = df.astype(str)

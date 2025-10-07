@@ -131,6 +131,7 @@ def enviar_email(projetos):
     destinatarios = [
         "allan.ribeiro@embrapii.org.br",
         "nicolas.rodrigues@embrapii.org.br",
+        "milena.goncalves@embrapii.org.br",
     ]
 
     outlook = win32.Dispatch("Outlook.Application")

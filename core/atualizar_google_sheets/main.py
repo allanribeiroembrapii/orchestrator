@@ -21,6 +21,7 @@ if not os.path.exists(inputs_dir):
     os.makedirs(inputs_dir)
 
 PORTFOLIO = os.path.abspath(os.path.join(ROOT, "inputs", "portfolio.xlsx"))
+PORTFOLIO2 = os.path.abspath(os.path.join(ROOT, "inputs", "portfolio2.xlsx"))
 PROJETOS_EMPRESAS = os.path.abspath(
     os.path.join(ROOT, "inputs", "projetos_empresas.xlsx")
 )
@@ -50,6 +51,7 @@ PROPOSTAS_TECNICAS = os.path.abspath(os.path.join(ROOT, "inputs", "negociacoes_p
 QIM_UES = os.path.abspath(os.path.join(ROOT, "inputs", "qim.xlsx"))
 EQUIPE_UE = os.path.abspath(os.path.join(ROOT, "inputs", "equipe_ue.xlsx"))
 ESTUDANTES = os.path.abspath(os.path.join(ROOT, "inputs", "estudantes.xlsx"))
+FUNIL = os.path.abspath(os.path.join(ROOT, "inputs", "funil.xlsx"))
 
 
 def main():
@@ -79,17 +81,27 @@ def main():
             "raw_estudantes": ESTUDANTES,
         }
 
-        for aba, caminho_arquivo in abas.items():
-            try:
-                atualizar_gsheet(url, aba, caminho_arquivo)
-            except Exception as e:
-                print(f"Erro ao atualizar aba {aba}: {str(e)}")
+        url_embrapii_raw = "https://docs.google.com/spreadsheets/d/1Yfr2k4fE4MXnmwYmu6_eZe9m5ch365tBwLjz3nlPS7I"
+        embrapii_raw_abas = {
+            "funil": FUNIL,
+            "qim_ues": QIM_UES,
+            "macroentregas": MACROENTREGAS,
+            "portfolio2": PORTFOLIO2,
+        }
 
+        atualizar_abas(url, abas)
+        atualizar_abas(url_embrapii_raw, embrapii_raw_abas)
 
     except Exception as e:
         # Re-lançar a exceção para manter o comportamento original
         raise
 
+def atualizar_abas(url, abas):
+    for aba, caminho_arquivo in abas.items():
+        try:
+            atualizar_gsheet(url, aba, caminho_arquivo)
+        except Exception as e:
+            print(f"Erro ao atualizar aba {aba}: {str(e)}")
 
 if __name__ == "__main__":
     try:

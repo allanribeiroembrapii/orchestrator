@@ -22,6 +22,7 @@ def puxar_planilhas():
     pasta_srinfo = "DWPII/srinfo"
     pasta_qim_ues = "DWPII/qim_ues"
     pasta_lookup = "DWPII/lookup_tables"
+    pasta_dw_pii = "dw_pii"
 
     lista_arquivos = {
         pasta_srinfo: {
@@ -39,16 +40,32 @@ def puxar_planilhas():
             "negociacoes_propostas_tecnicas",
             "equipe_ue",
             "estudantes",
+            "funil",
         },
         pasta_qim_ues: {
             "qim",
         },
         pasta_lookup: {
             "cnae_ibge",
+        },
+        pasta_dw_pii: {
+            "portfolio2",
         }
     }
 
-    for pasta, nomes in lista_arquivos.items():
+    lista_embrapii_raw = {
+        pasta_srinfo: {
+            "funil",
+        }
+    }
+
+    baixar_arquivos(sp, lista_arquivos, inputs)
+    baixar_arquivos(sp, lista_embrapii_raw, inputs)
+
+    print("🟢 " + inspect.currentframe().f_code.co_name)
+
+def baixar_arquivos(sp, lista, inputs):
+    for pasta, nomes in lista.items():
         for nome in nomes:
             filename = f"{nome}.xlsx"
             remote_path = f"{pasta}/{filename}"
@@ -56,7 +73,6 @@ def puxar_planilhas():
             print(f"⬇️  Baixando: {remote_path} -> {local_file}")
             sp.download_file(remote_path, local_file)
 
-    print("🟢 " + inspect.currentframe().f_code.co_name)
 
 
 def apagar_arquivos_pasta(caminho_pasta):

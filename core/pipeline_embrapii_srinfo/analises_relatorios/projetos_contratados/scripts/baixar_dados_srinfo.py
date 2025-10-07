@@ -78,8 +78,18 @@ def carregar_dados_e_fazer_download(driver):
     time.sleep(2)
 
     # Fazer o download
-    excel_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.CLASS_NAME, "buttons-excel"))
+    drop_csv_buttons = WebDriverWait(driver, 10).until(
+        EC.presence_of_all_elements_located((By.CLASS_NAME, "buttons-collection"))
     )
-    excel_button.click()
+    drop_csv_buttons[0].click()
+    csv_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.CLASS_NAME, "csvButton")) 
+    )
+    csv_button.click()
     time.sleep(3)
+
+    # excel_button = WebDriverWait(driver, 10).until(
+    #     EC.element_to_be_clickable((By.CLASS_NAME, "buttons-excel"))
+    # )
+    # excel_button.click()
+    # time.sleep(3)

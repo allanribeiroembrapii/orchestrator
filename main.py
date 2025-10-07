@@ -133,8 +133,8 @@ def main():
     # Execute modules in sequence
     success = True
     
-    # if success:
-    #     success = execute_module("main_orcamento", main_orcamento, logger, frequency='daily')
+    if success:
+        success = execute_module("main_orcamento", main_orcamento, logger, frequency='daily')
 
     if success:
         connect_vpn()
@@ -152,19 +152,20 @@ def main():
     # pipeline_embrapii_srinfo
     if success:
         success = execute_module("pipeline_embrapii_srinfo", pipeline_main, logger, frequency='daily')
-  
-    # qim_ues
+    
+    qim_ues
     if success:
         success = execute_module("qim_ues", qim_ues, logger, frequency='monday')
 
     #atualizar_google_sheets
     if success:
         success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
+    
 
     # CG Classificação de Projetos - Validação Diretoria de Operações
     if success:
-        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='monday')
-        
+        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
+            
     
     # Classificação Financeira dos Projetos Modelo Embrapii
     if success:
@@ -172,20 +173,11 @@ def main():
     
     if success:
         success = execute_module("classificar_repasses", main_repasses, logger, frequency='daily')
-    
-    # Brasil Mais Produtivo
-    if success:
-        success = execute_module("bmaisp", bmaisp, logger, frequency='monday')
 
     # api_datapii
     if success:
         success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
         
-
-    # # Classifier
-    # if success:
-    #     success = execute_module("classifier_gepes", main_classifier_gepes, logger, frequency='daily')
-
     # # Portfolio2
     if success:
         success = execute_module("portfolio2", main_portfolio2, logger, frequency='daily')

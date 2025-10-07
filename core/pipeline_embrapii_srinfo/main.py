@@ -41,6 +41,7 @@ from projeto.classificacao_projeto.main_classificacao_projeto import (
     main_classificacao_projeto,
 )
 from projeto.portfolio.main_portfolio import main_portfolio
+from projeto.funil.main_funil import main_funil
 from prospeccao.comunicacao.main_comunicacao import main_comunicacao
 from prospeccao.eventos_srinfo.main_eventos_srinfo import main_eventos_srinfo
 from prospeccao.prospeccao.main_prospeccao import main_prospeccao
@@ -174,7 +175,7 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
             main_plano_metas(driver)
             log = logear(log, "ue_plano_metas")
 
-        # Projetos
+        #Projetos
         print("Subseção: Projetos")
         print("Sebrae")
         main_sebrae(driver)
@@ -200,8 +201,8 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
         main_macroentregas(driver)
         log = logear(log, "macroentregas")
 
-        # main_comunicacao(driver)
-        # log = logear(log, "comunicacao")
+        main_comunicacao(driver)
+        log = logear(log, "comunicacao")
 
         if weekday == "Monday":
             print("Estudantes")
@@ -236,15 +237,22 @@ def main_pipeline_srinfo(plano_metas=False, gerar_snapshot=False, enviar_wpp=Fal
 
         # Processamento de dados
         print("SEÇÃO 2/5: PROCESSAMENTO DE DADOS")
+        print("Subseção: Classificação de Projetos")
         main_classificacao_projeto()
         log = logear(log, "classificacao_projetos")
 
         main_info_empresas_processar()
+        print("Subseção: Info Empresas")
         log = logear(log, "info_empresas")
 
         main_portfolio()
+        print("Subseção: Portfolio")
         log = logear(log, "portfolio")
-        
+
+        main_funil()
+        print("Subseção: Funil")
+        log = logear(log, "funil")
+
         registrar_log(log)
 
         # SharePoint
