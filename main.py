@@ -160,13 +160,11 @@ def main():
     #atualizar_google_sheets
     if success:
         success = execute_module("atualizar_google_sheets", google_sheets_main, logger, frequency='daily')
-    
 
     # CG Classificação de Projetos - Validação Diretoria de Operações
     if success:
-        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='daily')
+        success = execute_module("cg_classificacao_projetos_do", cg_classificacao_projetos_do, logger, frequency='monday')
             
-    
     # Classificação Financeira dos Projetos Modelo Embrapii
     if success:
         success = execute_module("classificacao_financeira", main_classificacao_financeira, logger, frequency='daily')
@@ -177,11 +175,7 @@ def main():
     # api_datapii
     if success:
         success = execute_module("api_datapii", api_datapii_main, logger, frequency='daily')
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 8bfd4eae7290ba990970be3c9f37c4f95a769c1e
     # # Portfolio2
     if success:
         success = execute_module("portfolio2", main_portfolio2, logger, frequency='daily')
