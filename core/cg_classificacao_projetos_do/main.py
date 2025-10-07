@@ -4,9 +4,13 @@ import shutil
 import win32com.client as win32
 import pandas as pd
 from dotenv import load_dotenv
+<<<<<<< HEAD
 from core.cg_classificacao_projetos_do.office365_api.download_files import get_file
 from core.cg_classificacao_projetos_do.office365_api.upload_files import upload_files
 from core.cg_classificacao_projetos_do.connect_sharepoint import SharepointClient
+=======
+from .office365_api.sharepoint import get_files_from_sharepoint, sharepoint_post
+>>>>>>> 8bfd4eae7290ba990970be3c9f37c4f95a769c1e
 from datetime import datetime
 import time
 import pyautogui
@@ -85,6 +89,7 @@ def puxar_planilhas():
     apagar_arquivos_pasta(stage_area)
     apagar_arquivos_pasta(data_processed)
     apagar_arquivos_pasta(output)
+<<<<<<< HEAD
 
     sp = SharepointClient()
 
@@ -104,6 +109,15 @@ def puxar_planilhas():
 
     baixar_arquivos(sp, lista_arquivos, data_raw)
 
+=======
+    
+    #Buscar dados
+    # get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, 'portfolio.xlsx', 'DWPII/srinfo', data_raw)
+    # get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, 'classificacao_projeto.xlsx', 'DWPII/srinfo', data_raw)
+    # get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, 'CG_Classificação de Projetos.xlsx', 'DWPII/srinfo', data_raw)
+    # get_file(SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC, 'ue_fonte_recurso_prioritario.xlsx', 'DWPII/unidades_embrapii', data_raw)
+    get_files_from_sharepoint()
+>>>>>>> 8bfd4eae7290ba990970be3c9f37c4f95a769c1e
     print("🟢 " + inspect.currentframe().f_code.co_name)
 
 def baixar_arquivos(sp, lista, inputs):
@@ -310,13 +324,13 @@ def add_novas_linhas_tratada():
     except Exception as e:
         print(f"🔴 Erro: {e}")
 
-def levar_sharepoint():
-    print("🟡 " + inspect.currentframe().f_code.co_name)
-    try:
-        upload_files(OUTPUT, "DWPII/srinfo", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
-        print("🟢 " + inspect.currentframe().f_code.co_name)
-    except Exception as e:
-        print(f"🔴 Erro: {e}")
+# def levar_sharepoint():
+#     print("🟡 " + inspect.currentframe().f_code.co_name)
+#     try:
+#         upload_files(OUTPUT, "DWPII/srinfo", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
+#         print("🟢 " + inspect.currentframe().f_code.co_name)
+#     except Exception as e:
+#         print(f"🔴 Erro: {e}")
 
 
 def sharepoint_post():
@@ -447,6 +461,10 @@ def main():
     novos_registros = add_novas_linhas_tratada()
     ordenar_com_pyautogui()
     sharepoint_post()
+<<<<<<< HEAD
+=======
+    # levar_sharepoint()
+>>>>>>> 8bfd4eae7290ba990970be3c9f37c4f95a769c1e
     alerta_email(novos_registros)
 
     #fim

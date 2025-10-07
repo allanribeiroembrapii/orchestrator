@@ -8,12 +8,13 @@ from datetime import datetime
 #carregar .env
 load_dotenv()
 ROOT = os.getenv('ROOT')
-STEP_3_DATA_PROCESSED = os.getenv('STEP_3_DATA_PROCESSED')
+STEP1 = os.getenv('STEP_1_DATA_RAW')
+STEP3 = os.getenv('STEP_3_DATA_PROCESSED')
 
 #Definição dos caminhos
-PASTA_ARQUIVOS = os.path.abspath(os.path.join(ROOT, STEP_3_DATA_PROCESSED))
-RAW = os.path.abspath(os.path.join(ROOT, '1_data_raw'))
-BACKUP = os.path.abspath(os.path.join(ROOT, 'backup'))
+PASTA_ARQUIVOS = os.path.abspath(os.path.join(ROOT, STEP3))
+RAW = os.path.abspath(os.path.join(ROOT, STEP1))
+BACKUP = os.path.abspath(os.path.join(ROOT, "data/backup"))
 
 #Sharepoint
 SHAREPOINT_SITE = os.getenv('sharepoint_url_site')
@@ -39,8 +40,8 @@ def zipar_arquivos(origem, destino):
 def up_sharepoint():
     print("🟡 " + inspect.currentframe().f_code.co_name)
     try:
-        # zipar_arquivos(RAW, BACKUP)
-        # upload_files(BACKUP, "DWPII_backup", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
+        zipar_arquivos(RAW, BACKUP)
+        upload_files(BACKUP, "DWPII_backup", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
         upload_files(PASTA_ARQUIVOS, "dw_pii", SHAREPOINT_SITE, SHAREPOINT_SITE_NAME, SHAREPOINT_DOC)
         print("🟢 " + inspect.currentframe().f_code.co_name)
     except Exception as e:

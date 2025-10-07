@@ -66,7 +66,15 @@ def baixar_dados_srinfo(driver, link_listagem, num_pages=None, option1000=None, 
             option.click()
 
         if sebrae:
+<<<<<<< HEAD
             time.sleep(60)
+=======
+            option.click()
+            time.sleep(30)
+
+        else:
+            option.click()
+>>>>>>> 8bfd4eae7290ba990970be3c9f37c4f95a769c1e
 
         carregar_dados_e_fazer_download(driver=driver)
         numero_download = 1

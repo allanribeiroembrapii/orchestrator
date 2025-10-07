@@ -11,13 +11,12 @@ load_dotenv()
 
 USERNAME = os.getenv('sharepoint_email')
 PASSWORD = os.getenv('sharepoint_password')
-SHAREPOINT_SITE = os.getenv('sharepoint_url_site')
-SHAREPOINT_SITE_NAME = os.getenv('sharepoint_site_name')
-SHAREPOINT_DOC = os.getenv('sharepoint_doc_library')
+
+print(USERNAME, PASSWORD)
 
 class SharePoint:
-    def _auth(self):
-        conn = ClientContext(SHAREPOINT_SITE).with_credentials(
+    def _auth(self, sharepoint_site):
+        conn = ClientContext(sharepoint_site).with_credentials(
             UserCredential(
                 USERNAME,
                 PASSWORD
@@ -25,31 +24,31 @@ class SharePoint:
         )
         return conn
 
-    def _get_files_list(self, folder_name):
-        conn = self._auth()
-        target_folder_url = f'{SHAREPOINT_DOC}/{folder_name}'
+    def _get_files_list(self, sharepoint_site, sharepoint_doc, folder_name):
+        conn = self._auth(sharepoint_site)
+        target_folder_url = f'{sharepoint_doc}/{folder_name}'
         root_folder = conn.web.get_folder_by_server_relative_url(target_folder_url)
         root_folder.expand(["Files", "Folders"]).get().execute_query()
         return root_folder.files
 
-    def get_folder_list(self, folder_name):
-        conn = self._auth()
-        target_folder_url = f'{SHAREPOINT_DOC}/{folder_name}'
+    def get_folder_list(self, sharepoint_site, sharepoint_doc, folder_name):
+        conn = self._auth(sharepoint_site)
+        target_folder_url = f'{sharepoint_doc}/{folder_name}'
         root_folder = conn.web.get_folder_by_server_relative_url(target_folder_url)
         root_folder.expand(["Folders"]).get().execute_query()
         return root_folder.folders
 
-    def download_file(self, file_name, folder_name):
-        conn = self._auth()
-        file_url = f'/sites/{SHAREPOINT_SITE_NAME}/{SHAREPOINT_DOC}/{folder_name}/{file_name}'
+    def download_file(self, sharepoint_site, sharepoint_site_name, sharepoint_doc, file_name, folder_name):
+        conn = self._auth(sharepoint_site)
+        file_url = f'/sites/{sharepoint_site_name}/{sharepoint_doc}/{folder_name}/{file_name}'
         # print(f'Debug: URL do arquivo -> {file_url}')
         file = File.open_binary(conn, file_url)
         return file.content
 
 
-    def download_latest_file(self, folder_name):
+    def download_latest_file(self, sharepoint_site, sharepoint_site_name, sharepoint_doc, folder_name):
         date_format = "%Y-%m-%dT%H:%M:%SZ"
-        files_list = self._get_files_list(folder_name)
+        files_list = self._get_files_list(sharepoint_site, sharepoint_doc, folder_name)
         file_dict = {}
         for file in files_list:
             dt_obj = datetime.datetime.strptime(file.time_last_modified, date_format)
@@ -57,19 +56,19 @@ class SharePoint:
         # sort dict object to get the latest file
         file_dict_sorted = {key: value for key, value in sorted(file_dict.items(), key=lambda item: item[1], reverse=True)}    
         latest_file_name = next(iter(file_dict_sorted))
-        content = self.download_file(latest_file_name, folder_name)
+        content = self.download_file(sharepoint_site, sharepoint_site_name, sharepoint_doc, latest_file_name, folder_name)
         return latest_file_name, content
 
     def upload_file(self, folder_name, sharepoint_site, sharepoint_site_name, sharepoint_doc, file_name, content):
-        conn = self._auth()
+        conn = self._auth(sharepoint_site)
         target_folder_url = f'/sites/{sharepoint_site_name}/{sharepoint_doc}/{folder_name}'
         target_folder = conn.web.get_folder_by_server_relative_path(target_folder_url)
         response = target_folder.upload_file(file_name, content).execute_query()
         return response
 
-    def upload_file_in_chunks(self, file_path, folder_name, chunk_size, chunk_uploaded=None, **kwargs):
-        conn = self._auth()
-        target_folder_url = f'/sites/{SHAREPOINT_SITE_NAME}/{SHAREPOINT_DOC}/{folder_name}'
+    def upload_file_in_chunks(self, sharepoint_site, sharepoint_site_name, sharepoint_doc, file_path, folder_name, chunk_size, chunk_uploaded=None, **kwargs):
+        conn = self._auth(sharepoint_site)
+        target_folder_url = f'/sites/{sharepoint_site_name}/{sharepoint_doc}/{folder_name}'
         target_folder = conn.web.get_folder_by_server_relative_path(target_folder_url)
         response = target_folder.files.create_upload_session(
             source_path=file_path,
@@ -79,14 +78,14 @@ class SharePoint:
         ).execute_query()
         return response
 
-    def get_list(self, list_name):
-        conn = self._auth()
+    def get_list(self, sharepoint_site, list_name):
+        conn = self._auth(sharepoint_site)
         target_list = conn.web.lists.get_by_title(list_name)
         items = target_list.items.get().execute_query()
         return items
 
-    def get_file_properties_from_folder(self, folder_name):
-        files_list = self._get_files_list(folder_name)
+    def get_file_properties_from_folder(self, sharepoint_site, sharepoint_doc, folder_name):
+        files_list = self._get_files_list(sharepoint_site, sharepoint_doc, folder_name)
         properties_list = []
         for file in files_list:
             file_dict = {
